@@ -1,0 +1,19 @@
+# Per-talk virtualenv, created by source/build.sh
+**/env/.venv/
+# Offline wheels: not tracked. Recreate with
+#   pip download -r source/env/requirements.txt -d source/env/wheels
+**/env/wheels/
+# Poster / earlier-talk PDFs kept locally only (standing ruling: poster/talk sources stay out of repos)
+**/data/sources/
+# Python bytecode, OS litter, LibreOffice scratch
+__pycache__/
+*.pyc
+.DS_Store
+lo_profile/
+# Unpublished results from the private project repository (decision 2026-09-30): kept locally
+# only. data/MANIFEST.tsv still lists each file with its sha256; see the talk's source/README.md.
+**/data/git/
+**/data/git_facts.json
+# The 25 Sep original outline PDF used by ./build.sh verify: it prints the co-author's e-mail
+# address, which is not published (decision 2026-09-30). Kept locally with the data above.
+**/verify/original_lung_tcell_talk_imrad_20260925.pdf
