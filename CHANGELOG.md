@@ -5,6 +5,14 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: four more talks and posters (proposed 2026-09-30)
+
+Added, one folder each, with a README recording provenance and pre-publication edits:
+`2026-09-balanced-donor-luad` (copied unchanged), `2026-08-jsdp-sclc-tcell-talk` and
+`2026-08-jsdp-sclc-tcell-poster` (co-author e-mail and local paths removed), and
+`2026-08-te-ocean-acidification-poster` (local paths and the private-repository link removed, PDF
+exported). The root README index lists them.
+
 ## v2026-09-30: public release
 
 Lung T-cell talk, prepared for making the repository public. Slide numbers, results and the
