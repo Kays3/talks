@@ -24,7 +24,7 @@ import re
 
 from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.enum.text import WD_COLOR_INDEX
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_COLOR_INDEX
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Mm, Pt
@@ -131,6 +131,13 @@ def build() -> dict:
     sec.page_width, sec.page_height = Mm(210), Mm(297)
     for side in ("left_margin", "right_margin", "top_margin", "bottom_margin"):
         setattr(sec, side, Mm(22))
+    # Page numbers, bottom centre (house rule of 2026-09-30: every report PDF carries "Page N of M").
+    foot = sec.footer.paragraphs[0]
+    foot.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    foot.add_run("Page ")
+    add_field(foot, "PAGE", "1")
+    foot.add_run(" of ")
+    add_field(foot, "NUMPAGES", "1")
     normal = doc.styles["Normal"]
     normal.font.name = "Arial"
     normal.font.size = Pt(10.5)
