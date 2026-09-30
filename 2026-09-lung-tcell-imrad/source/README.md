@@ -404,3 +404,12 @@ Decided before the repository was made public:
 After these changes `./build.sh publish` reported 0 words outside their text boxes, 0 slides whose
 words differ from their source, 99 of 99 report paragraphs verbatim and a 22-page report. The
 abstract and the figures did not change.
+
+## Page numbers in the report (2026-09-30)
+
+`src/make_docx.py` now puts "Page N of M" in the report footer, bottom centre (Word PAGE and
+NUMPAGES fields), following the office rule that every report PDF carries page numbers. The report
+text, figures and page count (22) are unchanged; `report.docx`, `report.pdf` and
+`editable/lung_tcell_report_imrad_20260925.docx` were rebuilt, and `SHA256SUMS` regenerated. The
+slides did not change, so the published `slides.pdf` was kept.
+

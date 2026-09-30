@@ -13,6 +13,11 @@ Added, one folder each, with a README recording provenance and pre-publication e
 `2026-08-te-ocean-acidification-poster` (local paths and the private-repository link removed, PDF
 exported). The root README index lists them.
 
+## Unreleased: report page numbers (proposed 2026-09-30)
+
+Lung T-cell talk: the written report (`report.pdf`, `report.docx`) now has "Page N of M" at the
+bottom centre of every page. No text changed; still 22 pages.
+
 ## v2026-09-30: public release
 
 Lung T-cell talk, prepared for making the repository public. Slide numbers, results and the
