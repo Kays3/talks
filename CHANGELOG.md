@@ -17,6 +17,10 @@ run is shown as gate passed, results pending. The E0 per-donor count table is ad
 Versions 1 and 2 are unchanged. The root README index lists it. Follow-up (2026-10-01): larger
 study diagram on slide 28 (four boxes), the boundary line on slide 7 no longer crosses the legend, and
 the legend on slide 22 no longer covers two data points.
+Follow-up (2026-10-02): slides 26 to 28 report the first bulk RNA-seq test (a linear network
+model against 17 measured CRISPR knockouts in CD4+ T cells; registered reading non-specific) in place
+of the proposal, with a new data figure; the open-questions, paper-outline and summary slides are updated
+accordingly.
 
 ## Unreleased: lab progress report, version 2 (proposed 2026-10-01)
 

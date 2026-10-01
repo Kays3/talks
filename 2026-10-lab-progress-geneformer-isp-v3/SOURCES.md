@@ -1,6 +1,6 @@
 # Sources for every number in "Evaluating in-silico perturbation with Geneformer" (version 3)
 
-Version 3 reuses the numbers of versions 1 and 2 (`../2026-10-lab-progress-geneformer-isp/` and `../2026-10-lab-progress-geneformer-isp-v2/`) and adds figures drawn from two existing results: the external-cohort feasibility count (E0) and the colon classifier gate (E2). It adds no new measurement. Files under `source/data/` are six inputs: the five result files of version 2 (three byte-identical to the result files named below; in the two null-study files the free-text `about` notes were shortened for publication and every value is unchanged) and the E0 per-donor count table (byte-identical, sha256 `3e47f81b0cd2f44d73d47e88650fd4ade809775bcd4f073a3b5dfb5b4086f2e9`). `source/SHA256SUMS` lists the copies' hashes.
+Version 3 reuses the numbers of versions 1 and 2 (`../2026-10-lab-progress-geneformer-isp/` and `../2026-10-lab-progress-geneformer-isp-v2/`) and adds figures drawn from existing results: the external-cohort feasibility count (E0), the colon classifier gate (E2) and the bulk perturbation test against measured knockouts (slides 27-28). It adds no new measurement of its own. Files under `source/data/` are eight inputs: the five result files of version 2 (three byte-identical to the result files named below; in the two null-study files the free-text `about` notes were shortened for publication and every value is unchanged) the E0 per-donor count table (byte-identical, sha256 `3e47f81b0cd2f44d73d47e88650fd4ade809775bcd4f073a3b5dfb5b4086f2e9`) and two bulk-test tables (see slides 26 to 28). `source/SHA256SUMS` lists the copies' hashes.
 
 Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit or branch is named; T = this talks repository; R = the lab's internal reports folder; STD = the lab's internal standard `isp-outcome-criteria.md` (ISP-STD-1 v1.1, adopted 2026-09-28); GF = the Geneformer package source, `geneformer/tokenizer.py`. Every row was re-read at source on 2026-10-01.
 
@@ -59,15 +59,24 @@ Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit or branc
 | 24 | "Not shown" list | R `balanced-donor-null-imrad-report-20260930.md`, section 5; R `geneformer-next-cycle-proposal-20261001.md`, Summary; R `geneformer-alt-dataset-experiment-design-20261001.md`, section 1 |
 | 25 | Pre-specified readings of the colon outcomes | `E2_REGISTRATION.md` sections 7 and 10 |
 
-## Slides 26 to 28: bulk RNA-seq (proposal)
+## Slides 26 to 28: bulk RNA-seq
+
+BI = Kays3/Geneformer_TE `main` at merge commit `6b637d8a409f5fffc4cf5998406b5851251acaf1` (pull request #1; results committed in `e36f9fc`), folder `docs/runs/2026-10-02_human_tcell_bulk_isp/` (pre-registration committed at `0714626` before the run; amendments A1 `08010fe`, A2 `56bc282`). The two tables were checked byte-for-byte against `6b637d8`. Two of its tables are copied byte-identical into `source/data/`: `tables/09_per_ko.tsv` as `bulk_isp_per_ko.tsv` (sha256 `81bc3c18...`) and `tables/09_tests.json` as `bulk_isp_tests.json` (sha256 `5d2882f4...`).
 
 | Slide | Number or statement | Source |
 |---|---|---|
-| 26 | Geneformer pretrained on single-cell rank encodings; zero-count genes absent from the list; V2 input limit 4,096 tokens | Theodoris et al. 2023; GF `tokenizer.py` (as slide 5) |
-| 26 | "No bulk ISP result in our work" | search of the lab's internal reports and shared notes on 2026-10-01 for bulk RNA-seq and in-silico perturbation: the only bulk-related items are per-donor pseudo-bulk tables used for differential expression (T6), not ISP |
+| 26 | Geneformer's input is a single-cell rank encoding with at most 4,096 tokens (V2), so it cannot take a bulk profile | Theodoris et al. 2023; GF `tokenizer.py` (as slide 5) |
 | 26 | Composition figure | Schematic with invented values, labelled so |
-| 27, 28 | Options A to C and the test design | the author's proposal; no study registered, no compute spent |
-| 28 | Sample counts: lung 43 donors x 2 tissues = 86, colon 19 x 2 = 38 | donor counts from the two classifier gate files |
+| 27 | Model: CellOracle-style linear network, ridge regression on TF-to-target edges of the CellOracle hg38 promoter base GRN, restricted to promoters overlapping a Freimer ATAC peak; leave-one-knockout-out; knockout clamped low and propagated | BI `PREREGISTRATION.md`; lab report `geneformer-te-bulk-isp-celloracle-tcell-20261002.md`, Methods; Kamimoto et al., Nature 614, 742-751 (2023) |
+| 27 | Ground truth: Freimer et al. 2022, 24 Cas9 knockouts in CD4+ T cells, 3 donors, AAVS1 controls; 17 are TFs in the base network (PTEN, MBD2 and CBFB only through motif annotation, not classical sequence-specific TFs), 7 not representable | GEO GSE171677 and GSE171736; `bulk_isp_tests.json` keys `n_scored` (17), `n_not_representable` (7) |
+| 27 | P1 median rho 0.083, p = 0.012; P2 median sign agreement 0.545, p = 0.013; P3 median difference from shuffled GRN +0.039, p = 0.19 (fail); P4 4 of 17 beat random TFs, p = 0.009; reading `RECOVERED_NONSPECIFIC` | `bulk_isp_tests.json` keys `P1_*` to `P4_*`, `pass`, `reading` |
+| 27 | Figure: per-knockout rho of the model, median of 50 shuffled GRNs, median of random TFs of the same out-degree quintile, and the co-expression baseline; asterisks mark knockouts with random-TF p <= 0.05 (ETS1, HIVEP2, IRF1, IRF4) | `bulk_isp_per_ko.tsv` columns `rho_resp`, `rho_shuf_median`, `rho_random_median`, `rho_baseline`, `p_random_tf`; the script asserts 17 scored knockouts and that the median of `rho_resp` equals `P1_rho_resp_median` |
+| 28 | Co-expression baseline as good as the model: paired median difference 0.002, two-sided p = 0.85 | `bulk_isp_tests.json` keys `model_minus_baseline_median`, `model_vs_baseline_wilcoxon_two_sided_p` |
+| 28 | Controls-only network: median rho -0.013, one-sided p = 0.76 (no agreement above chance) | `bulk_isp_per_ko.tsv` column `S2_controls_only_rho` (median over the 17 scored knockouts, -0.0126); lab report, Results |
+| 28 | Predicted shifts about 50 times smaller than measured: median ratio 0.018 (range 0.0002 to 0.11) | lab report, Results, "Magnitude and robustness" |
+| 28 | TE arm `NOT_TESTABLE`: no deposited multi-mapping-aware TE count table from human T cells or blood with perturbations was found in a bounded search (GEO metadata and the web; ArrayExpress, Zenodo, figshare and paper supplements not searched); re-alignment ruled out | BI amendment A2 (`56bc282`) and `te/SEARCH.md`; lab report, "TE arm" |
+| 28 | Replication on Weinstock et al. 2024 (GEO GSE271788, 60 knockouts in CD4+ T cells, 3 donors, same laboratory) in progress; an activation-state covariate as a planned sensitivity analysis, to be registered before it runs | lab report, Discussion ("Next step"); GSE271788 series record; status "in progress" as of 2 October 2026 per the study lead |
+| 28 | Pseudo-bulk comparison (T cells only versus all cells) | proposal by the author; not run |
 
 ## Slides 29 to 33: summary and next
 
@@ -75,6 +84,6 @@ Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit or branc
 |---|---|---|
 | 29 | Criteria table | rows above (slides 11-21) |
 | 30 | Goal swap, subset re-analysis, interpretable baseline from T-cell programs (TCAT; Kotliar et al., Nature Methods 22, 1964-1980, 2025); model size; positive controls and experimental screens | R `geneformer-next-cycle-proposal-20261001.md`, sections 4 and 5; STD C2, C4 and D1 |
-| 30 | Bulk row | slides 26-28 |
-| 31 | Working title, result (rho -0.59 and -0.61; lung, V2-316M, goal = the donor's own normal centroid), argument, hypotheses, figure list | proposal by the author; each figure marked drawable now (teal) or needing an open study (amber) |
+| 30 | Bulk row: first test non-specific; replication on 60 knockouts in progress | slides 27-28 |
+| 31 | Working title, result (rho -0.59 and -0.61; lung, V2-316M, goal = the donor's own normal centroid), argument, hypotheses, bulk line (17 knockouts, non-specific), figure list | proposal by the author; bulk line from slides 27-28; each figure marked drawable now (teal) or needing an open study (amber) |
 | 32 | Summary statements | rows above |
