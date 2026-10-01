@@ -14,7 +14,9 @@ figures show the external-cohort feasibility count (Pelka et al. 2021) and the p
 gate. Three slides discuss whether in-silico perturbation applies to bulk RNA-seq, stated as a proposal
 with no result, and the summary and paper-outline slides include that question. The colon perturbation
 run is shown as gate passed, results pending. The E0 per-donor count table is added to `source/data/`.
-Versions 1 and 2 are unchanged. The root README index lists it.
+Versions 1 and 2 are unchanged. The root README index lists it. Follow-up (2026-10-01): larger
+study diagram on slide 28 (four boxes), the boundary line on slide 7 no longer crosses the legend, and
+the legend on slide 22 no longer covers two data points.
 
 ## Unreleased: lab progress report, version 2 (proposed 2026-10-01)
 

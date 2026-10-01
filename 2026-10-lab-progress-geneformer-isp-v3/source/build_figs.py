@@ -180,7 +180,7 @@ def fig_finetune():
     fig, ax = plt.subplots(figsize=(7.6, 5.4))
     ax.scatter(*t.T, s=40, color=TUM, alpha=0.7, lw=0, label="tumour-infiltrating T cells")
     ax.scatter(*n.T, s=40, color=NOR, alpha=0.7, lw=0, label="normal-tissue T cells")
-    xs = np.linspace(0.5, 8.0, 10); ax.plot(xs, -0.95 * xs + 7.6, color=INK, lw=2, ls="--")
+    xs = np.linspace(2.0, 8.0, 10); ax.plot(xs, -0.95 * xs + 7.6, color=INK, lw=2, ls="--")
     ax.text(4.6, 0.5, "learned decision boundary", fontsize=15, ha="left", bbox=dict(fc=PAPER, ec="none", pad=2))
     ax.set_xticks([]); ax.set_yticks([]); ax.set_xlabel("embedding space (2-D sketch)")
     ax.legend(loc="upper left", frameon=False, fontsize=15); ax.set_xlim(0, 8.4); ax.set_ylim(0, 7.2)
@@ -312,7 +312,7 @@ def fig_e0_cohort():
     ax.axvline(100, color=INK, ls=":", lw=1.3); ax.axhline(100, color=INK, ls=":", lw=1.3)
     ax.set_xlim(5, 3000); ax.set_ylim(25, 5000)
     ax.set_xlabel("normal-colon T cells per donor"); ax.set_ylabel("tumour T cells per donor")
-    ax.legend(loc="lower right", frameon=False, fontsize=13.5, scatterpoints=1)
+    ax.legend(loc="upper left", frameon=False, fontsize=13.5, scatterpoints=1)
     ax.set_title("36 donors with a normal specimen (all processing)", fontsize=14.5, loc="left")
     fig.tight_layout(); save(fig, "e0_cohort.png")
     mmr = {}
@@ -377,17 +377,14 @@ def fig_bulk_mix():
 
 def fig_pseudobulk():
     """Proposed benchmark: build pseudo-bulk from our own single-cell data, where the answer is known."""
-    fig, ax = canvas(12.6, 5.0, 12.6, 5.0)
-    box(ax, 0.2, 1.75, 2.6, 1.6, "single-cell data\nwe already have\nlung 43, colon 19\ndonors", fs=14)
-    box(ax, 3.7, 3.25, 3.6, 1.3, "single-cell ISP\n(lung results exist;\ncolon running)", ec=PASS, fs=14)
-    box(ax, 3.7, 0.35, 3.6, 1.6, "pseudo-bulk per donor\nand tissue: (a) T cells\nonly, (b) all cells", ec=OPEN, ls="--", fs=14)
-    box(ax, 8.1, 0.35, 2.0, 1.6, "ISP on each\npseudo-bulk\nsample", ec=OPEN, ls="--", fs=14)
-    box(ax, 10.6, 1.75, 1.85, 1.6, "agreement\nof gene\nrankings", ec=OPEN, ls="--", fs=14, weight="bold")
-    arrow(ax, (2.85, 2.9), (3.65, 3.75)); arrow(ax, (2.85, 2.2), (3.65, 1.3))
-    arrow(ax, (7.35, 1.15), (8.05, 1.15)); arrow(ax, (10.15, 1.15), (10.9, 1.7))
-    arrow(ax, (7.35, 3.9), (10.9, 3.4))
-    ax.text(5.5, 2.45, "(a) vs (b) separates within-cell\nsignal from composition", ha="center", fontsize=13, color="#33445a", style="italic")
-    ax.text(12.5, 4.98, "Diagram of a proposed study (not run)", ha="right", va="top", fontsize=12, color=GREY, style="italic")
+    fig, ax = canvas(10.0, 3.7, 10.0, 3.7)
+    box(ax, 0.1, 1.05, 2.3, 1.55, "single-cell data\nlung 43, colon 19\ndonors", fs=17)
+    box(ax, 3.3, 2.1, 3.3, 1.2, "single-cell ISP\n(reference)", ec=PASS, fs=17)
+    box(ax, 3.3, 0.2, 3.3, 1.35, "pseudo-bulk ISP\n(a) T cells, (b) all cells", ec=OPEN, ls="--", fs=17)
+    box(ax, 7.5, 1.05, 2.4, 1.55, "agreement of\ngene rankings", ec=OPEN, ls="--", fs=17, weight="bold")
+    arrow(ax, (2.45, 2.15), (3.25, 2.6)); arrow(ax, (2.45, 1.5), (3.25, 0.95))
+    arrow(ax, (6.65, 2.7), (7.45, 2.2)); arrow(ax, (6.65, 0.85), (7.45, 1.4))
+    ax.text(9.95, 3.68, "Proposed study (not run)", ha="right", va="top", fontsize=13, color=GREY, style="italic")
     fig.tight_layout(); save(fig, "pseudobulk.png")
 
 
