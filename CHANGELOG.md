@@ -5,6 +5,16 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: lab progress report (proposed 2026-10-01)
+
+Added `2026-10-lab-progress-geneformer-isp`: "Reading the Current", a 28-slide lab progress report
+on Geneformer, in-silico perturbation and the criteria used to judge it, with speaker notes, a
+one-page handout, `SOURCES.md` (a source for every number) and `source/` (figure and deck
+generators with their input data and checksums). Prepared from an internal draft: reviewer names,
+host names and internal folder paths were removed. Slide 23 is a dated status of the colorectal
+run at 12:45 JST on 1 October and shows no result; it will be updated when the run has finished
+and been reviewed. The root README index lists it.
+
 ## Unreleased: four more talks and posters (proposed 2026-09-30)
 
 Added, one folder each, with a README recording provenance and pre-publication edits:
