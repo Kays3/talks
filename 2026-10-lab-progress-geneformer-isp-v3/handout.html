@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Evaluating in-silico perturbation with Geneformer</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10.5pt;line-height:1.5;max-width:46em;margin:2em auto;color:#1a1f29}
+h1.title{display:none} h1,h2,h3{line-height:1.2} code,pre{font-family:Menlo,monospace;font-size:9pt} pre{background:#f3f5f8;padding:.6em;overflow-x:auto;white-space:pre-wrap}
+table{border-collapse:collapse;font-size:9pt} th,td{border:1px solid #ccd;padding:3px 6px;vertical-align:top} blockquote{border-left:3px solid #b4651a;margin:0;padding-left:1em;color:#444}
+@page{size:A4 landscape;margin:12mm 12mm 16mm;@bottom-center{content:"Page " counter(page) " of " counter(pages);font-family:"Helvetica Neue",Arial,sans-serif;font-size:8pt;color:#667}}
+table{width:100%;table-layout:auto;font-size:8pt} th,td{overflow-wrap:break-word;word-break:normal;hyphens:auto} td code{font-size:7.5pt;overflow-wrap:anywhere}
+@media print{body{max-width:none;margin:0}}
+img{max-width:100%;height:auto}
+figure{max-width:100%}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Evaluating in-silico perturbation with Geneformer</h1>
+</header>
+<style>body{font-size:9.3pt;line-height:1.33;max-width:none} h1{font-size:15.5pt;margin:0 0 4pt} p{margin:4.5pt 0} table{font-size:8.4pt}</style>
+<h1 id="evaluating-in-silico-perturbation-with-geneformer">Evaluating
+in-silico perturbation with Geneformer</h1>
+<p><strong>Lab progress report, version 3, 1 October 2026 · Kaisar
+Dauyey</strong></p>
+<p><strong>Method.</strong> Geneformer encodes each cell as a list of
+its genes ranked by expression relative to each gene’s median across the
+pretraining corpus (zero-count genes omitted; at most 4,096 tokens for
+V2 models). We fine-tune it to separate a donor’s tumour-infiltrating T
+cells from that donor’s normal-tissue T cells, with donors held out.
+In-silico perturbation (ISP) deletes a gene from a tumour cell’s list or
+moves it to the top, and scores the change in cosine similarity of the
+cell’s embedding to the centroid of the same donor’s normal T cells. No
+cell is modified, and the model returns a score for every gene.</p>
+<p><strong>Six criteria, each traced to a documented error</strong> (lab
+standard ISP-STD-1, 28 September 2026)</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Rule</th>
+<th>Evidence behind it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Register first</td>
+<td>Test, direction, threshold, reachable p and outcome wording fixed
+and reviewed before any result</td>
+<td>An August ordering was interpreted without a plan</td>
+</tr>
+<tr>
+<td>2. Instrument works</td>
+<td>Held-out balanced accuracy &gt;= 0.60 with a donor sign test; a
+no-op edit gives exactly 0</td>
+<td>July tumour and normal groups came from different studies (0 of 18
+supplied both)</td>
+</tr>
+<tr>
+<td>3. Same cells</td>
+<td>Deletion and overexpression analysed on identical cells (since 25
+September)</td>
+<td>Overexpression on 2,424 cells for every gene, deletion on 202 to
+1,131</td>
+</tr>
+<tr>
+<td>4. Matched controls</td>
+<td>Each gene against at least 20 genes of similar detection and rank;
+ambient-RNA genes flagged</td>
+<td>S100A8/S100A9 shifted cells the same way under both edits in 9 of 12
+comparisons</td>
+</tr>
+<tr>
+<td>5. Random genes</td>
+<td>Opposed effects of the two edits are not, on their own,
+evidence</td>
+<td>Random genes: Spearman rho -0.593 (100 genes), -0.608 (200)</td>
+</tr>
+<tr>
+<td>6. Donors, stability, fixed names</td>
+<td>Donor as unit; stable in 95% of 10,000 bootstrap draws; never “no
+effect”</td>
+<td>One donor held 74.9% of the SCLC test cells</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supported.</strong> Lung (43 donors): held-out balanced
+accuracy 0.825, all donors above chance; 13 of 34 testable T-cell genes
+exceed matched controls, stably; opposed effects are generic. Colon (E2;
+Pelka et al. 2021, 19 donors with unsorted cells in both tissues, from
+25 eligible of 62): registration passed, classifier gate passed (0.904;
+19 of 19 donors; lowest 0.655), no-op shift 0.0. <strong>Not
+shown:</strong> that any gene regulates T-cell state; what the
+classifier reads (T-cell state, ambient RNA or subset composition);
+transfer of the lung models to new lung donors (E1 blocked: data not
+accessible).</p>
+<p><strong>Pending.</strong> The colon perturbation run (369 genes, 19
+donors) started at 02:42 JST on 1 October; results are expected on 2
+October and will be reported only after independent review.</p>
+<p><strong>Bulk RNA-seq (open question, no result).</strong> A bulk
+profile averages many cell types, so ISP on it mixes cell-type
+composition with within-cell regulation, and its input lies outside the
+single-cell pretraining distribution. Options: (A) a pseudo-bulk
+benchmark built from our own single-cell data and compared with
+single-cell ISP, with T-cell-only and all-cell versions to separate
+composition; (B) deconvolution before perturbation; (C) treating a
+sample as one “cell”, with a sample-level reading at most. A is the
+proposed first test.</p>
+<p><strong>Still to test.</strong> Goal swap; subset re-analysis; an
+interpretable baseline from T-cell programs (TCAT, Kotliar et al. 2025);
+model size (104M vs 316M); positive controls and experimental screens;
+bulk transfer. Possible methods paper, working title “Opposite by
+default”. Every number is sourced in <code>SOURCES.md</code>.</p>
+</body>
+</html>
