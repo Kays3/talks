@@ -406,28 +406,30 @@ def fig_bulk_result():
 # ---------- transposable elements (Geneformer_TE) ----------
 def fig_te_pipeline():
     """The three tracks of the TE project and the state of each."""
-    fig, ax = canvas(12.6, 5.6, 12.6, 5.6)
-    rows = [("Single cell\n(Geneformer)", OPEN, "--", "built, not run",
-             ["scRNA-seq with\nTE family counts", "classifier:\nTE-low vs TE-high\n(gate first)", "delete or\noverexpress\none regulator", "shift toward\nTE-high; TE\nfamily probe"]),
-            ("Bulk network\n(CPU, linear)", FAIL, "-", "run: fish, T cells",
-             ["bulk RNA-seq:\ngenes + TE\nfamilies", "ridge network,\nfitted within\neach stratum", "clamp one\nregulator,\npropagate 3 steps", "predicted TE\nshift vs random\ngenes"]),
-            ("Ground truth\n(measured)", OPEN, "--", "running",
-             ["public knockout\nand knockdown\nRNA-seq", "re-align and\ncount TEs with\nmultimapping", "differential\nexpression per\nstudy", "compare with\nthe predicted\ndirection"])]
-    w, h, gap, x0 = 2.05, 1.38, 0.32, 2.35
-    for r, (name, col, ls, state, steps) in enumerate(rows):
-        y = 4.0 - r * 1.78
-        ax.text(0.1, y + h / 2 + 0.16, name, ha="left", va="center", fontsize=15, weight="bold", linespacing=1.2)
-        ax.text(0.1, y + 0.08, state, ha="left", va="bottom", fontsize=12.5, color=col, weight="bold")
+    fig, ax = canvas(12.6, 4.7, 12.6, 4.7)
+    rows = [("Single cell", "Geneformer", OPEN, "--", "built, not run",
+             ["single cells,\nTE counts", "TE-low vs high\nclassifier", "delete or\noverexpress", "shift toward\nTE-high"]),
+            ("Bulk network", "linear, CPU", FAIL, "-", "run: fish, T cells",
+             ["bulk genes\n+ TE families", "ridge network\nper stratum", "clamp one\nregulator", "TE shift vs\nrandom genes"]),
+            ("Ground truth", "measured", OPEN, "--", "running",
+             ["published\nknockouts", "re-count TEs\n(multimapping)", "differential\nexpression", "compare with\nprediction"])]
+    w, h, gap, x0 = 2.12, 1.12, 0.3, 2.45
+    for r, (name, sub, col, ls, state, steps) in enumerate(rows):
+        y = 3.4 - r * 1.52
+        ax.text(0.05, y + h - 0.12, name, ha="left", va="top", fontsize=17, weight="bold")
+        ax.text(0.05, y + h - 0.5, sub, ha="left", va="top", fontsize=14, color="#4a5a6e")
+        ax.text(0.05, y + 0.02, state, ha="left", va="bottom", fontsize=14, color=col, weight="bold")
         for i, t in enumerate(steps):
             x = x0 + i * (w + gap)
-            ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.12", fc="#ffffff", ec=col, lw=1.8, ls=ls))
-            ax.text(x + w / 2, y + h / 2, t, ha="center", va="center", fontsize=13, color="#33445a", linespacing=1.25)
+            ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.12", fc="#ffffff", ec=col, lw=2, ls=ls))
+            ax.text(x + w / 2, y + h / 2, t, ha="center", va="center", fontsize=15.5, color="#26354a", linespacing=1.2)
             if i < 3:
                 arrow(ax, (x + w + 0.03, y + h / 2), (x + w + gap - 0.03, y + h / 2))
     xr = x0 + 3 * (w + gap) + w
-    ax.plot([xr + 0.12, xr + 0.3, xr + 0.3, xr + 0.12], [0.44 + 0.69, 0.44 + 0.69, 2.22 + 0.69, 2.22 + 0.69], color=GREY, lw=2)
-    ax.text(xr + 0.38, 1.82, "scored\nagainst", ha="left", va="center", fontsize=12, color=GREY, linespacing=1.2)
-    ax.text(12.5, 5.58, "Diagram", ha="right", va="top", fontsize=12, color=GREY, style="italic")
+    yb, yg = 3.4 - 1.52 + h / 2, 3.4 - 3.04 + h / 2
+    ax.plot([xr + 0.08, xr + 0.25, xr + 0.25, xr + 0.08], [yb, yb, yg, yg], color=GREY, lw=2)
+    ax.text(xr + 0.32, (yb + yg) / 2, "scored\nagainst", ha="left", va="center", fontsize=13, color=GREY, linespacing=1.2)
+    ax.text(12.55, 4.68, "Diagram", ha="right", va="top", fontsize=12, color=GREY, style="italic")
     fig.tight_layout(); save(fig, "te_pipeline.png")
 
 
