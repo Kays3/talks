@@ -353,12 +353,10 @@ add("plain", 1.3, 5, f"""
 <h2>A test would start with pseudo-bulk built from data we already have</h2>
 <figure class="full slim">{img('pseudobulk.png', 'proposed pseudo-bulk benchmark design')}</figure>
 <ul class="tight two-col">
-  <li>Pseudo-bulk per donor and tissue: lung 43 × 2, colon 19 × 2 samples.</li>
-  <li>(a) T cells only versus (b) all cells where the source data include them, to separate composition from within-cell signal.</li>
-  <li>The same baselines at bulk level: random genes and matched controls.</li>
-  <li>A registered agreement criterion with single-cell ISP, set before the run.</li>
-  <li>Open design choice: with 86 or 38 samples, fine-tuning a classifier may not be feasible; a goal centroid alone may be needed.</li>
-  <li>Real bulk cohorts only after the benchmark, and preferably with matched single-cell data.</li>
+  <li>Pseudo-bulk per donor and tissue (lung 43 × 2, colon 19 × 2 samples): (a) T cells only, (b) all cells where the source data include them.</li>
+  <li>The same baselines at bulk level, random genes and matched controls, with the agreement criterion registered first.</li>
+  <li>Open choice: with 86 or 38 samples a fine-tuned classifier may not be feasible; a goal centroid alone may be needed.</li>
+  <li>Real bulk cohorts only after the benchmark, preferably with matched single-cell data.</li>
 </ul>
 """, """A first test would use data we already hold. We would aggregate the lung and colon single-cell data into pseudo-bulk samples per donor and tissue, in two versions: T cells only, and all cells. Comparing the two separates composition from signal within cells. The random-gene and matched-control baselines would apply unchanged. The agreement criterion with the single-cell results would be registered before the run. One design question is open: with 86 lung or 38 colon samples, fine-tuning a classifier may not be feasible, and the goal might have to be defined without one. Real bulk cohorts would come only after this benchmark, ideally with matched single-cell data from the same samples. No compute has been spent on this.""")
 
@@ -509,9 +507,9 @@ h2 .chk{margin-right:8px;transform:translateY(-3px)}
 .gloss{display:grid;grid-template-columns:330px 1fr;gap:8px 24px} .gloss dt{font-family:"Iowan Old Style",Georgia,serif;font-weight:600;font-size:22px} .gloss dd{margin:0;font-size:20.5px;line-height:1.35}
 .narrow{max-width:1040px}
 .split.wide{grid-template-columns:0.72fr 1.45fr;gap:26px} .split.wide p{font-size:21.5px;line-height:1.38;margin:0 0 12px} .split.wide .lead{font-size:22.5px}
-figure.full img{width:100%;display:block;margin:0 auto 14px} figure.full.slim img{width:58%;margin-bottom:6px}
+figure.full img{width:100%;display:block;margin:0 auto 14px} figure.full.slim img{width:80%;margin-bottom:10px}
 .tri{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:6px} .tri .card p{font-size:20.5px} .tri .card p.small{font-size:17.5px;color:#33445a}
-.two-col{columns:2;column-gap:36px} .two-col li{font-size:17.5px;line-height:1.3;margin-bottom:5px;break-inside:avoid}
+.two-col{columns:2;column-gap:36px} .two-col li{font-size:19px;line-height:1.32;margin-bottom:5px;break-inside:avoid}
 .tbl.compact td{padding:5px 10px;font-size:19.5px}
 .figs.four{grid-template-columns:repeat(4,1fr)} .figs.four .pf{font-size:17.5px;padding:9px 11px}
 .endh{color:var(--paper);font-size:46px} .endlist{padding-left:34px;margin:0;max-width:1100px} .endlist li{color:#e6ebf1;font-size:25px;line-height:1.4;margin-bottom:16px}
