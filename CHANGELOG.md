@@ -5,6 +5,17 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: lab progress report, version 3 (proposed 2026-10-01)
+
+Added `2026-10-lab-progress-geneformer-isp-v3`: "Evaluating in-silico perturbation with Geneformer",
+a 33-slide revision of version 2 by Kaisar Dauyey. The language is more formal. New diagrams show the
+pipeline, rank-value tokenisation, the perturbation and its score, and the evaluation criteria; new data
+figures show the external-cohort feasibility count (Pelka et al. 2021) and the per-donor colon classifier
+gate. Three slides discuss whether in-silico perturbation applies to bulk RNA-seq, stated as a proposal
+with no result, and the summary and paper-outline slides include that question. The colon perturbation
+run is shown as gate passed, results pending. The E0 per-donor count table is added to `source/data/`.
+Versions 1 and 2 are unchanged. The root README index lists it.
+
 ## Unreleased: lab progress report, version 2 (proposed 2026-10-01)
 
 Added `2026-10-lab-progress-geneformer-isp-v2`: "Reading the Current, version 2", a 26-slide
