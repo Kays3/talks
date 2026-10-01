@@ -5,6 +5,16 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: lab progress report, version 2 (proposed 2026-10-01)
+
+Added `2026-10-lab-progress-geneformer-isp-v2`: "Reading the Current, version 2", a 26-slide
+rewrite of the lab progress report for students and professors together. One point per slide, a
+figure on most slides, a progress bar, one colour per verdict and one icon per evaluation check;
+plain language with a short glossary. New summary slides list the evaluation criteria found so
+far (each with the evidence behind it), what still needs testing, and the outline of a possible
+paper, with established results and hypotheses marked apart. No new measurement; the colon run
+is shown as running, with no result. Version 1 is unchanged. The root README index lists it.
+
 ## Unreleased: citizen-science poster (proposed 2026-10-01)
 
 Added `2026-08-te-citizen-science-poster`, the plain-language companion to the ocean-acidification
