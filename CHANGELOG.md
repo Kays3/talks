@@ -21,6 +21,9 @@ Follow-up (2026-10-02): slides 26 to 28 report the first bulk RNA-seq test (a li
 model against 17 measured CRISPR knockouts in CD4+ T cells; registered reading non-specific) in place
 of the proposal, with a new data figure; the open-questions, paper-outline and summary slides are updated
 accordingly.
+Follow-up (2026-10-02): slides 27, 28 and 30 to 32 add the replication on 38 new knockouts (Weinstock
+et al. 2024), which did not reproduce the first reading; the two tests are shown side by side with the
+uncontrolled differences between them.
 
 ## Unreleased: lab progress report, version 2 (proposed 2026-10-01)
 
