@@ -335,47 +335,49 @@ both samples, but the bulk level differs because the tumour sample
 contains fewer T cells. Any perturbation model fitted on bulk data
 inherits this mixture of composition and regulation within cells.
 Geneformer itself is not usable here, because a bulk profile does not
-resemble the single-cell lists it was trained on. We therefore ran a
-first test with a simpler network model, shown on the next two slides.
-The values in the figure are invented.</p>
-<h2 id="slide-27.-first-bulk-test-mostly-a-shared-knockout-response-not-regulator-specific-targets-about-1.5-min">Slide
-27. First bulk test: mostly a shared knockout response, not
-regulator-specific targets (about 1.5 min)</h2>
+resemble the single-cell lists it was trained on. We therefore tested a
+simpler network model, twice, as shown on the next two slides. The
+values in the figure are invented.</p>
+<h2 id="slide-27.-bulk-tests-a-weak-non-specific-signal-in-one-knockout-set-that-did-not-replicate-in-a-second-about-1.5-min">Slide
+27. Bulk tests: a weak, non-specific signal in one knockout set that did
+not replicate in a second (about 1.5 min)</h2>
 <p>We tested the simplest version of bulk perturbation against real
-knockouts. The model is not Geneformer. It is a linear network in the
-style of CellOracle: each gene is predicted from the transcription
+knockouts, twice. The model is not Geneformer. It is a linear network in
+the style of CellOracle: each gene is predicted from the transcription
 factors that a promoter-based network allows to regulate it, restricted
-to promoters that are accessible in matched ATAC-seq. Each knockout was
-left out in turn, simulated by clamping the factor low, and compared
-with the measured shift. The ground truth is Freimer and colleagues’ 24
-knockouts in CD4 T cells from three donors; 17 have edges in the base
-network. The prediction agreed with the measured shift more often than
-chance, and four knockouts beat random factors of the same connectivity.
-It did not beat a network with shuffled edges, so the registered reading
-is RECOVERED_NONSPECIFIC: some signal, but not specific to the
-regulator. Each point in the figure is one knockout; the open diamonds
-are shuffled networks and are often as high as the model. Sources: the
-bulk study report and its result tables at Geneformer_TE merge commit
-6b637d8.</p>
-<h2 id="slide-28.-what-the-bulk-test-does-not-support-and-what-comes-next-about-1.3-min">Slide
-28. What the bulk test does not support, and what comes next (about 1.3
+to promoters accessible in matched ATAC-seq. Each knockout was left out
+in turn, simulated by clamping the factor low, and compared with the
+measured shift. In the first set, from Freimer and colleagues, 17
+knockouts have edges in the base network. Predictions agreed with
+measured shifts more often than chance, and four beat random factors,
+but not a shuffled network, so the registered reading was
+RECOVERED_NONSPECIFIC. The figure shows that set. We then repeated the
+identical pipeline on 38 new knockouts from Weinstock and colleagues,
+same laboratory and cell type. None of the four tests passed, the
+reading was NOT_RECOVERED, and by the rule registered beforehand the
+first result does not replicate. Sources: the two bulk study reports and
+their result tables on Geneformer_TE main (merge commits 6b637d8 and
+460da8a).</p>
+<h2 id="slide-28.-what-the-two-bulk-tests-show-and-what-they-leave-open-about-1.3-min">Slide
+28. What the two bulk tests show, and what they leave open (about 1.3
 min)</h2>
-<p>Three results limit what the bulk test means. A model-free baseline
-using only co-expression with the knocked-out gene did as well as the
-network. A network fitted on unperturbed controls alone, which is how a
-bulk cohort without perturbations would have to be used, showed no
-agreement above chance; whatever the model gets right, it learns from
-the other knockouts. And predicted shifts were about fifty times smaller
-than measured ones. Together these point mostly to a shared response
-that many of the knockouts produce, plausibly linked to activation or
-proliferation, rather than to regulator-specific targets. Bulk data
-cannot tell whether that shared response is a change in cell composition
-or in regulation within cells. The transposable-element arm could not be
-tested, because a search found no deposited TE count table for T cells
-or blood with perturbations, and re-alignment was ruled out. The
-replication on sixty knockouts from the same laboratory is in progress.
-Sources: the bulk study report, sections Results and Discussion, and its
-test table.</p>
+<p>The pair of tests narrows the reading. The network never beat a
+shuffled network in either set, so the motif-and-promoter structure
+added nothing measurable beyond how many genes each factor may touch. In
+the first set a model-free co-expression baseline did as well as the
+network, and in the second both fell to chance together, so the first
+result was a shared response visible to plain correlation, not a
+property of the network. Fitted on unperturbed controls alone, which is
+how a bulk cohort without perturbations would have to be used, the
+network showed no agreement above chance in either set. Predicted
+magnitudes were 55 to 85 times too small. Why the two sets differ is not
+tested. Freimer’s regulators were chosen as hits in screens and produced
+large, overlapping responses; Weinstock’s produced much smaller ones.
+The runs also differ in harvest timing, deduplication, counting pipeline
+and possibly donors, none of which was controlled. The supported claim
+is narrow: in this design, bulk network perturbation is not a reliable
+way to predict knockout effects in T cells. Sources: the combined
+reading of the two bulk tests and the Weinstock report.</p>
 <h2 id="slide-29.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
 29. Summary 1: the evaluation criteria, each traced to evidence (about
 1.2 min)</h2>
@@ -393,9 +395,9 @@ goal, re-analysing within T-cell subsets, and comparing the classifier
 with an interpretable baseline built from published T-cell programs.
 Model size and positive controls have not started; without positive
 controls, a negative result is hard to interpret. The bulk RNA-seq row
-has one result so far: the first test recovered mostly a shared response
-rather than regulator-specific targets, and a replication on sixty
-knockouts is in progress. Sources: the next-cycle proposal, the
+now has a result: across two registered tests on 55 knockouts, the bulk
+network did not recover regulator-specific effects, and its one weak
+positive did not replicate. Sources: the next-cycle proposal, the
 independent-data design and the E0 feasibility report.</p>
 <h2 id="slide-31.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
 31. These results could form one methods paper on evaluating in-silico
@@ -406,21 +408,22 @@ established, but narrowly: in lung T cells, with the larger model and
 our design, random genes gave opposed effects. The argument, that
 gene-level claims need these baselines and checks, is a recommendation
 drawn from it. Extension to other tissues, goals and model sizes is a
-hypothesis. The bulk line is now a first result with a narrow reading:
-mostly a shared response, not specific targets. Figures one, two, four,
-five and seven could be drawn from results we have; figures three and
-six need the studies on the previous slide. A negative colon result
-would change the paper’s emphasis rather than remove it, because the
-lung evidence and the documented failure modes stand on their own.</p>
+hypothesis. The bulk line is now a negative result with a narrow scope:
+in this design, bulk network perturbation did not predict knockout
+effects. Figures one, two, four, five and seven could be drawn from
+results we have; figures three and six need the studies on the previous
+slide. A negative colon result would change the paper’s emphasis rather
+than remove it, because the lung evidence and the documented failure
+modes stand on their own.</p>
 <h2 id="slide-32.-summary-about-0.6-min">Slide 32. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
 criteria came from our own errors and are now how we evaluate every run;
 the colon study has passed its gates and its results are pending. On
-bulk RNA-seq, a first test against measured knockouts found mostly a
-shared response rather than specific targets, and a larger replication
-is in progress. Thank you; I am glad to take questions.</p>
+bulk RNA-seq, two registered tests against measured knockouts did not
+support regulator-specific prediction, and the first test’s weak signal
+did not replicate. Thank you; I am glad to take questions.</p>
 <h2 id="slide-33.-glossary-about-0.3-min">Slide 33. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>

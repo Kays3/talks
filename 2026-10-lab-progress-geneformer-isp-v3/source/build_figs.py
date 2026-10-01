@@ -397,7 +397,7 @@ def fig_bulk_result():
     ax.set_xlabel("Spearman ρ, predicted vs measured shift\n(genes that respond to the knockout)")
     ax.set_xlim(-0.45, 0.8)
     ax.legend(loc="upper center", bbox_to_anchor=(0.42, -0.17), ncol=2, frameon=False, fontsize=12, scatterpoints=1)
-    ax.set_title(f"17 knockouts; median ρ {t['P1_rho_resp_median']:.3f};  * beats random TFs ({t['P4_n_beat_random']}/17)",
+    ax.set_title(f"Freimer set, 17 knockouts; median ρ {t['P1_rho_resp_median']:.3f};  * beats random TFs ({t['P4_n_beat_random']}/17)",
                  fontsize=13.5, loc="left")
     fig.tight_layout(); save(fig, "bulk_result.png")
     return t["reading"], t["P1_rho_resp_median"], t["P3_p"], t["P4_n_beat_random"], sorted(beat)
