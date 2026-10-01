@@ -1,0 +1,43 @@
+{
+ "n_scored": 17,
+ "n_weak": 0,
+ "n_not_representable": 7,
+ "P1_rho_resp_median": 0.08344724464061688,
+ "P1_p": 0.0116119384765625,
+ "P2_sign_resp_median": 0.5445705024311183,
+ "P2_p": 0.013336181640625,
+ "P3_delta_shuf_median": 0.03922129716294494,
+ "P3_p": 0.18891143798828125,
+ "P4_n_beat_random": 4,
+ "P4_p": 0.008800604947685557,
+ "pass": {
+  "P1": true,
+  "P2": true,
+  "P3": false,
+  "P4": true
+ },
+ "reading": "RECOVERED_NONSPECIFIC",
+ "baseline_rho_resp_median": 0.20981863327215805,
+ "model_minus_baseline_median": 0.0023877102804759076,
+ "model_vs_baseline_wilcoxon_two_sided_p": 0.8536376953125,
+ "C4_matched_rank_by_observed_ko": {
+  "CBFB": 10,
+  "ETS1": 3,
+  "FOXK1": 6,
+  "FOXP1": 14,
+  "GATA3": 6,
+  "HIVEP2": 1,
+  "IRF1": 2,
+  "IRF2": 5,
+  "IRF4": 3,
+  "KLF2": 1,
+  "MBD2": 9,
+  "MYB": 9,
+  "PTEN": 8,
+  "RELA": 8,
+  "STAT5A": 12,
+  "STAT5B": 4,
+  "YY1": 8
+ },
+ "C4_n_matched_rank1": 2
+}
