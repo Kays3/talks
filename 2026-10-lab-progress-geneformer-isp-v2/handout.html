@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Reading the Current, version 2: judging Geneformer&#39;s virtual gene edits</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10.5pt;line-height:1.5;max-width:46em;margin:2em auto;color:#1a1f29}
+h1.title{display:none} h1,h2,h3{line-height:1.2} code,pre{font-family:Menlo,monospace;font-size:9pt} pre{background:#f3f5f8;padding:.6em;overflow-x:auto;white-space:pre-wrap}
+table{border-collapse:collapse;font-size:9pt} th,td{border:1px solid #ccd;padding:3px 6px;vertical-align:top} blockquote{border-left:3px solid #b4651a;margin:0;padding-left:1em;color:#444}
+@page{size:A4 landscape;margin:12mm 12mm 16mm;@bottom-center{content:"Page " counter(page) " of " counter(pages);font-family:"Helvetica Neue",Arial,sans-serif;font-size:8pt;color:#667}}
+table{width:100%;table-layout:auto;font-size:8pt} th,td{overflow-wrap:break-word;word-break:normal;hyphens:auto} td code{font-size:7.5pt;overflow-wrap:anywhere}
+@media print{body{max-width:none;margin:0}}
+img{max-width:100%;height:auto}
+figure{max-width:100%}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Reading the Current, version 2: judging Geneformer&#39;s
+virtual gene edits</h1>
+</header>
+<style>body{font-size:9.8pt;line-height:1.36;max-width:none} h1{font-size:16.5pt;margin:0 0 4pt} p{margin:5pt 0} table{font-size:8.8pt}</style>
+<h1 id="reading-the-current-version-2-judging-geneformers-virtual-gene-edits">Reading
+the Current, version 2: judging Geneformer’s virtual gene edits</h1>
+<p><strong>Lab progress report, 1 October 2026 · Kaisar Dauyey · Shinji
+Nakaoka</strong></p>
+<p><strong>The idea.</strong> Geneformer reads each cell as a list of
+its genes, most unusual first, and places the cell on an internal map.
+We teach it to tell a patient’s tumour T cells from their normal T
+cells, then edit a tumour cell’s list in the computer (delete a gene, or
+move it to the top) and measure whether the cell moves toward that
+patient’s normal T cells. This is called in-silico perturbation (ISP).
+No real cell is touched, and the model always gives an answer.</p>
+<p><strong>Six checks we now apply, each learned from a real
+mistake</strong> (lab standard ISP-STD-1, 28 September 2026)</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Check</th>
+<th>Rule</th>
+<th>What taught us</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Write the test down first</td>
+<td>Test, direction, threshold, reachable p and the outcome words, fixed
+and reviewed before any result</td>
+<td>In August we read meaning into an ordering we had not planned to
+test</td>
+</tr>
+<tr>
+<td>2. Check the instrument</td>
+<td>The model must work on unseen patients; an edit that changes nothing
+must give zero</td>
+<td>The July normal and tumour groups came from different studies (0 of
+18 supplied both)</td>
+</tr>
+<tr>
+<td>3. Same cells for both edits</td>
+<td>Delete and overexpress analysed on identical cells (since 25
+September)</td>
+<td>Overexpress used 2,424 cells for every gene, delete 202 to
+1,131</td>
+</tr>
+<tr>
+<td>4. Beat look-alike genes</td>
+<td>Each gene against at least 20 genes detected about as often;
+ambient-RNA genes flagged</td>
+<td>S100A8 and S100A9 moved cells the same way under both edits in 9 of
+12 comparisons</td>
+</tr>
+<tr>
+<td>5. Beat random genes</td>
+<td>Opposite effects of the two edits are not, on their own,
+evidence</td>
+<td>Random genes do it too: rank correlation -0.593 (100 genes), -0.608
+(200)</td>
+</tr>
+<tr>
+<td>6. Count patients, use fixed words</td>
+<td>Patients are the unit; stable in 95% of 10,000 resamplings; never
+“no effect”</td>
+<td>One patient held 74.9% of the SCLC test cells</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we can say.</strong> In lung (43 patients) the model
+separates tumour from normal T cells in unseen patients (balanced
+accuracy 0.825, all 43 above chance); 13 of 34 testable T-cell genes
+move cells more than their look-alikes, stably; and the opposed effects
+of the two edits are generic. In colon (19 patients, new models) the
+split is learnable too (0.904, 19 of 19). <strong>What we cannot
+say:</strong> that any gene controls T-cell state; what the classifier
+reads (T-cell state, ambient RNA or T-cell subset mix); whether the lung
+models work on new lung patients.</p>
+<p><strong>Running now.</strong> The colon perturbation test (369 genes,
+19 patients) started at 02:42 JST on 1 October and should finish on the
+morning of 2 October. No result is reported here.</p>
+<p><strong>Still to test.</strong> Whether the opposed effects belong to
+the model or to lung (colon run); transfer to new lung patients
+(blocked: data not accessible); the same effects under an unrelated
+goal; cell state versus T-cell subset mix; a readable baseline from
+published T-cell programs (TCAT, Kotliar et al. 2025); model size (104M
+vs 316M parameters); positive controls and real gene-editing screens.
+Together these could become one methods paper, working title “Opposite
+by default”.</p>
+<p><em>Terms.</em> <strong>Token:</strong> one gene in a cell’s list.
+<strong>Embedding:</strong> a cell’s position on the model’s map.
+<strong>Balanced accuracy:</strong> how often the model is right,
+counting both groups equally; 0.5 is a coin toss. <strong>Ambient
+RNA:</strong> genetic material from other cells picked up during sample
+preparation. <strong>Rank correlation:</strong> from -1 (opposed)
+through 0 to 1. Every number is sourced in <code>SOURCES.md</code>.</p>
+</body>
+</html>
