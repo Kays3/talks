@@ -12,6 +12,7 @@ The links open each file in the browser, so you do not need git to read them.
 | 2026-08 | [A foundation model points to antigen presentation in SCLC T-cell dysfunction (short talk)](2026-08-jsdp-sclc-tcell-talk/) | [PDF](2026-08-jsdp-sclc-tcell-talk/slides.pdf) · [PowerPoint](2026-08-jsdp-sclc-tcell-talk/slides.pptx) | | |
 | 2026-08 | [Foundation-model perturbation analysis identifies T-cell dysfunction programs in SCLC (poster)](2026-08-jsdp-sclc-tcell-poster/) | [PDF](2026-08-jsdp-sclc-tcell-poster/poster.pdf) · [HTML](2026-08-jsdp-sclc-tcell-poster/poster.html) | | |
 | 2026-08 | [Tissue- and phenotype-dependent transposable-element responses to ocean acidification (poster)](2026-08-te-ocean-acidification-poster/) | [PDF](2026-08-te-ocean-acidification-poster/poster.pdf) · [PowerPoint](2026-08-te-ocean-acidification-poster/poster.pptx) | | |
+| 2026-08 | [How do reef fish respond to a changing ocean? (citizen-science poster)](2026-08-te-citizen-science-poster/) | [PDF](2026-08-te-citizen-science-poster/poster.pdf) · [PowerPoint](2026-08-te-citizen-science-poster/poster.pptx) | | |
 
 Each talk has its own folder, with the files for readers at the top and a `README.md` that gives
 its provenance and any changes made before publication. Talks built from code also have a `source/`
