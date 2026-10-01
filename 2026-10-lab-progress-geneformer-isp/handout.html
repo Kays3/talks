@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Reading the Current: a one-page guide to judging an in-silico perturbation</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10.5pt;line-height:1.5;max-width:46em;margin:2em auto;color:#1a1f29}
+h1.title{display:none} h1,h2,h3{line-height:1.2} code,pre{font-family:Menlo,monospace;font-size:9pt} pre{background:#f3f5f8;padding:.6em;overflow-x:auto;white-space:pre-wrap}
+table{border-collapse:collapse;font-size:9pt} th,td{border:1px solid #ccd;padding:3px 6px;vertical-align:top} blockquote{border-left:3px solid #b4651a;margin:0;padding-left:1em;color:#444}
+@page{size:A4 landscape;margin:12mm 12mm 16mm;@bottom-center{content:"Page " counter(page) " of " counter(pages);font-family:"Helvetica Neue",Arial,sans-serif;font-size:8pt;color:#667}}
+table{width:100%;table-layout:auto;font-size:8pt} th,td{overflow-wrap:break-word;word-break:normal;hyphens:auto} td code{font-size:7.5pt;overflow-wrap:anywhere}
+@media print{body{max-width:none;margin:0}}
+img{max-width:100%;height:auto}
+figure{max-width:100%}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Reading the Current: a one-page guide to judging an
+in-silico perturbation</h1>
+</header>
+<style>body{font-size:9.6pt;line-height:1.36;max-width:none} h1{font-size:17pt;margin:0 0 4pt} p{margin:5pt 0} table{font-size:8.6pt}</style>
+<h1 id="reading-the-current-a-one-page-guide-to-judging-an-in-silico-perturbation">Reading
+the Current: a one-page guide to judging an in-silico perturbation</h1>
+<p><strong>Lab progress report, 1 October 2026 · Kaisar Dauyey · Shinji
+Nakaoka</strong></p>
+<p><strong>The idea in one line.</strong> Geneformer draws a chart of
+cell states. An in-silico perturbation (ISP) nudges one cell by deleting
+or overexpressing a gene token, and we measure whether it moves toward a
+goal (the centre of the same donor’s normal-tissue T cells). The model
+always answers, so we judge every answer against six rules from our
+standard, ISP-STD-1.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Rule</th>
+<th>In one sentence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. File the plan first</td>
+<td>Register the test, direction, alpha, smallest attainable p, controls
+and wording before any output; an independent reviewer signs off on file
+hashes.</td>
+</tr>
+<tr>
+<td>2. Check the compass</td>
+<td>Classifier gate: held-out balanced accuracy &gt;= 0.60 and an exact
+two-sided sign test over donors with p &lt;= 0.05, or the study
+stops.</td>
+</tr>
+<tr>
+<td>3. Anchor test</td>
+<td>No-op gate: two independent passes with no edit must give a shift of
+exactly 0, or within measured noise.</td>
+</tr>
+<tr>
+<td>4. Same-build boats</td>
+<td>&gt;= 20 matched control genes per gene (0.5 log2 detection, 5
+rank-percentile points); donors are the unit; results must be
+stable.</td>
+</tr>
+<tr>
+<td>5. Measure the current</td>
+<td>Run the pipeline on random genes: the default behaviour any claimed
+effect must exceed.</td>
+</tr>
+<tr>
+<td>6. Fixed log words</td>
+<td>positive, negative, opposite_direction, not_estimable,
+control_draw_sensitive_open, no_op_failed, not_run_by_design,
+stopped_not_analysed. Never “no effect”.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How we got here.</strong> In July a Geneformer screen and an
+SCLC abstract started the work; by September our own checks had shown an
+exhaustion shift no bigger than random genes give (p 0.4286), top hits
+behaving like ambient RNA, a study-confounded “normal” class and two
+faults in our perturbation code. Each rule below answers one of those
+moments.</p>
+<p><strong>What we found.</strong> Lung (43 donors): classifier balanced
+accuracy 0.825, all 43 donors above chance. Random genes showed a
+deletion/overexpression anti-correlation, Spearman rho = -0.593 (N =
+100) and -0.608 (N = 200), one-sided p at the permutation floor (&lt;=
+1e-5). Opposite signs under deletion and overexpression are therefore
+not evidence of specificity. Colorectal (Pelka et al. 2021, 19 donors,
+new models fine-tuned per fold): balanced accuracy 0.904, 19 of 19
+donors above chance. The colorectal perturbation screen is running: at
+12:45 JST on 1 October, 119 of 369 genes were done, including all 100
+random genes, with about 32 GPU-hours projected against a 52-hour
+ceiling. Results are expected on the morning of 2 October and are not
+reported here.</p>
+<p><strong>What ISP cannot show.</strong> Cause; whether the classifier
+reads T-cell state, ambient RNA or CD4:CD8 mix; accuracy against an
+experimental screen (none matched yet).</p>
+<p><strong>Ways to join.</strong> Re-derive a gate from its JSON file
+(an afternoon) · compute a test’s smallest attainable p (an afternoon) ·
+propose positive-control genes (a week) · find a T-cell CRISPR or
+Perturb-seq screen for ground truth (a week) · test whether rank
+encoding alone makes the anti-correlation (2-4 weeks) · open the
+independent lung cohort’s Code Ocean capsule (an hour).</p>
+<p><em>Glossary.</em> <strong>Token:</strong> one gene in a cell’s
+ranked list. <strong>Embedding:</strong> the model’s coordinates for a
+cell. <strong>Cosine shift:</strong> change in similarity to the goal;
+positive means closer to normal. <strong>Fine-tuning:</strong> further
+training on one labelled task. <strong>Balanced accuracy:</strong> mean
+of true-positive and true-negative rates; 0.5 is chance. <strong>Null
+control:</strong> the same pipeline on random genes. <strong>Permutation
+floor:</strong> the smallest p a permutation test can report,
+1/(permutations + 1). Every number is sourced in
+<code>SOURCES.md</code>.</p>
+</body>
+</html>

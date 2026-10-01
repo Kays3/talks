@@ -6,6 +6,7 @@ The links open each file in the browser, so you do not need git to read them.
 
 | Date | Talk | Slides or poster | Report | Abstract |
 |---|---|---|---|---|
+| 2026-10 | [Reading the Current: Geneformer, in-silico perturbation, and how we judge it (lab progress report)](2026-10-lab-progress-geneformer-isp/) | [PDF](2026-10-lab-progress-geneformer-isp/slides.pdf) · [HTML](2026-10-lab-progress-geneformer-isp/slides.html) | [Speaker notes](2026-10-lab-progress-geneformer-isp/speaker-notes.pdf) · [Handout](2026-10-lab-progress-geneformer-isp/handout.pdf) | |
 | 2026-09 | [A Foundation-Model T-cell Dysfunction Screen: Translational Candidates, Then a Full Audit](2026-09-lung-tcell-imrad/) | [PDF](2026-09-lung-tcell-imrad/slides.pdf) · [PowerPoint](2026-09-lung-tcell-imrad/slides.pptx) | [PDF](2026-09-lung-tcell-imrad/report.pdf) · [Word](2026-09-lung-tcell-imrad/report.docx) | [text](2026-09-lung-tcell-imrad/abstract.md) |
 | 2026-09 | [Paired tumour-vs-normal T cells from 43 patients: which genes does a foundation model read as T-cell state?](2026-09-balanced-donor-luad/) | [PDF](2026-09-balanced-donor-luad/slides.pdf) · [PowerPoint](2026-09-balanced-donor-luad/slides.pptx) | | |
 | 2026-08 | [A foundation model points to antigen presentation in SCLC T-cell dysfunction (short talk)](2026-08-jsdp-sclc-tcell-talk/) | [PDF](2026-08-jsdp-sclc-tcell-talk/slides.pdf) · [PowerPoint](2026-08-jsdp-sclc-tcell-talk/slides.pptx) | | |
