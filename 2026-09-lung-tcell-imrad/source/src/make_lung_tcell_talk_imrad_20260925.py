@@ -290,7 +290,7 @@ frame(c, M, H - 100 * mm, W - 2 * M, 70 * mm, [
 ])
 frame(c, M, 24 * mm, W - 2 * M, 26 * mm, [
     Paragraph("<b>Kaisar Dauyey</b> &nbsp;&#183;&nbsp; <b>Shinji Nakaoka</b>", st(13, CREAM, False, 17)),
-    Paragraph("Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University",
+    Paragraph("Laboratory of Mathematical Biology, Hokkaido University, Japan",
               st(10.5, WARMT, False, 15)),
     Paragraph("Contact: k.dauyey.bio.nu@gmail.com", st(10.5, WARMT, False, 15)),
     Paragraph("Slides, report and build package: github.com/Kays3/talks",

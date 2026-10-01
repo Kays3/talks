@@ -69,7 +69,7 @@ add("title", 0.5, None, """
 <div class="kicker">Lab progress report · 1 October 2026 · version 3</div>
 <h1 class="big">Evaluating in-silico perturbation with Geneformer</h1>
 <p class="sub">Tumour-infiltrating T cells, the criteria a result must meet,<br>and the questions that remain open</p>
-<div class="byline">Kaisar Dauyey<br><span>Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University</span></div>
+<div class="byline">Kaisar Dauyey<br><span>Laboratory of Mathematical Biology, Hokkaido University, Japan</span></div>
 """, """This report covers our work since July on Geneformer and in-silico perturbation in tumour-infiltrating T cells. It is the third version of the talk. Compared with the second, it adds diagrams of the method, figures from the external-cohort feasibility check and the colon classifier gate, and a short section on whether the approach can be applied to bulk RNA-seq. I introduce each term before I use it, so no prior knowledge of the model is assumed.""")
 
 add("plain", 0.8, 0, """
