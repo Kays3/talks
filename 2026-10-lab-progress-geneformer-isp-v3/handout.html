@@ -122,19 +122,25 @@ accessible).</p>
 <p><strong>Pending.</strong> The colon perturbation run (369 genes, 19
 donors) started at 02:42 JST on 1 October; results are expected on 2
 October and will be reported only after independent review.</p>
-<p><strong>Bulk RNA-seq (open question, no result).</strong> A bulk
-profile averages many cell types, so ISP on it mixes cell-type
-composition with within-cell regulation, and its input lies outside the
-single-cell pretraining distribution. Options: (A) a pseudo-bulk
-benchmark built from our own single-cell data and compared with
-single-cell ISP, with T-cell-only and all-cell versions to separate
-composition; (B) deconvolution before perturbation; (C) treating a
-sample as one “cell”, with a sample-level reading at most. A is the
-proposed first test.</p>
+<p><strong>Bulk RNA-seq (first test).</strong> Geneformer cannot take a
+bulk profile, so we tested a CellOracle-style linear network
+(transcription-factor-to-target edges from a promoter base network,
+filtered by matched ATAC-seq) against 17 measured CRISPR knockouts in
+CD4+ T cells (Freimer et al. 2022, 3 donors). Predictions agreed with
+measured shifts more often than chance (median rho 0.083, p = 0.012),
+and 4 of 17 beat random transcription factors, but not a shuffled
+network (p = 0.19): registered reading
+<code>RECOVERED_NONSPECIFIC</code>. Co-expression alone did as well; a
+network fitted on unperturbed controls showed no agreement above chance
+(median rho -0.013, p = 0.76); predicted shifts were about 50 times too
+small; bulk data cannot separate composition from regulation. The
+transposable-element arm was <code>NOT_TESTABLE</code>: a search found
+no deposited TE count table, and re-alignment was ruled out. Replication
+on 60 knockouts (Weinstock et al. 2024) is in progress.</p>
 <p><strong>Still to test.</strong> Goal swap; subset re-analysis; an
 interpretable baseline from T-cell programs (TCAT, Kotliar et al. 2025);
 model size (104M vs 316M); positive controls and experimental screens;
-bulk transfer. Possible methods paper, working title “Opposite by
+bulk replication. Possible methods paper, working title “Opposite by
 default”. Every number is sourced in <code>SOURCES.md</code>.</p>
 </body>
 </html>

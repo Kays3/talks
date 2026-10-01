@@ -325,49 +325,57 @@ only one of several differences between the studies, so we could not
 attribute the change to it. The lung reference genes count as repeating
 only at nine of ten. Sources: the colon study registration, sections
 6.2, 6.3 and 7.</p>
-<h2 id="slide-26.-bulk-rna-seq-a-bulk-profile-is-an-average-over-a-mixed-population-not-a-cell-about-1.3-min">Slide
+<h2 id="slide-26.-bulk-rna-seq-a-bulk-profile-is-an-average-over-a-mixed-population-not-a-cell-about-1.1-min">Slide
 26. Bulk RNA-seq: a bulk profile is an average over a mixed population,
-not a cell (about 1.3 min)</h2>
-<p>We have been asked whether this approach applies to bulk RNA-seq. We
-have no bulk result, so these three slides are a proposal. The basic
-difficulty is that Geneformer was trained on single cells, and a bulk
-profile is an average over many cell types. In the schematic, gene G has
-the same level inside T cells in both samples, but the bulk level
-differs because the tumour sample contains fewer T cells. A perturbation
-on a bulk profile would mix composition with regulation within a cell. A
-second issue is technical: a bulk profile detects far more genes than a
-single cell, so the list is cut at the model’s input limit, and the
-input itself does not resemble anything the model saw in pretraining.
+not a cell (about 1.1 min)</h2>
+<p>We were asked whether this approach applies to bulk RNA-seq. The
+basic difficulty is that a bulk profile is an average over many cell
+types. In the schematic, gene G has the same level inside T cells in
+both samples, but the bulk level differs because the tumour sample
+contains fewer T cells. Any perturbation model fitted on bulk data
+inherits this mixture of composition and regulation within cells.
+Geneformer itself is not usable here, because a bulk profile does not
+resemble the single-cell lists it was trained on. We therefore ran a
+first test with a simpler network model, shown on the next two slides.
 The values in the figure are invented.</p>
-<h2 id="slide-27.-three-ways-to-apply-isp-to-bulk-data-each-with-different-assumptions-about-1.3-min">Slide
-27. Three ways to apply ISP to bulk data, each with different
-assumptions (about 1.3 min)</h2>
-<p>There are three broad options. The first uses our own single-cell
-data: aggregate cells into pseudo-bulk samples, run ISP on those, and
-compare with the single-cell results we already have. This gives a
-reference, though pseudo-bulk lacks some of the noise of real bulk data.
-The second deconvolves bulk profiles first, using a single-cell
-reference to estimate cell-type fractions or cell-type-specific
-profiles, and then perturbs an estimated T-cell profile; any error in
-the deconvolution passes into the result. The third treats each bulk
-sample as one cell. It is the simplest, but the input is outside the
-model’s training distribution and composition remains confounded, so at
-most it supports a statement about samples, not cells. None of these has
-been run.</p>
-<h2 id="slide-28.-a-test-would-start-with-pseudo-bulk-built-from-data-we-already-have-about-1.3-min">Slide
-28. A test would start with pseudo-bulk built from data we already have
-(about 1.3 min)</h2>
-<p>A first test would use data we already hold. We would aggregate the
-lung and colon single-cell data into pseudo-bulk samples per donor and
-tissue, in two versions: T cells only, and all cells. Comparing the two
-separates composition from signal within cells. The random-gene and
-matched-control baselines would apply unchanged. The agreement criterion
-with the single-cell results would be registered before the run. One
-design question is open: with 86 lung or 38 colon samples, fine-tuning a
-classifier may not be feasible, and the goal might have to be defined
-without one. Real bulk cohorts would come only after this benchmark,
-ideally with matched single-cell data from the same samples. No compute
-has been spent on this.</p>
+<h2 id="slide-27.-first-bulk-test-mostly-a-shared-knockout-response-not-regulator-specific-targets-about-1.5-min">Slide
+27. First bulk test: mostly a shared knockout response, not
+regulator-specific targets (about 1.5 min)</h2>
+<p>We tested the simplest version of bulk perturbation against real
+knockouts. The model is not Geneformer. It is a linear network in the
+style of CellOracle: each gene is predicted from the transcription
+factors that a promoter-based network allows to regulate it, restricted
+to promoters that are accessible in matched ATAC-seq. Each knockout was
+left out in turn, simulated by clamping the factor low, and compared
+with the measured shift. The ground truth is Freimer and colleagues’ 24
+knockouts in CD4 T cells from three donors; 17 have edges in the base
+network. The prediction agreed with the measured shift more often than
+chance, and four knockouts beat random factors of the same connectivity.
+It did not beat a network with shuffled edges, so the registered reading
+is RECOVERED_NONSPECIFIC: some signal, but not specific to the
+regulator. Each point in the figure is one knockout; the open diamonds
+are shuffled networks and are often as high as the model. Sources: the
+bulk study report and its result tables at Geneformer_TE merge commit
+6b637d8.</p>
+<h2 id="slide-28.-what-the-bulk-test-does-not-support-and-what-comes-next-about-1.3-min">Slide
+28. What the bulk test does not support, and what comes next (about 1.3
+min)</h2>
+<p>Three results limit what the bulk test means. A model-free baseline
+using only co-expression with the knocked-out gene did as well as the
+network. A network fitted on unperturbed controls alone, which is how a
+bulk cohort without perturbations would have to be used, showed no
+agreement above chance; whatever the model gets right, it learns from
+the other knockouts. And predicted shifts were about fifty times smaller
+than measured ones. Together these point mostly to a shared response
+that many of the knockouts produce, plausibly linked to activation or
+proliferation, rather than to regulator-specific targets. Bulk data
+cannot tell whether that shared response is a change in cell composition
+or in regulation within cells. The transposable-element arm could not be
+tested, because a search found no deposited TE count table for T cells
+or blood with perturbations, and re-alignment was ruled out. The
+replication on sixty knockouts from the same laboratory is in progress.
+Sources: the bulk study report, sections Results and Discussion, and its
+test table.</p>
 <h2 id="slide-29.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
 29. Summary 1: the evaluation criteria, each traced to evidence (about
 1.2 min)</h2>
@@ -384,10 +392,11 @@ Three studies are planned with little or no new GPU work: swapping the
 goal, re-analysing within T-cell subsets, and comparing the classifier
 with an interpretable baseline built from published T-cell programs.
 Model size and positive controls have not started; without positive
-controls, a negative result is hard to interpret. The bulk RNA-seq
-question is the newest row and is a proposal only. Sources: the
-next-cycle proposal, the independent-data design and the E0 feasibility
-report.</p>
+controls, a negative result is hard to interpret. The bulk RNA-seq row
+has one result so far: the first test recovered mostly a shared response
+rather than regulator-specific targets, and a replication on sixty
+knockouts is in progress. Sources: the next-cycle proposal, the
+independent-data design and the E0 feasibility report.</p>
 <h2 id="slide-31.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
 31. These results could form one methods paper on evaluating in-silico
 perturbation (about 1.3 min)</h2>
@@ -396,21 +405,22 @@ methods paper. The slide separates three things. The result is
 established, but narrowly: in lung T cells, with the larger model and
 our design, random genes gave opposed effects. The argument, that
 gene-level claims need these baselines and checks, is a recommendation
-drawn from it. Extension to other tissues, goals, model sizes and to
-bulk profiles is a hypothesis. Figures one, two, four and five could be
-drawn from results we have; figures three, six and seven need the
-studies on the previous slide. A negative colon result would change the
-paper’s emphasis rather than remove it, because the lung evidence and
-the documented failure modes stand on their own.</p>
+drawn from it. Extension to other tissues, goals and model sizes is a
+hypothesis. The bulk line is now a first result with a narrow reading:
+mostly a shared response, not specific targets. Figures one, two, four,
+five and seven could be drawn from results we have; figures three and
+six need the studies on the previous slide. A negative colon result
+would change the paper’s emphasis rather than remove it, because the
+lung evidence and the documented failure modes stand on their own.</p>
 <h2 id="slide-32.-summary-about-0.6-min">Slide 32. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
 criteria came from our own errors and are now how we evaluate every run;
-the colon study has passed its gates and its results are pending.
-Whether the approach applies to bulk RNA-seq remains open, and the first
-test we propose uses data we already have. Thank you; I am glad to take
-questions.</p>
+the colon study has passed its gates and its results are pending. On
+bulk RNA-seq, a first test against measured knockouts found mostly a
+shared response rather than specific targets, and a larger replication
+is in progress. Thank you; I am glad to take questions.</p>
 <h2 id="slide-33.-glossary-about-0.3-min">Slide 33. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>

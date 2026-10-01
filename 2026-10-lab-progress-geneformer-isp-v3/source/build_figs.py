@@ -375,23 +375,39 @@ def fig_bulk_mix():
     save(fig, "bulk_mix.png")
 
 
-def fig_pseudobulk():
-    """Proposed benchmark: build pseudo-bulk from our own single-cell data, where the answer is known."""
-    fig, ax = canvas(10.0, 3.7, 10.0, 3.7)
-    box(ax, 0.1, 1.05, 2.3, 1.55, "single-cell data\nlung 43, colon 19\ndonors", fs=17)
-    box(ax, 3.3, 2.1, 3.3, 1.2, "single-cell ISP\n(reference)", ec=PASS, fs=17)
-    box(ax, 3.3, 0.2, 3.3, 1.35, "pseudo-bulk ISP\n(a) T cells, (b) all cells", ec=OPEN, ls="--", fs=17)
-    box(ax, 7.5, 1.05, 2.4, 1.55, "agreement of\ngene rankings", ec=OPEN, ls="--", fs=17, weight="bold")
-    arrow(ax, (2.45, 2.15), (3.25, 2.6)); arrow(ax, (2.45, 1.5), (3.25, 0.95))
-    arrow(ax, (6.65, 2.7), (7.45, 2.2)); arrow(ax, (6.65, 0.85), (7.45, 1.4))
-    ax.text(9.95, 3.68, "Proposed study (not run)", ha="right", va="top", fontsize=13, color=GREY, style="italic")
-    fig.tight_layout(); save(fig, "pseudobulk.png")
+def fig_bulk_result():
+    """Bulk network ISP against 17 measured CRISPR knockouts (Freimer et al. 2022): per-knockout Spearman rho."""
+    with open(os.path.join(DATA, "bulk_isp_per_ko.tsv")) as f:
+        rows = [r for r in csv.DictReader(f, delimiter="\t") if r["status"] == "SCORED"]
+    t = load("bulk_isp_tests.json")
+    assert len(rows) == t["n_scored"] == 17
+    assert abs(float(np.median([float(r["rho_resp"]) for r in rows])) - t["P1_rho_resp_median"]) < 1e-9
+    rows.sort(key=lambda r: float(r["rho_resp"]))
+    y = np.arange(len(rows))
+    fig, ax = plt.subplots(figsize=(8.4, 8.0))
+    ax.axvline(0, color=GREY, lw=1)
+    for k, (col, kw, lab) in enumerate([
+            ("rho_random_median", dict(marker="|", s=260, color=GREY, lw=2.5), "random TFs, same connectivity (median)"),
+            ("rho_shuf_median", dict(marker="D", s=46, facecolor="none", edgecolor=OPEN, lw=1.8), "shuffled network (median of 50)"),
+            ("rho_baseline", dict(marker="s", s=46, color="#6d8f5e"), "co-expression only, no model"),
+            ("rho_resp", dict(marker="o", s=80, color=INK, zorder=5), "network model")]):
+        ax.scatter([float(r[col]) for r in rows], y, label=lab, **kw)
+    beat = {r["ko"] for r in rows if float(r["p_random_tf"]) <= 0.05}
+    ax.set_yticks(y); ax.set_yticklabels([r["ko"] + (" *" if r["ko"] in beat else "") for r in rows], fontsize=13.5)
+    ax.set_xlabel("Spearman ρ, predicted vs measured shift\n(genes that respond to the knockout)")
+    ax.set_xlim(-0.45, 0.8)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.42, -0.17), ncol=2, frameon=False, fontsize=12, scatterpoints=1)
+    ax.set_title(f"17 knockouts; median ρ {t['P1_rho_resp_median']:.3f};  * beats random TFs ({t['P4_n_beat_random']}/17)",
+                 fontsize=13.5, loc="left")
+    fig.tight_layout(); save(fig, "bulk_result.png")
+    return t["reading"], t["P1_rho_resp_median"], t["P3_p"], t["P4_n_beat_random"], sorted(beat)
 
 
 if __name__ == "__main__":
     fig_pipeline(); fig_tokenise(); fig_isp_mech(); fig_criteria(); fig_finetune(); fig_isp(); fig_baseline()
-    fig_one_patient(); fig_unpaired(); fig_bulk_mix(); fig_pseudobulk()
+    fig_one_patient(); fig_unpaired(); fig_bulk_mix()
     print("null", fig_null_scatter())
     print("gate", fig_gate_strip())
     print("e0", fig_e0_cohort())
     print("e2", fig_e2_gate())
+    print("bulk", fig_bulk_result())
