@@ -5,6 +5,18 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
+
+Added `2026-10-lab-progress-geneformer-isp-v4`: version 3 plus six slides (29 to 34) on transposable
+elements, from the Geneformer_TE project, by Kaisar Dauyey. A diagram shows the project's three tracks
+(single-cell Geneformer, bulk linear network, measured knockouts as ground truth) and their state. Two data
+figures come from merged tables: 30 fish TE regulators against 90 expression-matched random genes in 162
+bulk libraries (no regulator passed), and the TE share of reads by tissue and CO2 group (gill lower after
+developmental exposure; exploratory). The zebrafish knockout panel and the TE re-alignment of the Freimer
+knockouts are shown as running, with what they will test and no results. Summary 2, the closing summary,
+the outline and the glossary are updated, and the bulk slide notes that the TE re-alignment was approved.
+Version 3 is unchanged. The root README index lists it.
+
 ## Unreleased: lab progress report, version 3 (proposed 2026-10-01)
 
 Added `2026-10-lab-progress-geneformer-isp-v3`: "Evaluating in-silico perturbation with Geneformer",

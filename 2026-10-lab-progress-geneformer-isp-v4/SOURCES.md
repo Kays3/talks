@@ -1,0 +1,125 @@
+# Sources for every number in "Evaluating in-silico perturbation with Geneformer" (version 4)
+
+Version 4 is version 3 (talks `main` at `a52428c`) plus a part on transposable elements, slides 29 to 34, whose sources are listed in their own section below; slides 1 to 28 keep their version 3 sources, and slides 35 to 39 are version 3 slides 29 to 33. Version 3 reuses the numbers of versions 1 and 2 (`../2026-10-lab-progress-geneformer-isp/` and `../2026-10-lab-progress-geneformer-isp-v2/`) and adds figures drawn from existing results: the external-cohort feasibility count (E0), the colon classifier gate (E2) and the bulk perturbation test against measured knockouts (slides 27-28). It adds no new measurement of its own. Files under `source/data/` are ten inputs: the five result files of version 2 (three byte-identical to the result files named below; in the two null-study files the free-text `about` notes were shortened for publication and every value is unchanged) the E0 per-donor count table (byte-identical, sha256 `3e47f81b0cd2f44d73d47e88650fd4ade809775bcd4f073a3b5dfb5b4086f2e9`) and four bulk-test tables (see slides 26 to 28). Version 4 adds five fish tables (see slides 29 to 34), so `source/data/` holds fifteen files. `source/SHA256SUMS` lists the copies' hashes.
+
+Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit or branch is named; T = this talks repository; R = the lab's internal reports folder; STD = the lab's internal standard `isp-outcome-criteria.md` (ISP-STD-1 v1.1, adopted 2026-09-28); GF = the Geneformer package source, `geneformer/tokenizer.py`. Every row was re-read at source on 2026-10-01.
+
+## Slides 1 to 10: question and method
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 4 | The eight steps: cohort rule (at least 100 T cells per tissue), tokenisation, donor-held-out fine-tuning, classifier gate (held-out balanced accuracy >= 0.60) and no-op gate (shift exactly 0), deletion and overexpression, cosine shift toward the donor's own normal centroid, comparison with matched controls and random genes, donor-level call with fixed outcome names | G branch `analysis/e2-pelka-crc-20261001`, `pelka_crc_e2/registration/E2_REGISTRATION.md` (8b11d5d), sections 5.4, 6.1 and 6.2; STD sections A and B |
+| 5 | Counts divided by the cell's total (scaled to 10,000) and by each gene's median across the pretraining corpus, then sorted; zero-count genes absent; V2 models read at most 4,096 tokens | GF `tokenize_anndata` (`X_view / n_counts * target_sum`, then `/ norm_factor_vector`), `rank_genes` (sort on non-zero values), `model_input_size` (4,096 for V2); Theodoris et al., Nature 618, 616-624 (2023). Genes and bars in the figure are invented and labelled so |
+| 6, 30 | Masked-gene pretraining; about 104 million cells; model sizes 104M and 316M parameters (slide 30) | Theodoris et al. 2023; Geneformer model card on Hugging Face (ctheodoris/Geneformer) |
+| 7, 24 | Lung classifier: pooled held-out balanced accuracy 0.8249 (shown 0.825); 43 of 43 donors above 0.5 | G `balanced_donor_luad/phase4_results/classifier_gate.json`; copy `source/data/luad_classifier_gate.json` |
+| 8 | Score per cell = change in cosine similarity of the CLS embedding to the goal (exact-mean CLS embedding of the donor's own normal pool cells); donor mean over token-positive cells; gene value = median over donors with >= 10 token-positive cells, at least 10 donors | `E2_REGISTRATION.md` (8b11d5d) section 5.4 step 3 and section 6.2 |
+| 7, 9 | Two cell clouds, the boundary and the edit arrows | Schematics labelled "Schematic, not data" (`source/build_figs.py`) |
+| 10 | July screen: 21,000 T cells, 104M model, 2,937,776 held-out cell-gene deletions | G `README.md` lines 34-36 and 50-53 |
+| 10 | 28 July audit: the LUAD/LUSC work could not by itself support the abstract's SCLC claims (paraphrased) | G `sclc_validation/audit/SCLC_DATA_FEASIBILITY_AUDIT.md` lines 3-10 |
+| 10 | 50 genes; four passed in both directions in 3 of 3 SCLC test donors (TIM-3/HAVCR2, TIGIT, CTLA-4, IL7R) | T `2026-08-jsdp-sclc-tcell-talk/slides.pdf` |
+
+## Slides 11 to 14: lessons
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 11, 29 | S100A8 and S100A9 among the most significant genes (S100A8 12th and S100A9 16th of 784 gated rows in luad_to_sclc); same direction under both edits in 9 of 12 rows; 55 of the top 120 rows ambient-flagged | R `s100a8-s100a9-crossref-20260922.md` lines 92 and 105-150 |
+| 11, 29 | 0 of 18 studies supplied both normal and tumour T cells (July classifier) | G `current_workflow/METHODS.md` lines 231-256 |
+| 11 | 13 of the 15 July genes not testable in T cells | R `balanced-donor-null-imrad-report-20260930.md`, section 3.2 |
+| 12, 29 | One SCLC donor held 74.9% of the SCLC test cells; donor-level p 0.216 (19 vs 22 donors) | G `sclc_validation/immune_axis_test/RESULTS_T6.md` lines 58-70 and 79-81 |
+| 13, 18, 29 | Overexpress arm 2,424 SCLC test cells for every gene; delete arm 202 to 1,131; "a qualifier, not a retraction"; runner fixed 22 Sep (66d235b); panel not rerun | R `lung_tcell_talk_imrad_sources_20260925.md` lines 128-157 |
+| 13, 29 | Gene-list overexpression inserts into every cell: 14,738 of 15,179 calls | G `balanced_donor_luad/registration/PHASE5_ISP_REGISTRATION.md`, Amendment 3h (b2473ef) |
+| 14, 20, 29, 31, 32 | Random genes: Spearman rho -0.5927 (N = 100) and -0.6078 (N = 200), shown -0.593 and -0.608 (-0.59 and -0.61 on slides 31 and 32); one-sided p 9.9999e-06 = 1/100,001, the floor of 100,000 permutations | `phase8_null/a5_primary_result_v2.json` (upstream sha256 a00ccb2f62a7a888386208eb63a2f349d1c2ee8717208f742a563bc508588267) and `phase8_null/n200_combined_result_v2.json` (upstream c9e56026fac99d30a89da91ab557b09e7889717163712242a961d33295a3b847); copies in `source/data/`; the figure asserts that the first 100 genes equal the N = 100 set and that the recomputed rho equals the stored value |
+
+## Slides 15 to 21: criteria
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 15 | Six checks in order; outcome names positive, negative, opposite_direction, control_draw_sensitive_open, not_estimable, no_op_failed; adopted 2026-09-28 | STD A6 and sections A and B; `E2_REGISTRATION.md` section 6.2 (status list) |
+| 16, 25 | Colon: expected n = 10 testable reference genes; repeated if at least 9 of 10 (8 of 9 if n = 9); one-sided exact binomial | `E2_REGISTRATION.md` (8b11d5d), section 6.3 |
+| 16 | First review of that plan not passed: environment stated as unchanged, but pandas went 3.0.5 -> 2.3.3 | internal review of the registration, 2026-09-30; corrected in 8b11d5d |
+| 17, 23, 24 | Colon classifier: pooled 0.9042 (shown 0.904); 19 of 19 donors above 0.5; lowest 0.655; no-op largest shift 0.0 | G `pelka_crc_e2/phase4_results/classifier_gate.json` and `noop_gate.json` at 2c104ab; copies `source/data/e2_classifier_gate.json`, `source/data/e2_noop_gate.json` |
+| 18 | Constant-count warning sign; replay count checks in every analysis since 25 Sep, including the colon study | STD B2; Amendment 3h (b2473ef); `E2_REGISTRATION.md` section 6.2 |
+| 19 | At least 20 matched controls within 0.5 log2 detection and 5 rank-percentile points; fewer than 20: not_estimable; ambient and classifier-anchor genes flagged | STD B1, B4 |
+| 19, 20, 24 | 13 of 34 testable panel genes stable against matched controls | R `balanced-donor-null-imrad-report-20260930.md`, section 3.3 and the Abstract |
+| 20 | Control genes: rho -0.658 on 308 of 318 | `phase8_null/a5_primary_result_v2.json`, key `validity_check_318_control_genes` |
+| 21 | Stable = holds in every leave-one-control-out and in >= 95% of 10,000 bootstrap draws; never "no effect" | STD A6, B5, B8 |
+| 21 (notes) | S100 ambient test negative, p = 6/70 and 34/70 | G at 53adee2 `.../results_s100_luad_20260928/RESULT.md` lines 1-8 |
+| 11-21 | "Addressed by" and "From" links between lessons and checks | the author's reading of the history above; STD cites the same episodes (B2, B4, B7) |
+
+## Slides 22 to 25: status
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 22 | Pelka et al. 2021 (GSE178341): 62 patients, 36 with a normal specimen, 25 with >= 100 CD4/CD8 T cells (author annotation TCD4/TCD8) in both tissues; sorting mix differs within 11 of the 25; 19 when both tissues are restricted to unsorted cells | R `geneformer-e0-feasibility-20261001.md`, Summary and section 2; per-donor table copy `source/data/pelka_e0_counts.csv` (the figure asserts 36 and 25 and that the 19 E2 donors are among the 25) |
+| 22 | Figure: counts over all processing types; the 19 E2 donors are the keys of `per_donor_balanced_accuracy` in the E2 gate file; open circles are the other 6 qualifying donors | `source/data/pelka_e0_counts.csv`, `source/data/e2_classifier_gate.json` |
+| 22, 30 | Bischoff et al. 2021: data only as a Code Ocean capsule, which refused automated access (HTTP 403); E1 blocked | R `geneformer-e0-feasibility-20261001.md`, section 3 |
+| 23 | Registration reviewed and passed before any GPU step | review of `E2_REGISTRATION.md` at 8b11d5d (sha256 of the file adc7548b...), 2026-09-30 |
+| 23 | Five new fold classifiers from the base V2-316M weights, LUAD recipe unchanged; sign test p = 1/262,144 = 3.8e-06; per-donor values and MMR markers (MMR from the E0 table: 9 MMRd, 10 MMRp among the 19); C134 lowest at 0.655 with the fewest tumour T cells (137 unsorted); lowest three donors MMRp; no MMR test registered | `e2_classifier_gate.json` (keys `sign_test_p_float`, `per_donor_balanced_accuracy`); `pelka_e0_counts.csv` (column `MMR`); R `geneformer-e2-classifier-gate-20261001.md`, Methods and Results |
+| 23 | Perturbation run: 369 genes (100 random, 28 panel, 241 controls), 19 donors, both edits; started 02:42 JST 1 Oct (2026-09-30 17:42:37 UTC); finish expected the morning of 2 Oct; 52 GPU-hour ceiling; no result shown | `E2_REGISTRATION.md` sections 5.4 and 7; deviation D1 at ab66d3a (per-gene cost above the prediction, within the ceiling); `isp_started_utc.txt` |
+| 24 | "Not shown" list | R `balanced-donor-null-imrad-report-20260930.md`, section 5; R `geneformer-next-cycle-proposal-20261001.md`, Summary; R `geneformer-alt-dataset-experiment-design-20261001.md`, section 1 |
+| 23 | Version 4: 278 of 369 genes done at 02:29 JST, 2 October | coordination note `te-geneformer-coordination-20261002.md`, status board (E2 row) |
+| 25 | Pre-specified readings of the colon outcomes | `E2_REGISTRATION.md` sections 7 and 10 |
+
+## Slides 26 to 28: bulk RNA-seq
+
+BI = Kays3/Geneformer_TE `main` at merge commit `6b637d8a409f5fffc4cf5998406b5851251acaf1` (pull request #1; results committed in `e36f9fc`), folder `docs/runs/2026-10-02_human_tcell_bulk_isp/` (pre-registration committed at `0714626` before the run; amendments A1 `08010fe`, A2 `56bc282`). The two tables were checked byte-for-byte against `6b637d8`. Two of its tables are copied byte-identical into `source/data/`: `tables/09_per_ko.tsv` as `bulk_isp_per_ko.tsv` (sha256 `81bc3c18...`) and `tables/09_tests.json` as `bulk_isp_tests.json` (sha256 `5d2882f4...`).
+
+BW = the Weinstock replication, Kays3/Geneformer_TE `main` at merge commit `460da8a` (pull request #2, head `32bf745`; pre-registration `1ff9c5c`, amendment R1 `188a46b`, results `6d704db`), folder `docs/runs/2026-10-02_human_tcell_weinstock_bulk_isp/`. Its `tables/09_per_ko.tsv` and `tables/09_tests.json` are copied byte-identical as `bulk_isp_weinstock_per_ko.tsv` (sha256 `86eca492...`) and `bulk_isp_weinstock_tests.json` (sha256 `1b716648...`), checked against `460da8a` and `32bf745`; the Freimer tables are unchanged at `460da8a`. Lab reports: `geneformer-te-bulk-isp-weinstock-20261002.md` and `geneformer-te-bulk-isp-combined-reading-20261002.md`.
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 26 | Geneformer's input is a single-cell rank encoding with at most 4,096 tokens (V2), so it cannot take a bulk profile | Theodoris et al. 2023; GF `tokenizer.py` (as slide 5) |
+| 26 | Composition figure | Schematic with invented values, labelled so |
+| 27 | Model: CellOracle-style linear network, ridge regression on TF-to-target edges of the CellOracle hg38 promoter base GRN, restricted to promoters overlapping a Freimer ATAC peak; leave-one-knockout-out; knockout clamped low and propagated | BI `PREREGISTRATION.md`; lab report `geneformer-te-bulk-isp-celloracle-tcell-20261002.md`, Methods; Kamimoto et al., Nature 614, 742-751 (2023) |
+| 27 | Ground truth (first set): Freimer et al. 2022, 24 Cas9 knockouts in CD4+ T cells, 3 donors, AAVS1 controls; 17 are TFs in the base network (PTEN, MBD2 and CBFB only through motif annotation, not classical sequence-specific TFs), 7 not representable | GEO GSE171677 and GSE171736; `bulk_isp_tests.json` keys `n_scored` (17), `n_not_representable` (7) |
+| 27 | P1 median rho 0.083, p = 0.012; P2 median sign agreement 0.545, p = 0.013; P3 median difference from shuffled GRN +0.039, p = 0.19 (fail); P4 4 of 17 beat random TFs, p = 0.009; reading `RECOVERED_NONSPECIFIC` | `bulk_isp_tests.json` keys `P1_*` to `P4_*`, `pass`, `reading` |
+| 27 | Second set: Weinstock et al. 2024 (GEO GSE271788), 60 Cas9 knockouts in CD4+ T cells, 3 donors, 35 AAVS1 controls, none among the Freimer genes; 38 in the base network and scored, 22 not representable. P1 0.033, p = 0.21; P2 0.517, p = 0.38; P3 +0.035, p = 0.14; P4 3 of 38, p = 0.30; all fail; reading `NOT_RECOVERED`; by the rule in its pre-registration (section 5), the Freimer reading does not replicate | `bulk_isp_weinstock_tests.json` keys `n_scored`, `n_not_representable`, `P1_*` to `P4_*`, `reading`; BW `PREREGISTRATION.md` section 5; Weinstock report, Summary |
+| 27 | Figure: per-knockout rho of the model, median of 50 shuffled GRNs, median of random TFs of the same out-degree quintile, and the co-expression baseline; asterisks mark knockouts with random-TF p <= 0.05 (ETS1, HIVEP2, IRF1, IRF4) | `bulk_isp_per_ko.tsv` columns `rho_resp`, `rho_shuf_median`, `rho_random_median`, `rho_baseline`, `p_random_tf`; the script asserts 17 scored knockouts and that the median of `rho_resp` equals `P1_rho_resp_median` |
+| 28 | As a group, no gain over shuffled networks (P3 failed in both sets); individually 0 of 17 (Freimer) and 3 of 38 (Weinstock: NFAT5, NFE2L2, ZNF329) beat their 50 shuffles at empirical p <= 0.05, about the 1.9 expected by chance in 38 | `bulk_isp_tests.json` and `bulk_isp_weinstock_tests.json` keys `P3_*`; column `p_shuf` of both per-knockout tables; combined-reading report (corrected wording) |
+| 28 | Co-expression baseline: median rho 0.21 in Freimer (model vs baseline paired median difference 0.002, two-sided p = 0.85); 0.015 in Weinstock | `bulk_isp_tests.json` and `bulk_isp_weinstock_tests.json`, keys `baseline_rho_resp_median`, `model_minus_baseline_median`, `model_vs_baseline_wilcoxon_two_sided_p` |
+| 28 | Controls-only network: median rho -0.013 (Freimer, one-sided p = 0.76) and 0.008 (Weinstock); no agreement above chance in either | column `S2_controls_only_rho` of `bulk_isp_per_ko.tsv` (median -0.0126) and `bulk_isp_weinstock_per_ko.tsv` (median 0.0084); lab reports, Results |
+| 28 | Predicted shifts 55 to 85 times too small: median ratio of predicted to measured shift 0.018 (Freimer) and 0.012 (Weinstock) | combined-reading report, "What the pair shows"; Freimer report, "Magnitude and robustness" |
+| 28 | TE arm `NOT_TESTABLE`: no deposited multi-mapping-aware TE count table from human T cells or blood with perturbations was found in a bounded search (GEO metadata and the web; ArrayExpress, Zenodo, figshare and paper supplements not searched); re-alignment ruled out at the time. Version 4 adds that a re-alignment was approved on 2 October and is running | BI amendment A2 (`56bc282`) and `te/SEARCH.md`; lab report, "TE arm"; amendment A3 (`2ca032a`, branch `analysis/bulk-isp-te-freimer-20261002`) |
+| 28 | Why the sets may differ (untested): median responsive genes per knockout 394 (Freimer) and 70.5 (Weinstock). Uncontrolled differences: harvest 5 days after electroporation (Freimer) versus 8 days after isolation and activation (Weinstock); UMI deduplication named by Freimer, not in Weinstock's GEO record; counting pipeline; unknown donor overlap | column `n_resp` of both per-knockout tables (medians 394 and 70.5); Weinstock report, Methods ("Data"); combined-reading report, "Why the two sets may differ" |
+| 28 | A revisit would need a composition covariate registered in advance, or single-cell or sorted data | combined-reading report, "Consequence" |
+
+## Slides 29 to 34: transposable elements (Geneformer_TE)
+
+TE = Kays3/Geneformer_TE `main` at `71014df58e16e1f8fd09483af000b4129a076597`. FB = `docs/runs/2026-10-01_fish_bulk_isp/` (`RUN_RECORD.md`, `tables/`); TA = `docs/runs/2026-10-01_te_axis_treatment/REPORT.md`; GA = `docs/runs/2026-10-01_gene_axis/REPORT.md`; ZF = `docs/runs/2026-10-01_zebrafish_validation/RUN_RECORD.md`; DC = `docs/DESIGN_CHANGES.md`; HO = `docs/HANDOFF.md`. Five tables are copied byte-identical from TE into `source/data/`: FB `tables/05c_plain_per_regulator.tsv`, `05c_rmTEpc1_per_regulator.tsv`, `05c_plain_overall.tsv`, `05c_rmTEpc1_overall.tsv` (as `te_fish_05c_*.tsv`) and TA `tables/06_te_read_pct.tsv` (as `te_fish_06_te_read_pct.tsv`). A3 = TE-arm pre-registration amendment, commit `2ca032a` on branch `analysis/bulk-isp-te-freimer-20261002` (not yet merged; cited only for what will be tested). Every row was re-read at source on 2026-10-02.
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 29 | Aim (which regulators control TE expression), silencing machinery (KRAB zinc-finger proteins with KAP1, HUSH, DNA methylation, H3K9 methylation), three tracks | TE `README.md` (introduction; "Perturbation targets"); HO section 1 |
+| 29 | Track states: single-cell built, not run; bulk run on fish and T cells; ground truth running | HO sections 1, 3 and 4 |
+| 29 | Pipeline figure | Diagram of the tracks as implemented (`te_pipeline.png`) |
+| 30 | No TE tokens in the V2 vocabulary; readout mode with TE-low/TE-high states within cell type and a linear probe; gate checks; 316M in bf16 with an fp32 canary | TE `README.md` ("The joint gene–TE token space", "Two readouts", "The classifier gate", "316M and bf16"); DC-01, DC-02 |
+| 30 | No human single-cell data with TE counts staged; candidates; family level only | HO section 8 item 3; TE `README.md` ("Known confounds and limits") |
+| 31 | 162 libraries, 3 tissues × 3 CO2 groups (9 strata of 18); 30 regulators found; KAP1/TRIM28 and KRAB-ZNFs absent | FB "Inputs"; DC-11 |
+| 31 | 90 random pseudo-regulators (3 seeds × 30), expression-matched | FB "TL;DR"; DC-05; `te_fish_05c_plain_overall.tsv` column `n_random` |
+| 31 | 32,142 of 114,720 tests at FDR < 0.05 in plain mode | FB "Findings" item 2 |
+| 31 | Plain: 1 regulator at empirical p ≤ 0.05 (tasora, p = 0.044 = 4/91), 1.5 expected, 0 pass BH; real vs random Mann–Whitney p = 0.70. Axis removed: 0 at p ≤ 0.05 (atrx and ythdc1 lowest, p = 0.055), 0 pass BH; Mann–Whitney p = 0.17 | `te_fish_05c_*_overall.tsv` (delete rows) columns `n_regulators_p_emp_hits_le_0.05`, `expected_by_chance`, `n_regulators_fdr_hits_lt_0.05`, `mw_p_n_fdr05`; `te_fish_05c_*_per_regulator.tsv` columns `p_emp_hits`, `fdr_hits`. FB "TL;DR" gives tasora p_emp = 0.033; the table gives 0.044, which the slide uses |
+| 31 | Also none after removing the global TE axis (0 at FDR < 0.05, 0 at nominal p ≤ 0.05) | `te_fish_05c_rmTEpc1_overall.tsv` (delete row) |
+| 31 | Global TE axis: PC1 29.3% of within-stratum TE variance; r = 0.87 with TE read fraction; predicted directions follow each regulator's correlation with it | FB "Findings" items 1 and 2; DC-06 |
+| 32 | Gill strict-TE share 2.87% [2.72, 3.03] to 2.55% [2.38, 2.73]; −11.4% [−17.2, −5.1]; p = 0.0009; FDR 0.006 (table value 0.0056) | `te_fish_06_te_read_pct.tsv` (measure `te_frac_strict`, gill); TA results table (p, FDR) |
+| 32 | Brain +6.7% [−3.4, +17.9], FDR 0.29; liver −0.9% [−11.7, +11.2], FDR 0.87 (figure) | `te_fish_06_te_read_pct.tsv` |
+| 32 | TE share is a fraction of counted reads, not absolute TE expression | TA "Methods" (measure definitions) |
+| 32 | Robust to QC adjustment and outlier exclusion; brain and liver inconclusive; tolerant vs sensitive smallest FDR 0.11; exploratory, not in the study protocol | TA "Summary" and status line; DC-07, DC-08, DC-12 |
+| 32 | No candidate gene mediates the gill drop beyond random genes; thyroid set p = 0.025, FDR 0.10 (lead only) | GA; HO section 3; DC-13 |
+| 33 | Zebrafish: 17 contrasts, 14 GEO series, 112 runs; regulators uhrf1, dnmt1, dnmt3, kdm1a, ezh2, mettl3, atrx; measures per study; two concordance questions; call rule BH-FDR < 0.05 and ≥ 5% change in TE share | ZF "Design"; DC-14 |
+| 33 | Zebrafish caveats (unstranded counting, morpholinos, alleles that do not lower their own mRNA, GSE234993 read-1-only sensitivity, studies never pooled); counts expected 2 October | HO section 4; DC-16; lab coordination note `te-geneformer-coordination-20261002.md` (status board) |
+| 33 | TE arm: 96 samples (384 runs) re-aligned with multimapping (STAR up to 100 loci), TEcount; gates Q1 (ρ ≥ 0.90 per sample, else stop) and Q3 (≥ 20 expressed strict-TE subfamilies, else `TE_NOT_TESTABLE`); registered 02:12 JST 2 Oct before any download | A3 sections A3.1 to A3.4 and header (commit time 2026-10-02 02:11:55 +0900) |
+| 33 | Progress, each with its time: zebrafish 53 of 112 samples counted at 02:35 JST 2 Oct [17:35 UTC 1 Oct], counts expected 06:00 to 07:00 JST; TE arm code review passed; alignment launched 02:48:30 JST (host A) and 02:51:58 JST (host B), 2 Oct; first counts about 04:15 JST, all samples about 07:30 to 10:30 JST | ZF status line (17:35 UTC); coordination note status board; TE-arm `te_realign/RUN_RECORD.md`, "Launch" (branch `analysis/bulk-isp-te-freimer-20261002`, commit `d1e2c9a`; 17:48:30Z and 17:51:58Z); ETA as reported by the executing team at about 02:52 JST |
+| 34 | Co-variation network did not meet the registered bar for specific prediction in any controlled test: fish, no regulator beat random genes after BH; Freimer, P4 passed (4 of 17 beat random TFs) and P3 (shuffled networks) failed; Weinstock, both failed | slides 27, 28 and 31; `bulk_isp_tests.json` and `bulk_isp_weinstock_tests.json` keys `P3_*`; HO section 3, "Overall" |
+| 34 | Summary of slides 31 to 33; unexplained global axis (intronic or nascent RNA, composition) | FB "Next steps" item 3 |
+
+## Slides 35 to 39: summary and next (version 3 slides 29 to 33)
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 35 | Criteria table | rows above (slides 11-21) |
+| 36 | Goal swap, subset re-analysis, interpretable baseline from T-cell programs (TCAT; Kotliar et al., Nature Methods 22, 1964-1980, 2025); model size; positive controls and experimental screens | R `geneformer-next-cycle-proposal-20261001.md`, sections 4 and 5; STD C2, C4 and D1 |
+| 36 | Bulk row: not supported; two registered tests, 55 knockouts (17 + 38) | slides 27-28 |
+| 36 | TE rows: zebrafish and Freimer TE arm running; single-cell TE track not started | slides 30 and 33 |
+| 37 | Working title, result (rho -0.59 and -0.61; lung, V2-316M, goal = the donor's own normal centroid), argument, hypotheses, bulk line (two tests, 55 knockouts, not supported), figure list | proposal by the author; bulk line from slides 27-28; each figure marked drawable now (teal) or needing an open study (amber) |
+| 38 | Summary statements, including item 4 (TE: no better than random genes in 162 fish libraries; tests running) | rows above; slides 31 and 33 |
+| 39 | Glossary, including transposable element | definitions, no numbers |
