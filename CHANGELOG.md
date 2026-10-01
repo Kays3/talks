@@ -5,6 +5,13 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: citizen-science poster (proposed 2026-10-01)
+
+Added `2026-08-te-citizen-science-poster`, the plain-language companion to the ocean-acidification
+poster (4 August 2026). Local file paths in the speaker notes are reduced to file names, camera and
+editing metadata is removed from the embedded photographs, and a PDF is exported. The root README
+index lists it.
+
 ## Unreleased: lab progress report (proposed 2026-10-01)
 
 Added `2026-10-lab-progress-geneformer-isp`: "Reading the Current", a 28-slide lab progress report
