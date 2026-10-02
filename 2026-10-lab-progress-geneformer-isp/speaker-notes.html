@@ -41,7 +41,7 @@ figure{max-width:100%}
 <h1 id="reading-the-current-speaker-notes">Reading the Current: speaker
 notes</h1>
 <p>Lab progress report, 1 October 2026. Kaisar Dauyey · Shinji Nakaoka.
-28 slides, about 25 minutes of talk, then 5 to 10 minutes of discussion.
+28 slides, about 26 minutes of talk, then 5 to 10 minutes of discussion.
 Every number is sourced in <code>SOURCES.md</code>.</p>
 <h2 id="slide-1.-reading-the-current-about-0.5-min">Slide 1. Reading the
 Current (about 0.5 min)</h2>
@@ -274,30 +274,26 @@ because these are new models, this says nothing about whether the lung
 models transfer. Sources: classifier_gate.json and noop_gate.json at
 commit 2c104ab, and the interim report of 1 October, which passed
 internal review.</p>
-<h2 id="slide-23.-colorectal-perturbation-screen-status-on-1-october-about-1-min">Slide
-23. Colorectal perturbation screen: status on 1 October (about 1
-min)</h2>
-<p>This slide gives the state of the run at 12:45 Japan time today, not
-a result. The perturbation run started at 02:42 this morning. The
-hundred random genes, which carry the primary question, finished at
-about ten past eleven, and nineteen of the panel genes have finished
-since. Each random gene took about two and a half times longer than we
-predicted, 294 GPU-seconds against about 120. We entered that in the
-registration’s deviation log as a cost overrun; it changes nothing in
-the procedure or the analysis, and the projected total of about 32
-GPU-hours is well inside the 52-hour ceiling we registered. We expect
-the run to finish at about ten to nine tomorrow morning, give or take an
-hour. The readings on the right were fixed before the GPU started. If
-random genes are anti-correlated in colon as well, the effect more
-likely belongs to Geneformer and our design than to lung, although we
-cannot separate the model from the design here. If they are not, we
-cannot blame tissue, because almost everything else about the data
-differs too. For the lung reference genes, holding direction means the
-pattern carries over, not that any gene regulates T-cell state. I will
-not show either result until it has been reviewed. Sources: the run’s
-per-unit log and ceiling monitor, read at 12:45 JST, and
-E2_REGISTRATION.md sections 6.2, 6.3, 7 and deviation D1 (commit
-ab66d3a).</p>
+<h2 id="slide-23.-colorectal-perturbation-screen-same-direction-as-lung-but-not-stable-the-lung-gene-pattern-did-not-replicate-about-1.5-min">Slide
+23. Colorectal perturbation screen: same direction as lung but not
+stable; the lung gene pattern did not replicate (about 1.5 min)</h2>
+<p>The colorectal run finished at 10:20 Japan time on 2 October, inside
+the compute we registered, and the results passed internal review before
+I put them here. The primary question was whether random genes are
+anti-correlated in colon as in lung. They are, in the same direction:
+the rank correlation was minus 0.245, with a one-sided p of 0.0067, and
+no single gene carries it. But the pattern stayed significant in only 78
+percent of resamples, short of the 95 percent we set in advance, so by
+our own rule it is reported as open. For the lung reference genes, three
+of ten kept their lung direction where nine were needed, so the lung
+pattern did not replicate; seven opposite signs is within what chance
+gives, so this is not a reversal. The right-hand card is the set of
+readings we fixed before the run, with the two outcomes that occurred
+marked. Neither difference from lung can be put down to tissue, because
+study, sample handling, chemistry, the fold models and the number of
+patients all differ. Sources: the E2 results report and the H2b, H2c and
+Panel B result files on geneformer-lung-tcell main, merge 4cce44a, and
+E2_REGISTRATION.md sections 6.2, 6.3 and 7.</p>
 <h2 id="slide-24.-uncharted-waters-about-0.2-min">Slide 24. Uncharted
 waters (about 0.2 min)</h2>
 <p>We have more open questions than people. Each task on the next slides
@@ -335,8 +331,9 @@ came from measuring something we had taken for granted, such as the
 study behind a class, the cells behind an arm, the patient behind a
 shift, or the drift behind a nudge. The anti-correlation in random genes
 is not a failure of the method. It is the baseline any claimed effect
-has to exceed. The colorectal results will tell us whether that baseline
-belongs to the model or to lung. Thank you; I am happy to take
-questions, and to talk about any of the entry tasks.</p>
+has to exceed. In colon the baseline points the same way but is not yet
+stable, so whether it belongs to the model or to lung is still open.
+Thank you; I am happy to take questions, and to talk about any of the
+entry tasks.</p>
 </body>
 </html>

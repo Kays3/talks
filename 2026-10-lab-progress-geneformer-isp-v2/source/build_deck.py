@@ -274,29 +274,31 @@ add("plain", 1.3, 5, f"""
       <li>13 of 34 testable T-cell genes move cells more than their look-alikes, stably.</li>
       <li>Delete and overexpress give opposed effects for random genes too.</li>
       <li>Colon: the tumour/normal split is learnable too (90.4%; 19 of 19).</li>
+      <li>Colon: the lung gene pattern did not repeat (3 of 10 genes kept their lung direction).</li>
     </ul></div>
   <div class="card open"><h3>{badge('open', 'Not shown')}</h3>
     <ul class="tight">
       <li>That any gene controls T-cell state. A move on the model's map is not a mechanism.</li>
-      <li>Whether the opposed effects come from the model or from lung tissue (colon run, next slide).</li>
+      <li>Whether the opposed effects come from the model or from lung tissue: in colon they point the same way but are not stable (next slide).</li>
       <li>What the classifier actually reads: T-cell state, ambient RNA, or the mix of T-cell types.</li>
       <li>Whether the lung models work on new lung patients.</li>
     </ul></div>
 </div>
-""", """Here is where the evidence stands. In lung, the classifier works on unseen patients, a curated set of thirteen T-cell genes passes the look-alike check, and the opposed effects of the two edits are generic. In colon, the classifier also works. What we cannot say is just as important. None of this shows that a gene controls T-cell state; a shift on the model's map is not a mechanism. We do not know whether the classifier is reading T-cell state, ambient RNA or simply a different mix of T-cell types between tissues. And we have not yet tested the lung models on new lung patients. Sources: the balanced-donor report and the colon interim report.""")
+""", """Here is where the evidence stands. In lung, the classifier works on unseen patients, a curated set of thirteen T-cell genes passes the look-alike check, and the opposed effects of the two edits are generic. In colon, the classifier also works, and the lung gene pattern did not repeat. What we cannot say is just as important. None of this shows that a gene controls T-cell state; a shift on the model's map is not a mechanism. We do not know whether the classifier is reading T-cell state, ambient RNA or simply a different mix of T-cell types between tissues. And we have not yet tested the lung models on new lung patients. Sources: the balanced-donor report and the colon interim report.""")
 
-add("plain", 1.0, 5, f"""
-<h2>The colon test is running now, and its possible answers were fixed in advance</h2>
+add("plain", 1.4, 5, f"""
+<h2>The colon test: random genes were opposed again, but not reliably; the lung gene pattern did not repeat</h2>
 <div class="two">
-  <div class="card open"><h3>{badge('open', 'Running')}</h3>
-    <p>369 genes, 19 patients, both edits: 100 random genes, 28 panel genes, 241 look-alike controls. Started 02:42 JST on 1 October; expected to finish on the morning of 2 October, within a 52 GPU-hour limit.</p>
-    <p><b>No result is shown here.</b> Results are presented only after independent review.</p></div>
-  <div class="card"><h3>What each answer would mean</h3>
-    <p><b>Random genes opposed in colon too:</b> the effect more likely belongs to the model and our design than to lung.</p>
-    <p><b>Not opposed:</b> we still cannot blame tissue; the study, sample handling and models all differ.</p>
-    <p><b>Lung reference genes:</b> if 10 can be tested, the pattern counts as repeated only if at least 9 keep their lung direction.</p></div>
+  <div class="card open"><h3>{badge('open', 'Open')} Random genes</h3>
+    <p>Delete and overexpress again pushed random genes in opposite directions: rank correlation −0.25 (lung: −0.59), p = 0.0067.</p>
+    <p>It survived dropping any one gene, but held in only 78% of resamplings; we required 95%.</p>
+    <p>Our pre-written reading: same direction as lung, not stable, so the question stays open.</p></div>
+  <div class="card fail"><h3>{badge('fail', 'Not repeated')} Lung reference genes</h3>
+    <p>Of 10 lung genes we could test, 3 kept their lung direction; we required 9. Seven pointing the other way is within what chance gives.</p>
+    <p>One gene, PRF1, passed every check in colon; in lung it was undecided.</p></div>
 </div>
-""", """The colon study repeats the whole design in a different tissue, using public data. The run started early this morning and should finish tomorrow morning, well inside the compute limit we registered. I am not showing any result from it. What I can show is what each possible answer would mean, because we wrote that down before starting. If random genes are opposed in colon too, the effect more likely belongs to the model and our design. If they are not, tissue is only one of several differences, so we could not blame it. And the lung reference genes count as repeating only if at least nine of ten agree. Sources: the colon study registration, sections 6.2, 6.3 and 7.""")
+<p class="foot">We cannot blame tissue for the differences: the colon data come from another study, with different sample handling, new models and fewer patients (19 against 43).</p>
+""", """The colon run finished on the morning of 2 October, and the results have passed internal review. The first question was whether random genes are opposed in colon too. They are, in the same direction as in lung, but more weakly, and the pattern held in only 78 percent of resamplings, short of the 95 percent we required before starting. So by the reading we wrote down in advance, the direction matches lung but the result is not stable, and the question stays open. The second question was whether the lung reference genes keep their direction. Three of ten did, where we needed nine, so the lung gene pattern did not repeat. Seven pointing the other way is about what chance would give, so this is not a reversal either. One gene, PRF1, passed every check in colon, though it was undecided in lung. None of these differences can be put down to tissue, because the colon study differs from the lung studies in almost every other way too, and it has fewer patients. Sources: the colon study results report and its result files on geneformer-lung-tcell main, merge 4cce44a.""")
 
 # ---------- 6. Next ----------
 found = "".join(f"<tr><td>{chk(k, True)}</td><td>{c}</td><td>{e}</td></tr>" for k, c, e in [
@@ -313,7 +315,7 @@ add("plain", 1.3, 6, f"""
 """, """This table is the first half of what I would call our contribution so far. Each criterion on the left is now lab practice, and each one is tied to a specific piece of evidence on the right, from our own work. I want to be precise about the status. These are established as practice in our lab, with sources for every row. They have not yet been tested by anyone else, and some, like the 95 percent stability bar, are choices we made rather than results we derived.""")
 
 todo = "".join(f"<tr><td>{badge(s, l)}</td><td>{q}</td><td>{h}</td></tr>" for s, l, q, h in [
-    ("open", "running", "Are the opposed effects a property of the model or of lung?", "Colon study (E2), results 2 Oct"),
+    ("open", "open", "Are the opposed effects a property of the model or of lung?", "Colon (E2): same direction, not stable; lung gene pattern did not repeat"),
     ("open", "blocked", "Do the lung models work on new lung patients?", "E1: the one candidate dataset is not yet accessible"),
     ("open", "planned", "Are the opposed effects the same whatever the goal? (calibrating the random-gene baseline)", "Swap the goal for an unrelated one"),
     ("open", "planned", "Is the 13-gene result cell state, or just a different mix of T-cell types?", "Re-analyse within T-cell subsets"),
@@ -323,8 +325,8 @@ todo = "".join(f"<tr><td>{badge(s, l)}</td><td>{q}</td><td>{h}</td></tr>" for s,
 add("plain", 1.4, 6, f"""
 <h2>Summary 2: what we still need to test</h2>
 <table class="tbl"><tr><th>Status</th><th>Question</th><th>How</th></tr>{todo}</table>
-<p class="foot">All rows are hypotheses or open questions. None has a result yet.</p>
-""", """The second half is what we do not know. One study is running: the colon test asks whether the opposed effects belong to the model or to lung. The lung transfer test is blocked, because the one independent lung dataset we found is packaged in a way we could not access. Three studies are planned without new GPU work, or with modest GPU work: swapping the goal to see whether the opposed effects depend on it, re-analysing within T-cell subsets, and comparing the model with a readable baseline built from published T-cell programs. Two questions have not started: whether model size changes the results, and whether the method recovers genes we already know matter. Without that last one, a negative result is hard to interpret. Sources: the next-cycle proposal, the independent-data design and the E0 feasibility report.""")
+<p class="foot">All rows are open. The colon row has a first answer: open for random genes, not repeated for the lung genes.</p>
+""", """The second half is what we do not know. The colon test has a first answer: random genes were opposed in the same direction as in lung, but not stably, so whether the effect belongs to the model or to lung stays open; the lung gene pattern did not repeat. The lung transfer test is blocked, because the one independent lung dataset we found is packaged in a way we could not access. Three studies are planned without new GPU work, or with modest GPU work: swapping the goal to see whether the opposed effects depend on it, re-analysing within T-cell subsets, and comparing the model with a readable baseline built from published T-cell programs. Two questions have not started: whether model size changes the results, and whether the method recovers genes we already know matter. Without that last one, a negative result is hard to interpret. Sources: the next-cycle proposal, the independent-data design and the E0 feasibility report.""")
 
 add("plain", 1.3, 6, f"""
 <h2>Together these could become one paper on how to judge virtual gene edits</h2>
@@ -340,7 +342,7 @@ add("plain", 1.3, 6, f"""
     <div class="pf open"><b>Fig. 6</b> Model size, new lung patients, known genes</div>
   </div>
 </div>
-""", """If the open studies come through, the material could become one methods paper. A working title would be "Opposite by default". The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument we would make from it, that gene-level claims need these baselines and checks, is a recommendation, not a finding; paired cells and patient-level counting come from the other traps. Whether the result holds in other tissues, under other goals and for other model sizes is still a hypothesis. Figures one, two, four and five could be drawn today from results we have. Figures three and six need the studies on the previous slide. If the colon result is negative, the paper changes shape rather than disappearing, because the lung evidence and the traps stand on their own.""")
+""", """If the open studies come through, the material could become one methods paper. A working title would be "Opposite by default". The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument we would make from it, that gene-level claims need these baselines and checks, is a recommendation, not a finding; paired cells and patient-level counting come from the other traps. Whether the result holds in other tissues, under other goals and for other model sizes is still a hypothesis. Figures one, two, four and five could be drawn today from results we have. Figures three and six need the studies on the previous slide. The colon result, open for random genes and not repeated for the lung genes, changes the paper's shape rather than removing it, because the lung evidence and the traps stand on their own.""")
 
 add("end", 0.4, None, """
 <h1 class="big">The model always answers.<br>The checks tell us when to listen.</h1>
