@@ -42,7 +42,7 @@ speaker notes</h1>
 <h1 id="evaluating-in-silico-perturbation-with-geneformer-speaker-notes">Evaluating
 in-silico perturbation with Geneformer: speaker notes</h1>
 <p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 40
-slides, about 43 minutes of talk, then 5 to 10 minutes of discussion.
+slides, about 44 minutes of talk, then 5 to 10 minutes of discussion.
 Every number is sourced in <code>SOURCES.md</code>.</p>
 <h2 id="slide-1.-evaluating-in-silico-perturbation-with-geneformer-about-0.5-min">Slide
 1. Evaluating in-silico perturbation with Geneformer (about 0.5
@@ -290,9 +290,9 @@ that dropped out under the unsorted restriction. The independent lung
 cohort could not be assessed, because its data are distributed only
 through a capsule that refused automated access. Sources: the E0
 feasibility report and its per-donor count table.</p>
-<h2 id="slide-23.-colon-study-e2-registration-and-classifier-gate-passed-perturbation-results-pending-about-1.3-min">Slide
-23. Colon study (E2): registration and classifier gate passed;
-perturbation results pending (about 1.3 min)</h2>
+<h2 id="slide-23.-colon-study-e2-classifier-gate-passed-perturbation-run-complete-about-1.3-min">Slide
+23. Colon study (E2): classifier gate passed, perturbation run complete
+(about 1.3 min)</h2>
 <p>The colon study repeats the lung design on the nineteen-donor cohort.
 Its registration was reviewed and approved before any GPU work. Five new
 fold classifiers were fine-tuned from the base model with the lung
@@ -301,30 +301,50 @@ donor was above chance, and the lowest donor, C134, at 0.655, also had
 the fewest tumour T cells. The no-op gate gave exactly zero.
 Mismatch-repair status is marked for description only; the lowest three
 donors are all MMR-proficient, but no test was registered and we draw no
-conclusion. The perturbation run is in progress: 278 of 369 genes were
-done at 02:29 Japan time on 2 October. No result is shown. Sources: the
-colon classifier gate file at commit 2c104ab, the E2 interim report and
-the registration.</p>
-<h2 id="slide-24.-what-the-results-support-and-what-they-do-not-about-1.2-min">Slide
-24. What the results support, and what they do not (about 1.2 min)</h2>
+conclusion. The perturbation run finished at 10:20 Japan time on 2
+October, using 32.6 of the 52 GPU-hours authorised; its results are on
+the next slide. Sources: the colon classifier gate file at commit
+2c104ab, the E2 interim report and the registration.</p>
+<h2 id="slide-24.-colon-results-random-genes-opposed-in-the-same-direction-but-not-stably-the-lung-gene-pattern-did-not-replicate-about-1.6-min">Slide
+24. Colon results: random genes opposed in the same direction but not
+stably; the lung gene pattern did not replicate (about 1.6 min)</h2>
+<p>The colon perturbation run finished at 10:20 Japan time on 2 October,
+and the results passed internal review. The primary question was whether
+random genes give opposed deletion and overexpression effects in colon
+as they do in lung. They do in direction: the rank correlation was minus
+0.245, with a one-sided p of 0.0067, and every leave-one-out test
+passed. But it is much weaker than in lung, and in only 78 percent of
+resamples did it stay significant, against the 95 percent we registered.
+So the registered reading is that the direction matches lung but the
+result is not stable, and it stays open. The point cloud shows why: most
+genes sit near zero, and a few genes with large overexpression shifts
+carry the trend. The second question was whether the lung reference
+genes keep their direction. Three of ten did, where nine were needed, so
+the lung gene pattern did not replicate. Seven opposite signs out of ten
+is within what chance gives, so this does not show a reversal either,
+and across the 27 panel genes tested in both tissues the lung and colon
+deletion medians are not detectably correlated. One panel gene, PRF1,
+reached a dose-concordant status in colon; it was open in lung. None of
+these differences can be put down to tissue, because almost everything
+else about the two studies differs too, and colon has fewer donors. So
+the lung caution holds in colon: opposed deletion and overexpression
+shifts are not on their own evidence of a specific effect, and
+gene-level statuses from one tissue should not be carried to another
+without testing. Sources: the E2 results report, the H2b and H2c result
+files and the Panel B outcome rows on geneformer-lung-tcell main, merge
+4cce44a, results commit b7369cb.</p>
+<h2 id="slide-25.-what-the-results-support-and-what-they-do-not-about-1.2-min">Slide
+25. What the results support, and what they do not (about 1.2 min)</h2>
 <p>In lung, the classifier works on held-out donors, thirteen T-cell
 genes exceed their matched controls, and the opposed effects of the two
-perturbations are generic. In colon, the classifier also works. None of
-this shows that a gene regulates T-cell state. We also do not know
-whether the classifier reads T-cell state, ambient RNA or differences in
-subset composition between tissues, and we have not tested the lung
-models on new lung donors. Sources: the balanced-donor report and the
-colon interim report.</p>
-<h2 id="slide-25.-the-possible-colon-outcomes-and-their-readings-were-fixed-before-the-run-about-0.9-min">Slide
-25. The possible colon outcomes and their readings were fixed before the
-run (about 0.9 min)</h2>
-<p>These readings were written into the registration before the run
-started. If random genes are also opposed in colon, the effect more
-likely belongs to the model and the design. If they are not, tissue is
-only one of several differences between the studies, so we could not
-attribute the change to it. The lung reference genes count as repeating
-only at nine of ten. Sources: the colon study registration, sections
-6.2, 6.3 and 7.</p>
+perturbations are generic. In colon, the classifier also works, and the
+lung gene pattern did not replicate; the opposed effects appear in the
+same direction but did not reach the registered stability bar, so that
+question stays open. None of this shows that a gene regulates T-cell
+state. We also do not know whether the classifier reads T-cell state,
+ambient RNA or differences in subset composition between tissues, and we
+have not tested the lung models on new lung donors. Sources: the
+balanced-donor report and the colon interim report.</p>
 <h2 id="slide-26.-bulk-rna-seq-a-bulk-profile-is-an-average-over-a-mixed-population-not-a-cell-about-1.1-min">Slide
 26. Bulk RNA-seq: a bulk profile is an average over a mixed population,
 not a cell (about 1.1 min)</h2>
@@ -493,18 +513,20 @@ represent had at least ten responsive subfamilies. A null built after
 review from the control libraries alone puts that in proportion: a
 control library standing in for a knockout reaches a median of seven,
 and a quarter reach ten, so only CBFB exceeds what controls do among
-themselves. For genes, fourteen of seventeen knockouts exceed the same
-null. The network’s predicted TE shifts agreed with the measured ones
-above chance, but not better than a shuffled network, and only one
-knockout beat random factors, so the reading is non-specific, as for
-genes. Most TE reads in these 3-prime tag libraries sit in introns, so a
-knockout that regulates TEs cannot be separated from one that changes
-transcription of the genes containing them; the distal-locus test meant
-to do that left only three knockouts. On these data the knockouts change
-gene expression and, with one possible exception, do not detectably
-shift TE subfamilies. Asking the TE question properly needs full-length
-total-RNA data. Sources: the TE-arm report and the run record and tables
-on Geneformer_TE main, merge c17d39b, PR head eef6e18.</p>
+themselves; STAT5A, at 39, sits just past the shaded band but its
+empirical p is 0.051. For genes, fourteen of seventeen knockouts exceed
+the same null. The network’s predicted TE shifts agreed with the
+measured ones above chance, but not better than a shuffled network, and
+only one knockout beat random factors, so the reading is non-specific,
+as for genes. Most TE reads in these 3-prime tag libraries sit in
+introns, so a knockout that regulates TEs cannot be separated from one
+that changes transcription of the genes containing them; the
+distal-locus test meant to do that left only three knockouts. On these
+data the knockouts change gene expression and, with one possible
+exception, do not detectably shift TE subfamilies. Asking the TE
+question properly needs full-length total-RNA data. Sources: the TE-arm
+report and the run record and tables on Geneformer_TE main, merge
+c17d39b, PR head eef6e18.</p>
 <h2 id="slide-35.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
 35. What the TE work shows so far, and what it does not (about 1.1
 min)</h2>
@@ -544,22 +566,24 @@ groups, and some, such as the 95 percent stability threshold, are
 choices rather than derived results.</p>
 <h2 id="slide-37.-summary-2-what-remains-to-be-tested-about-1.3-min">Slide
 37. Summary 2: what remains to be tested (about 1.3 min)</h2>
-<p>This is what we do not yet know. The colon study is running, with its
-gate passed. Transfer to new lung donors is blocked by data access.
-Three studies are planned with little or no new GPU work: swapping the
-goal, re-analysing within T-cell subsets, and comparing the classifier
-with an interpretable baseline built from published T-cell programs.
-Model size and positive controls have not started; without positive
-controls, a negative result is hard to interpret. The bulk RNA-seq row
-now has a result: across two registered tests on 55 knockouts, the bulk
-network did not recover regulator-specific effects, and its one weak
-positive did not replicate. The last three rows come from the TE
-project. In zebrafish, the fish network directions agreed with measured
-TE responses at chance level; in the Freimer T-cell knockouts, TE shifts
-mostly stayed within a control-only null and the network’s TE
-predictions were non-specific; and the single-cell TE track needs data
-we have not prepared. Sources: the next-cycle proposal, the
-independent-data design and the E0 feasibility report.</p>
+<p>This is what we do not yet know. The colon study has finished: random
+genes were opposed in the same direction as in lung but not stably, so
+the first question stays open, and the lung gene pattern did not
+replicate. Transfer to new lung donors is blocked by data access. Three
+studies are planned with little or no new GPU work: swapping the goal,
+re-analysing within T-cell subsets, and comparing the classifier with an
+interpretable baseline built from published T-cell programs. Model size
+and positive controls have not started; without positive controls, a
+negative result is hard to interpret. The bulk RNA-seq row now has a
+result: across two registered tests on 55 knockouts, the bulk network
+did not recover regulator-specific effects, and its one weak positive
+did not replicate. The last three rows come from the TE project. In
+zebrafish, the fish network directions agreed with measured TE responses
+at chance level; in the Freimer T-cell knockouts, TE shifts mostly
+stayed within a control-only null and the network’s TE predictions were
+non-specific; and the single-cell TE track needs data we have not
+prepared. Sources: the next-cycle proposal, the independent-data design
+and the E0 feasibility report.</p>
 <h2 id="slide-38.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
 38. These results could form one methods paper on evaluating in-silico
 perturbation (about 1.3 min)</h2>
@@ -573,23 +597,25 @@ hypothesis. The bulk line is now a negative result with a narrow scope:
 in this design, bulk network perturbation did not predict knockout
 effects. Figures one, two, four, five and seven could be drawn from
 results we have; figures three and six need the studies on the previous
-slide. A negative colon result would change the paper’s emphasis rather
-than remove it, because the lung evidence and the documented failure
-modes stand on their own.</p>
+slide. The colon result, open on the primary question and not replicated
+for the lung genes, changes the paper’s emphasis rather than removing
+it, because the lung evidence and the documented failure modes stand on
+their own.</p>
 <h2 id="slide-39.-summary-about-0.6-min">Slide 39. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
 criteria came from our own errors and are now how we evaluate every run;
-the colon study has passed its gates and its results are pending. On
-bulk RNA-seq, two registered tests against measured knockouts did not
-support regulator-specific prediction, and the first test’s weak signal
-did not replicate. For transposable elements, the same network did no
-better than random genes in fish, its directions agreed with measured
-zebrafish TE responses only at chance level, and in the T-cell knockouts
-the TE shifts mostly stayed within what control libraries show among
-themselves, CBFB the exception in a check added after the results. Thank
-you; I am glad to take questions.</p>
+in colon, random genes were opposed in the same direction as in lung but
+not stably, so that question stays open, and the lung gene pattern did
+not replicate. On bulk RNA-seq, two registered tests against measured
+knockouts did not support regulator-specific prediction, and the first
+test’s weak signal did not replicate. For transposable elements, the
+same network did no better than random genes in fish, its directions
+agreed with measured zebrafish TE responses only at chance level, and in
+the T-cell knockouts the TE shifts mostly stayed within what control
+libraries show among themselves, CBFB the exception in a check added
+after the results. Thank you; I am glad to take questions.</p>
 <h2 id="slide-40.-glossary-about-0.3-min">Slide 40. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>

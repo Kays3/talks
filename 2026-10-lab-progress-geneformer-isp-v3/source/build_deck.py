@@ -281,15 +281,25 @@ add("plain", 1.2, 4, f"""
 """, """Before any external study, we counted eligible donors from per-cell metadata alone. In the colorectal data of Pelka and colleagues, 25 donors had at least one hundred CD4 or CD8 T cells in both tumour and normal colon. In eleven of them, tumour and normal specimens differed in magnetic sorting, so the tumour-normal contrast would partly be a processing contrast. Restricting both tissues to unsorted cells left nineteen donors, the cohort used for the colon study. The figure shows counts over all processing types; the open circles are the six donors that dropped out under the unsorted restriction. The independent lung cohort could not be assessed, because its data are distributed only through a capsule that refused automated access. Sources: the E0 feasibility report and its per-donor count table.""")
 
 add("plain", 1.3, 4, f"""
-<h2>Colon study (E2): registration and classifier gate passed; perturbation results pending</h2>
+<h2>Colon study (E2): classifier gate passed, perturbation run complete</h2>
 <div class="split"><div>
-  <p>{badge('pass', 'registration reviewed')} {badge('pass', 'classifier gate')} {badge('pass', 'no-op gate')} {badge('open', 'ISP results')}</p>
+  <p>{badge('pass', 'registration reviewed')} {badge('pass', 'classifier gate')} {badge('pass', 'no-op gate')} {badge('pass', 'perturbation run complete')}</p>
   <p>New fold classifiers from the same base model. Pooled held-out balanced accuracy <b>0.904</b> (bar 0.60); <b>19 of 19</b> donors above chance; lowest 0.655; sign test p = 3.8 × 10⁻⁶.</p>
-  <p>Perturbation run: 369 genes, both arms, 19 donors; started 02:42 JST, 1 October; finish expected the morning of 2 October, within a 52 GPU-hour limit.</p>
+  <p>Perturbation run: 369 genes × 19 donors × 2 arms (14,022 calls), 02:42 JST 1 Oct to 10:20 JST 2 Oct; 32.6 GPU-hours of the 52 authorised. Results on the next slide.</p>
   <p class="note">MMR status is descriptive; no test was registered.</p>
 </div><figure>{img('e2_gate.png', 'per-donor held-out balanced accuracy in the colon study')}</figure></div>
-""", """The colon study repeats the lung design on the nineteen-donor cohort. Its registration was reviewed and approved before any GPU work. Five new fold classifiers were fine-tuned from the base model with the lung recipe unchanged. Pooled held-out balanced accuracy was 0.904, every donor was above chance, and the lowest donor, C134, at 0.655, also had the fewest tumour T cells. The no-op gate gave exactly zero. Mismatch-repair status is marked for description only; the lowest three donors are all MMR-proficient, but no test was registered and we draw no conclusion. The perturbation run is in progress and no result is shown. Sources: the colon classifier gate file at commit 2c104ab, the E2 interim report and the registration.""")
+""", """The colon study repeats the lung design on the nineteen-donor cohort. Its registration was reviewed and approved before any GPU work. Five new fold classifiers were fine-tuned from the base model with the lung recipe unchanged. Pooled held-out balanced accuracy was 0.904, every donor was above chance, and the lowest donor, C134, at 0.655, also had the fewest tumour T cells. The no-op gate gave exactly zero. Mismatch-repair status is marked for description only; the lowest three donors are all MMR-proficient, but no test was registered and we draw no conclusion. The perturbation run finished at 10:20 Japan time on 2 October, using 32.6 of the 52 GPU-hours authorised; its results are on the next slide. Sources: the colon classifier gate file at commit 2c104ab, the E2 interim report and the registration.""")
 
+add("plain", 1.6, 4, f"""
+<h2>Colon results: random genes opposed in the same direction but not stably; the lung gene pattern did not replicate</h2>
+<div class="split bulk zf"><figure>{img('e2_results.png', 'colon random genes, deletion against overexpression; lung reference genes, colon deletion shift')}</figure><div>
+  <p><b>Random genes (primary):</b> ρ = −0.245, one-sided p = 0.0067 (100,000 permutations); all 100 leave-one-out tests pass; significant in 78% of 10,000 resamples, below the registered 95%. <code>control_draw_sensitive_open</code>: direction as in lung, not stable; open. {badge('open', 'open')}</p>
+  <p>Lung gave −0.593. The control genes, a more highly detected set, were also negative (sign-only check).</p>
+  <p><b>Lung reference genes:</b> 10 testable; 3 keep their lung deletion direction (p = 0.95; the bar was 9 of 10). <code>pattern_not_replicated</code>. Seven opposite signs are within chance (P = 0.17). {badge('fail', 'not replicated')}</p>
+  <p><b>Panel genes in colon:</b> 1 of 28 dose-concordant (PRF1, toward normal; it was <code>OPEN</code> in lung). Lung against colon deletion medians, 27 genes: ρ −0.29, compatible with zero.</p>
+</div></div>
+<p class="foot">Readings were fixed before the run. A colon–lung difference is not attributable to tissue alone: study, dissociation, chemistry, annotation, null-gene population and fold models all differ, and 19 donors give less power per gene than 43. New fold models, so the lung models were not tested. Effects are a few thousandths of cosine similarity in both tissues.</p>
+""", """The colon perturbation run finished at 10:20 Japan time on 2 October, and the results passed internal review. The primary question was whether random genes give opposed deletion and overexpression effects in colon as they do in lung. They do in direction: the rank correlation was minus 0.245, with a one-sided p of 0.0067, and every leave-one-out test passed. But it is much weaker than in lung, and in only 78 percent of resamples did it stay significant, against the 95 percent we registered. So the registered reading is that the direction matches lung but the result is not stable, and it stays open. The point cloud shows why: most genes sit near zero, and a few genes with large overexpression shifts carry the trend. The second question was whether the lung reference genes keep their direction. Three of ten did, where nine were needed, so the lung gene pattern did not replicate. Seven opposite signs out of ten is within what chance gives, so this does not show a reversal either, and across the 27 panel genes tested in both tissues the lung and colon deletion medians are not detectably correlated. One panel gene, PRF1, reached a dose-concordant status in colon; it was open in lung. None of these differences can be put down to tissue, because almost everything else about the two studies differs too, and colon has fewer donors. So the lung caution holds in colon: opposed deletion and overexpression shifts are not on their own evidence of a specific effect, and gene-level statuses from one tissue should not be carried to another without testing. Sources: the E2 results report, the H2b and H2c result files and the Panel B outcome rows on geneformer-lung-tcell main, merge 4cce44a, results commit b7369cb.""")
 add("plain", 1.2, 4, f"""
 <h2>What the results support, and what they do not</h2>
 <div class="two">
@@ -299,28 +309,18 @@ add("plain", 1.2, 4, f"""
       <li>13 of 34 testable T-cell genes exceed their matched controls, stably.</li>
       <li>Deletion and overexpression give opposed effects for random genes.</li>
       <li>Colon, 19 donors: the tumour/normal separation is learnable (0.904; 19 of 19).</li>
+      <li>Colon: the lung reference-gene pattern did not replicate (3 of 10 kept their lung direction).</li>
     </ul></div>
   <div class="card open"><h3>{badge('open', 'Not shown')}</h3>
     <ul class="tight">
       <li>That any gene regulates T-cell state. A shift in embedding space is not a mechanism.</li>
-      <li>Whether the opposed effects come from the model or from lung tissue (colon run pending).</li>
+      <li>Whether the opposed effects come from the model or from lung tissue: in colon they appear in the same direction but weaker and not stable (open).</li>
       <li>What the classifier reads: T-cell state, ambient RNA or T-cell subset composition.</li>
       <li>Whether the lung models generalise to new lung donors.</li>
     </ul></div>
 </div>
-""", """In lung, the classifier works on held-out donors, thirteen T-cell genes exceed their matched controls, and the opposed effects of the two perturbations are generic. In colon, the classifier also works. None of this shows that a gene regulates T-cell state. We also do not know whether the classifier reads T-cell state, ambient RNA or differences in subset composition between tissues, and we have not tested the lung models on new lung donors. Sources: the balanced-donor report and the colon interim report.""")
+""", """In lung, the classifier works on held-out donors, thirteen T-cell genes exceed their matched controls, and the opposed effects of the two perturbations are generic. In colon, the classifier also works, and the lung gene pattern did not replicate; the opposed effects appear in the same direction but did not reach the registered stability bar, so that question stays open. None of this shows that a gene regulates T-cell state. We also do not know whether the classifier reads T-cell state, ambient RNA or differences in subset composition between tissues, and we have not tested the lung models on new lung donors. Sources: the balanced-donor report and the colon interim report.""")
 
-add("plain", 0.9, 4, """
-<h2>The possible colon outcomes and their readings were fixed before the run</h2>
-<div class="two">
-  <div class="card"><h3>Random genes (primary)</h3>
-    <p><b>Opposed in colon as well:</b> the effect is more likely a property of the model and design than of lung tissue.</p>
-    <p><b>Not opposed:</b> tissue cannot be identified as the cause; study, processing and fold models also differ.</p></div>
-  <div class="card"><h3>Lung reference genes</h3>
-    <p>If 10 are testable, the lung pattern counts as repeated only if at least 9 keep their lung direction (8 of 9 if 9 are testable).</p>
-    <p>Results are reported only after independent review.</p></div>
-</div>
-""", """These readings were written into the registration before the run started. If random genes are also opposed in colon, the effect more likely belongs to the model and the design. If they are not, tissue is only one of several differences between the studies, so we could not attribute the change to it. The lung reference genes count as repeating only at nine of ten. Sources: the colon study registration, sections 6.2, 6.3 and 7.""")
 
 # ---------- 5. Bulk RNA-seq ----------
 add("plain", 1.1, 5, f"""
@@ -381,7 +381,7 @@ add("plain", 1.2, 6, f"""
 """, """Each criterion on the left is now lab practice, and each is tied to a documented episode on the right. These are established as practice in our lab, with sources for every row. They have not been tested by other groups, and some, such as the 95 percent stability threshold, are choices rather than derived results.""")
 
 todo = "".join(f"<tr><td>{badge(s, l)}</td><td>{q}</td><td>{h}</td></tr>" for s, l, q, h in [
-    ("open", "running", "Are the opposed effects a property of the model or of lung?", "Colon study (E2): gate passed, results pending"),
+    ("open", "open", "Are the opposed effects a property of the model or of lung?", "Colon (E2): same direction, weaker, not stable; lung gene pattern not replicated"),
     ("open", "blocked", "Do the lung models generalise to new lung donors?", "E1: the one candidate dataset is not accessible"),
     ("open", "planned", "Are the opposed effects the same for an unrelated goal?", "Swap the goal centroid"),
     ("open", "planned", "Is the 13-gene result cell state or T-cell subset composition?", "Re-analyse within T-cell subsets"),
@@ -393,7 +393,7 @@ add("plain", 1.3, 6, f"""
 <h2>Summary 2: what remains to be tested</h2>
 <table class="tbl compact"><tr><th>Status</th><th>Question</th><th>Approach</th></tr>{todo}</table>
 <p class="foot">All rows but the last are open. The bulk row has a result: not supported in this design.</p>
-""", """This is what we do not yet know. The colon study is running, with its gate passed. Transfer to new lung donors is blocked by data access. Three studies are planned with little or no new GPU work: swapping the goal, re-analysing within T-cell subsets, and comparing the classifier with an interpretable baseline built from published T-cell programs. Model size and positive controls have not started; without positive controls, a negative result is hard to interpret. The bulk RNA-seq row now has a result: across two registered tests on 55 knockouts, the bulk network did not recover regulator-specific effects, and its one weak positive did not replicate. Sources: the next-cycle proposal, the independent-data design and the E0 feasibility report.""")
+""", """This is what we do not yet know. The colon study has finished: random genes were opposed in the same direction as in lung but not stably, so the first question stays open, and the lung gene pattern did not replicate. Transfer to new lung donors is blocked by data access. Three studies are planned with little or no new GPU work: swapping the goal, re-analysing within T-cell subsets, and comparing the classifier with an interpretable baseline built from published T-cell programs. Model size and positive controls have not started; without positive controls, a negative result is hard to interpret. The bulk RNA-seq row now has a result: across two registered tests on 55 knockouts, the bulk network did not recover regulator-specific effects, and its one weak positive did not replicate. Sources: the next-cycle proposal, the independent-data design and the E0 feasibility report.""")
 
 add("plain", 1.3, 6, f"""
 <h2>These results could form one methods paper on evaluating in-silico perturbation</h2>
@@ -410,17 +410,17 @@ add("plain", 1.3, 6, f"""
     <div class="pf pass"><b>Fig. 7</b> Bulk network ISP against two knockout sets</div>
   </div>
 </div>
-""", """If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. A negative colon result would change the paper's emphasis rather than remove it, because the lung evidence and the documented failure modes stand on their own.""")
+""", """If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. The colon result, open on the primary question and not replicated for the lung genes, changes the paper's emphasis rather than removing it, because the lung evidence and the documented failure modes stand on their own.""")
 
 add("end", 0.6, None, """
 <h2 class="endh">Summary</h2>
 <ol class="endlist">
   <li>In lung, random genes give opposed deletion and overexpression effects (ρ −0.59 to −0.61). Gene-level claims must exceed this baseline.</li>
-  <li>Six evaluation criteria, each traced to a documented error, are now lab practice. In colon the instrument passed its gates; results are pending.</li>
+  <li>Six evaluation criteria, each traced to a documented error, are now lab practice. In colon, random genes were opposed in the same direction but not stably (open); the lung gene pattern did not replicate.</li>
   <li>On bulk RNA-seq, a simple network model did not recover regulator-specific knockout effects in two registered tests (55 knockouts); the first test's weak signal did not replicate.</li>
 </ol>
 <div class="byline">Every number is sourced in SOURCES.md in this talk's folder.</div>
-""", """To summarise: the opposed effects of the two perturbations in random genes are the baseline that any gene-level claim has to exceed. The six criteria came from our own errors and are now how we evaluate every run; the colon study has passed its gates and its results are pending. On bulk RNA-seq, two registered tests against measured knockouts did not support regulator-specific prediction, and the first test's weak signal did not replicate. Thank you; I am glad to take questions.""")
+""", """To summarise: the opposed effects of the two perturbations in random genes are the baseline that any gene-level claim has to exceed. The six criteria came from our own errors and are now how we evaluate every run; in colon, random genes were opposed in the same direction as in lung but not stably, so that question stays open, and the lung gene pattern did not replicate. On bulk RNA-seq, two registered tests against measured knockouts did not support regulator-specific prediction, and the first test's weak signal did not replicate. Thank you; I am glad to take questions.""")
 
 add("plain", 0.3, None, """
 <h2>Glossary</h2>
@@ -512,7 +512,7 @@ h2 .chk{margin-right:8px;transform:translateY(-3px)}
 .pf{font-size:20px;border-radius:10px;padding:12px 14px;background:#faf7f0;border-left:6px solid var(--pass)} .pf.open{border-left:6px dashed var(--open)}
 .gloss{display:grid;grid-template-columns:330px 1fr;gap:8px 24px} .gloss dt{font-family:"Iowan Old Style",Georgia,serif;font-weight:600;font-size:22px} .gloss dd{margin:0;font-size:20.5px;line-height:1.35}
 .narrow{max-width:1040px}
-.split.bulk{grid-template-columns:1.05fr 0.95fr;gap:22px;align-items:center} .split.bulk figure img{max-height:540px;width:auto;max-width:100%;display:block;margin:0 auto} .split.bulk p{font-size:17.5px;line-height:1.32;margin:0 0 8px} .tbl.mini{font-size:17px;margin:4px 0 10px} .tbl.mini td,.tbl.mini th{padding:4px 8px;font-size:16.5px} .tbl.mini .badge{font-size:14px;padding:2px 9px}
+.split.bulk{grid-template-columns:1.05fr 0.95fr;gap:22px;align-items:center} .split.bulk figure img{max-height:540px;width:auto;max-width:100%;display:block;margin:0 auto} .split.bulk p{font-size:17.5px;line-height:1.32;margin:0 0 8px} .split.bulk.zf{grid-template-columns:1fr 1fr;gap:26px} .split.bulk.zf p{font-size:16.5px;line-height:1.3;margin:0 0 9px} .split.bulk.zf figure img{max-height:468px} .tbl.mini{font-size:17px;margin:4px 0 10px} .tbl.mini td,.tbl.mini th{padding:4px 8px;font-size:16.5px} .tbl.mini .badge{font-size:14px;padding:2px 9px}
 .slide .card .stamp{font-size:15px;padding:2px 8px}
 .split.wide{grid-template-columns:0.72fr 1.45fr;gap:26px} .split.wide p{font-size:21.5px;line-height:1.38;margin:0 0 12px} .split.wide .lead{font-size:22.5px}
 figure.full img{width:100%;display:block;margin:0 auto 14px} figure.full.slim img{width:80%;margin-bottom:10px}

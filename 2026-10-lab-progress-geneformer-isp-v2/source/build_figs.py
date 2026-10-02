@@ -39,7 +39,7 @@ def stamp(ax, text="Schematic, not data"):
 
 
 def save(fig, name):
-    fig.savefig(os.path.join(OUT, name), dpi=170); plt.close(fig)
+    fig.savefig(os.path.join(OUT, name), dpi=170, metadata={"Software": None}); plt.close(fig)
 
 
 def fig_cell_ranking():
@@ -174,7 +174,7 @@ def fig_gate_strip():
         ax.text(i + 0.31, pooled, f"{pooled*100:.1f}%", va="center", fontsize=16)
     ax.axhline(0.50, color=FAIL, ls=":", lw=1.6); ax.text(1.62, 0.508, "coin toss (50%)", fontsize=14, ha="right", color=FAIL)
     ax.set_xticks([0, 1]); ax.set_xticklabels(["Lung\n43 patients", "Colon\n19 patients"])
-    ax.set_ylabel("right answers, both groups counted equally"); ax.set_ylim(0.45, 1.01); ax.set_xlim(-0.55, 1.68)
+    ax.set_ylabel("right answers,\nboth groups counted equally", fontsize=16); ax.set_ylim(0.45, 1.01); ax.set_xlim(-0.55, 1.68)
     ax.set_yticks([0.5, 0.6, 0.7, 0.8, 0.9, 1.0]); ax.set_yticklabels(["50%", "60%", "70%", "80%", "90%", "100%"])
     ax.set_title("Each dot: one patient the model never saw", fontsize=15, loc="left")
     fig.tight_layout(); save(fig, "gate_strip.png")

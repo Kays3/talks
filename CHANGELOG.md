@@ -7,6 +7,16 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Updated versions 1 to 4 on 2026-10-02 with the reviewed results of the colon perturbation study (E2;
+Kays3/geneformer-lung-tcell `main`, merge `4cce44a`). Random genes were
+opposed in the same direction as in lung (rho -0.245, one-sided p 0.0067) but stayed significant in only
+78% of resamples against the registered 95%, so the registered reading is `control_draw_sensitive_open`;
+3 of 10 lung reference genes kept their lung direction (9 were needed), so `pattern_not_replicated`.
+Versions 3 and 4 replace the slide of pre-specified readings with a results slide and a data figure drawn
+from three copied result files; versions 1 and 2 replace their running-status slide. Summaries, open
+questions and handouts are updated. Version 1 also adopts the wording "negative (the anti-correlation did
+not appear)", and the version 2 gate-strip figure no longer clips its y-axis label.
+
 Updated version 4 on 2026-10-02 with the TE arm of the Freimer T-cell knockout test (Geneformer_TE
 `main` merge `c17d39b`, after science and numbers review). Slide 34 now shows the result with a data
 figure drawn from four copied tables: the registered reading is `TE_RECOVERED_NONSPECIFIC`; a post hoc

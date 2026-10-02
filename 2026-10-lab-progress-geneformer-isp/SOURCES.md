@@ -44,3 +44,17 @@ Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit is named
 | 11 | Overexpress inserts into every cell, 14,738 of 15,179 calls; "Prior art in this repository, missed." | G `balanced_donor_luad/registration/PHASE5_ISP_REGISTRATION.md`, Amendment 3h (b2473ef) |
 | 12 | 43 donors, 100 cells per tissue, 316M; BA 0.825, 43/43; Panel A 13 of 15 untestable; 13 of 34 testable stable; controls rho -0.62 | R `balanced-donor-null-imrad-report-20260930.md`, sections 2.1, 3.2-3.4 |
 | 12 | ISP-STD-1 adopted 2026-09-28; S100 run (do ambient-high S100 genes beat their matched controls more than ambient-low ones?) negative, p = 6/70 and 34/70 | `isp-outcome-criteria.md` header; G at 53adee2 `.../results_s100_luad_20260928/RESULT.md` lines 1-8 |
+
+## E2 results (added 2 October 2026)
+
+E2R = Kays3/geneformer-lung-tcell `main`, merge `4cce44a` of PR #45 (branch `analysis/e2-pelka-crc-20261001`; results commit `b7369cb`, files unchanged at the merge, checked by sha256), folder `pelka_crc_e2/results/`, and the internal E2 results report `geneformer-e2-pelka-20261002.md` (passed review 2 October 2026, 12:39 JST [03:39 UTC]). Upstream sha256: `h2b_null_result.json` 48d036a8db55b1f9921f4f1250b4b57188c6c036e6f7a681db6d7faf6ad3461e; `h2c_result.json` 6e687f91059f52e1635ab27378af23e291bba0e21986cbff04f3dfa5ad4a35ab; `panel_b/outcome_rows.json` 79a8cb08979fbef8a501665ba54b109e8110bf190614e4f46da13c7605d2caa8.
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 23 | Random genes (H2b, primary): Spearman ρ −0.24522, shown −0.245 (−0.25 on the lay slide); one-sided permutation p 0.006740 (100,000 permutations), shown 0.0067; 100 of 100 estimable; leave-one-out 100 of 100 pass; bootstrap stable fraction 0.7791 of 10,000, shown 78%, against the registered 0.95; status `control_draw_sensitive_open` | E2R `h2b_null_result.json` key `primary`; registration (`E2_REGISTRATION.md`, 8b11d5d) sections 6.2 and 7 |
+| 23 | Control genes also negative (ρ −0.531, 231 of 241 estimable), sign-only check; populations differ, magnitudes not compared | E2R `h2b_null_result.json` key `validity_check_318_control_genes` (the key name and its note carry LUAD labels; E2 has 241 unique controls, `design.json` strata) |
+| 23 | Lung reference genes (H2c): 10 testable of 13; 3 keep their lung deletion sign (GZMA, LCK, CD247); exact one-sided binomial p 121/128 = 0.95; bar 9 of 10; reading `pattern_not_replicated`; 7 or more of 10 opposite by chance: 176/1024 = 0.17 | E2R `h2c_result.json` keys `n_tested`, `del_agree`, `p_exact`, `reading`, `per_gene`; report, Discussion |
+| 23 | Panel genes in colon: 1 of 28 dose-concordant (PRF1 `T_CELL_SIGNAL_TOWARD`, `COHERENT`); PRF1 `OPEN` in lung | E2R `panel_b/outcome_rows.json` (status counts: 1 TOWARD, 1 DELETION_ONLY, 26 OPEN, 4 NOT_ESTIMABLE_CONTROLS, 7 NOT_RUN); `h2c_result.json` key `descriptive.status_table` |
+| 23 | Run: 369 genes × 19 donors × 2 operations = 14,022 calls; finished 2026-10-02 01:20:55 UTC = 10:20 JST; 110,083 GPU-s ISP + 7,180 s preparation = 32.6 GPU-h of the 52 authorised | E2R `isp_compute.txt`, `isp_finished_utc.txt` |
+| 23 | A colon–lung difference is not attributable to tissue alone (study, dissociation, chemistry, annotation, null-gene population, fold models; 19 against 43 donors); new fold models, so the lung models were not tested | registration section 10; report, Discussion |
+| 25, 28 | Summary, open-question and closing statements on the colon study | rows above |

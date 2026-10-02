@@ -19,7 +19,7 @@
 
 **What we can say.** In lung (43 patients) the model separates tumour from normal T cells in unseen patients (balanced accuracy 0.825, all 43 above chance); 13 of 34 testable T-cell genes move cells more than their look-alikes, stably; and the opposed effects of the two edits are generic. In colon (19 patients, new models) the split is learnable too (0.904, 19 of 19). **What we cannot say:** that any gene controls T-cell state; what the classifier reads (T-cell state, ambient RNA or T-cell subset mix); whether the lung models work on new lung patients.
 
-**Running now.** The colon perturbation test (369 genes, 19 patients) started at 02:42 JST on 1 October and should finish on the morning of 2 October. No result is reported here.
+**Colon results (after review).** Random genes were opposed again (rank correlation −0.25; lung −0.59) but held in only 78% of resamplings, short of the 95% required: open. Of 10 lung reference genes, 3 kept their lung direction (9 required): the lung pattern did not repeat. Tissue cannot be blamed: study, handling, models and patient numbers differ.
 
 **Still to test.** Whether the opposed effects belong to the model or to lung (colon run); transfer to new lung patients (blocked: data not accessible); the same effects under an unrelated goal; cell state versus T-cell subset mix; a readable baseline from published T-cell programs (TCAT, Kotliar et al. 2025); model size (104M vs 316M parameters); positive controls and real gene-editing screens. Together these could become one methods paper, working title "Opposite by default".
 
