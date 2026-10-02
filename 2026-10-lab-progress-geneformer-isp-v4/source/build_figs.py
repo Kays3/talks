@@ -411,7 +411,7 @@ def fig_te_pipeline():
              ["single cells,\nTE counts", "TE-low vs high\nclassifier", "delete or\noverexpress", "shift toward\nTE-high"]),
             ("Bulk network", "linear, CPU", FAIL, "-", "run: fish, T cells",
              ["bulk genes\n+ TE families", "ridge network\nper stratum", "clamp one\nregulator", "TE shift vs\nrandom genes"]),
-            ("Ground truth", "measured", OPEN, "--", "running",
+            ("Ground truth", "measured", OPEN, "--", "1 result, 1 running",
              ["published\nknockouts", "re-count TEs\n(multimapping)", "differential\nexpression", "compare with\nprediction"])]
     w, h, gap, x0 = 2.12, 1.12, 0.3, 2.45
     for r, (name, sub, col, ls, state, steps) in enumerate(rows):
@@ -497,6 +497,65 @@ def fig_te_gill():
     return out
 
 
+ZF_LABEL = {"atrx_MPNST_2019": "atrx tumour", "dnmt1_EC_2022": "dnmt1 EC", "dnmt1_HE_2022": "dnmt1 HE",
+            "dnmt1_HSC_2022": "dnmt1 HSC", "dnmt1_larva_2023": "dnmt1 larva", "dnmt1_liver_2020": "dnmt1 liver",
+            "dnmt3ba_MO_2025": "dnmt3ba MO", "dnmt3bb1_MO_2017": "dnmt3bb.1 MO", "ezh2_MZ_24hpf_2019": "ezh2 MZ",
+            "hUHRF1_OE_liver_2023": "hUHRF1 OE liver", "kdm1a_23095_2022": "kdm1a 23095", "kdm1a_36433_2022": "kdm1a 36433",
+            "mettl3_MO_EC_2017": "mettl3 MO", "uhrf1_larva_2017": "uhrf1 larva 2017", "uhrf1_larva_2020": "uhrf1 larva 2020",
+            "uhrf1_liver_2020": "uhrf1 liver 2020", "uhrf1_liver_2023": "uhrf1 liver 2023"}
+
+
+def fig_te_zebrafish():
+    """Zebrafish ground truth (Geneformer_TE 08, main 246c3e4): TE families up/down and TE-share change per study."""
+    rows = read_tsv("te_zf_08_study_te_response.tsv")
+    flag = {r["study_id"]: r["flag_mapping_gap"] == "True" for r in read_tsv("te_zf_08c_qc_by_arm.tsv")}
+    assert len(rows) == 17 and sum(flag.values()) == 3
+    order = ["uhrf1_larva_2017", "uhrf1_larva_2020", "uhrf1_liver_2020", "uhrf1_liver_2023", "dnmt1_liver_2020",
+             "dnmt1_larva_2023", "dnmt1_EC_2022", "dnmt1_HE_2022", "dnmt1_HSC_2022", "dnmt3ba_MO_2025", "dnmt3bb1_MO_2017",
+             "mettl3_MO_EC_2017", "kdm1a_23095_2022", "kdm1a_36433_2022", "ezh2_MZ_24hpf_2019", "atrx_MPNST_2019",
+             "hUHRF1_OE_liver_2023"]
+    d = {r["study_id"][3:]: r for r in rows}
+    assert sorted(order) == sorted(d)
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.6, 7.2), sharey=True, gridspec_kw={"width_ratios": [1.2, 1]})
+    y = np.arange(len(order))[::-1]
+    n_lean, n_shift = 0, 0
+    for yi, k in zip(y, order):
+        r = d[k]; up, dn = int(r["n_sig_up"]), int(r["n_sig_down"])
+        lean = r["fdr_binom"] != "" and float(r["fdr_binom"]) < 0.05
+        n_lean += lean
+        a1.barh(yi, np.log10(up + 1), color=INK if lean else LIGHT, height=0.62)
+        a1.barh(yi, -np.log10(dn + 1), color="#7d93ad" if lean else LIGHT, height=0.62)
+        a1.text(np.log10(up + 1) + 0.05, yi, str(up), va="center", fontsize=13)
+        a1.text(-np.log10(dn + 1) - 0.05, yi, str(dn), va="center", ha="right", fontsize=13)
+        rc, lo, hi = (float(r[c]) for c in ("te_share_rel_change_pct", "te_share_rel_ci95_low", "te_share_rel_ci95_high"))
+        q = float(r["fdr_te_share"]); sig = q < 0.05; n_shift += sig
+        lr = lambda v: np.log2(1 + v / 100)
+        L, H = max(lr(lo), -2.2), min(lr(hi), 2.2)
+        a2.plot([L, H], [yi, yi], color=INK if sig else GREY, lw=2.4 if sig else 1.6)
+        a2.scatter(lr(rc) if abs(lr(rc)) < 2.2 else np.sign(lr(rc)) * 2.2, yi, s=60 if sig else 38,
+                   color=INK if sig else GREY, zorder=5, marker="o" if abs(lr(rc)) < 2.2 else ">")
+        if sig:
+            a2.text(H + 0.08, yi, f"+{rc:.1f}%\nFDR {q:.3f}", va="center", fontsize=13, weight="bold", linespacing=1.0)
+    assert n_lean == 9 and n_shift == 1
+    a1.axvline(0, color=INK, lw=1)
+    lim = np.log10(600)
+    a1.set_xlim(-lim - 1.05, lim + 0.85)
+    tk = [100]
+    a1.set_xticks([-np.log10(t + 1) for t in tk[::-1]] + [np.log10(t + 1) for t in tk])
+    a1.set_xticklabels([str(t) for t in tk[::-1]] + [str(t) for t in tk], fontsize=12.5)
+    a1.set_yticks(y); a1.set_yticklabels([ZF_LABEL[k] + (" †" if flag["ZF_" + k] else "") for k in order], fontsize=14)
+    a1.set_xlabel("TE families\ndown | up (log scale)", fontsize=13.5)
+    a1.set_title(f"Families called\n(dark: lean, {n_lean} of 17)", fontsize=13.5, loc="left")
+    a2.axvline(0, color=INK, lw=1)
+    a2.set_xlim(-2.3, 2.3)
+    a2.set_xticks([-2, -1, 0, 1, 2]); a2.set_xticklabels(["÷4", "÷2", "×1", "×2", "×4"], fontsize=12.5)
+    a2.set_xlabel("perturbed ÷ control\n(95% CI)", fontsize=13.5)
+    a2.set_title(f"TE share of reads\n({n_shift} of 17 shifts)", fontsize=13.5, loc="left")
+    a2.axhline(0.5, color=LIGHT, lw=1)
+    fig.tight_layout(); save(fig, "te_zebrafish.png")
+    return n_lean, n_shift
+
+
 if __name__ == "__main__":
     fig_pipeline(); fig_tokenise(); fig_isp_mech(); fig_criteria(); fig_finetune(); fig_isp(); fig_baseline()
     fig_one_patient(); fig_unpaired(); fig_bulk_mix()
@@ -508,3 +567,4 @@ if __name__ == "__main__":
     fig_te_pipeline()
     print("te_null", fig_te_fish_null())
     print("te_gill", fig_te_gill())
+    print("te_zf", fig_te_zebrafish())
