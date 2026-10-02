@@ -7,6 +7,11 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Rebuilt on 2026-10-02 the outputs that still carried the old affiliation after the affiliation change:
+`2026-08-jsdp-sclc-tcell-poster/poster.html` (edited in place, it has no builder) and `poster.pdf`
+(WeasyPrint 69.0, as before), and `slides.html` and `slides.pdf` of lab progress versions 1 to 3, with
+their manifests. The extracted text changes only in the affiliation lines.
+
 Updated version 4 on 2026-10-02 with a cross-project synthesis slide (39) before the closing summary:
 seven tests across the two projects, where predictions tracked the data the controls did too, and no
 Geneformer prediction has been checked against a measured perturbation. It adds no new number. The deck
