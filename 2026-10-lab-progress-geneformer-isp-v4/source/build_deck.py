@@ -499,6 +499,18 @@ add("plain", 1.3, 7, f"""
 </div>
 """, """If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. The colon result, open on the primary question and not replicated for the lung genes, changes the paper's emphasis rather than removing it, because the lung evidence and the documented failure modes stand on their own.""")
 
+add("plain", 1.5, 7, f"""
+<h2>Seven tests: the bulk network's agreement was matched by its controls; Geneformer's lung gene results did not replicate</h2>
+<ul class="synth">
+  <li><b>Two kinds of test.</b> Bulk linear network, five tests: four compare predictions with measured perturbations, one is a control test of the fish regulator calls. Geneformer, two tests: perturbation outputs against matched controls and a random-gene null, then a second tissue. No Geneformer prediction has been checked against a measured perturbation.</li>
+  <li><b>Bulk network, human knockouts.</b> Freimer <code>RECOVERED_NONSPECIFIC</code> (gain over a shuffled network +0.039, p = 0.19); Weinstock <code>NOT_RECOVERED</code> (all four tests fail); Freimer TE subfamilies <code>TE_RECOVERED_NONSPECIFIC</code> (gain 0.007, p = 0.34). As a group the model did not beat a shuffled network in any of the three.</li>
+  <li><b>Fish regulator calls.</b> Indistinguishable from expression-matched random genes (p = 0.70; 0 of 30 after FDR); their directions did not track zebrafish knockouts (ρ −0.18, p = 0.50; 4 of 9 studies).</li>
+  <li><b>Geneformer, lung to colon.</b> The classifier transfers (balanced accuracy 0.825, then 0.904); the deletion/overexpression anti-correlation appears in the same direction but is not stable (ρ −0.593, then −0.245; 78% of resamples against a 95% bar); the lung gene pattern did not replicate (3 of 10 keep their sign, within chance).</li>
+  <li><b>TE biology, exploratory.</b> Gill TE share lower after developmental CO2 (−11.4% [−17.2, −5.1]; 54 libraries; not decomposed into TE and gene reads). Zebrafish loss-of-function leans 6 of 8 up (p = 0.29), consistent with derepression and not significant.</li>
+</ul>
+<p class="foot">The seven tests share data and methods and amount to three or four questions. At this power, a negative or open reading leaves room for effects the registered controls could not separate.</p>
+""", """This slide puts the two projects side by side. The bulk network was tested five times, four of them against measured perturbations, and Geneformer twice, against controls and then in a second tissue; no Geneformer prediction has yet been checked against a measured perturbation. For the bulk network, wherever predictions tracked the measured effects, a shuffled network or co-expression alone tracked them as well. For Geneformer, the random-gene null showed a built-in sign structure, and the lung gene results did not replicate in colon. Replication was the informative step in both lines. Weinstock removed the weak agreement seen in Freimer, and colon did not reproduce the lung gene statuses, with low power and a real difference not separable. The two TE-biology items are exploratory. Several of the checks that shaped these readings were added in review and are post hoc, such as the control-only null, the mapping covariate and the read-total decomposition; none changed a registered status. What would change the picture is a measured single-cell perturbation ground truth for Geneformer, such as CRISPR or Perturb-seq screens in T cells; a full-length, stranded, total-RNA perturbation dataset with a control-only null registered in advance for the TE question; and better-replicated zebrafish loss-of-function studies. Sources: the cross-project synthesis report and the merged reports behind each line, all already cited on earlier slides.""")
+
 add("end", 0.6, None, """
 <h2 class="endh">Summary</h2>
 <ol class="endlist">
@@ -585,7 +597,7 @@ h2 .chk{margin-right:8px;transform:translateY(-3px)}
 .cklist{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px;margin-top:0}
 .ck{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px}
 .ck b{display:block;font-size:24px} .ck div span{display:block;font-size:20px;color:#4a5a6e;line-height:1.3}
-.foot{position:absolute;left:70px;right:70px;bottom:30px;font-size:17px;color:#4a5a6e}
+.foot{position:absolute;left:70px;right:70px;bottom:30px;font-size:17px;color:#4a5a6e} ul.synth{margin:6px 0 0;padding-left:22px} ul.synth li{font-size:19.5px;line-height:1.34;margin:0 0 11px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:6px 0 20px}
 .stamps{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 14px}
 .stamp{display:inline-block;font-family:Menlo,monospace;font-size:17px;padding:5px 12px;border:1.5px solid var(--ink);border-radius:6px}

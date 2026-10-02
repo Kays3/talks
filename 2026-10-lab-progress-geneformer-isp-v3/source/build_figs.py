@@ -357,13 +357,12 @@ def fig_e2_results():
     assert abs(float(spearmanr(d, o)[0]) - pr["rho"]) < 1e-12
     ref = [g for g in c["per_gene"] if g["e2_tested"]]
     assert len(ref) == c["n_tested"] == 10 and sum(g["del_agree"] for g in ref) == c["del_agree"] == 3
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(6.6, 7.6), gridspec_kw={"height_ratios": [1, 1.05]})
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(6.6, 7.6), gridspec_kw={"height_ratios": [1, 1.1]})
     a1.axhline(0, color=GREY, lw=1); a1.axvline(0, color=GREY, lw=1)
     a1.scatter(d, o, s=26, color=INK, alpha=0.75, lw=0)
-    a1.set_xlabel("deletion shift, donor median (×10⁻³)", fontsize=13.5); a1.set_ylabel("overexpression\nshift (×10⁻³)", fontsize=13.5)
-    a1.tick_params(labelsize=12.5)
-    a1.set_title(f"100 random genes: ρ = {pr['rho']:.3f}".replace("-", "−") + f", p = {pr['p_lower_tail']:.4f};\n"
-                 f"stable in {pr['bootstrap_fraction_stable'] * 100:.0f}% of resamples (bar 95%)", fontsize=13, loc="left")
+    a1.set_xlabel("deletion shift, donor median (×10⁻³)", fontsize=15); a1.set_ylabel("overexpression\nshift (×10⁻³)", fontsize=15)
+    a1.tick_params(labelsize=14)
+    a1.set_title("100 random genes", fontsize=15, loc="left")
     ref.sort(key=lambda g: g["e2_del_median"])
     y = np.arange(len(ref))
     a2.axvline(0, color=GREY, lw=1)
@@ -373,11 +372,11 @@ def fig_e2_results():
         a2.plot([r["del_ci_lo"] * 1e3, r["del_ci_hi"] * 1e3], [yi, yi], color=col, lw=2)
         a2.scatter(r["del_median"] * 1e3, yi, s=60, color=col if g["del_agree"] else PAPER, edgecolor=col, lw=2, zorder=5)
     a2.set_yticks(y)
-    a2.set_yticklabels([f"{g['symbol']} ({'toward' if g['luad_del_median'] > 0 else 'away'})" for g in ref], fontsize=13)
-    a2.set_xlabel("colon deletion shift, control-adjusted (×10⁻³, 95% CI)\n← away from normal | toward normal →", fontsize=13)
-    a2.tick_params(axis="x", labelsize=12.5)
-    a2.set_title(f"Lung reference genes, lung direction in brackets:\n{c['del_agree']} of {c['n_tested']} keep it in colon (filled)",
-                 fontsize=13, loc="left")
+    a2.set_yticklabels([f"{g['symbol']} ({'toward' if g['luad_del_median'] > 0 else 'away'})" for g in ref], fontsize=15)
+    a2.set_xlabel("colon deletion shift, control-adjusted\n(×10⁻³, 95% CI)   ← away | toward normal →", fontsize=14.5)
+    a2.tick_params(axis="x", labelsize=14)
+    a2.set_title(f"Lung reference genes (lung direction);\nfilled: kept in colon ({c['del_agree']} of {c['n_tested']})",
+                 fontsize=15, loc="left")
     fig.tight_layout(); save(fig, "e2_results.png")
     return pr["rho"], pr["p_lower_tail"], pr["bootstrap_fraction_stable"], c["del_agree"], c["p_exact"], c["reading"]
 

@@ -1,6 +1,6 @@
 # Evaluating in-silico perturbation with Geneformer: speaker notes
 
-Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 40 slides, about 44 minutes of talk, then 5 to 10 minutes of discussion. Every number is sourced in `SOURCES.md`.
+Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 41 slides, about 45 minutes of talk, then 5 to 10 minutes of discussion. Every number is sourced in `SOURCES.md`.
 
 ## Slide 1. Evaluating in-silico perturbation with Geneformer (about 0.5 min)
 
@@ -154,10 +154,14 @@ This is what we do not yet know. The colon study has finished: random genes were
 
 If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. The colon result, open on the primary question and not replicated for the lung genes, changes the paper's emphasis rather than removing it, because the lung evidence and the documented failure modes stand on their own.
 
-## Slide 39. Summary (about 0.6 min)
+## Slide 39. Seven tests: the bulk network's agreement was matched by its controls; Geneformer's lung gene results did not replicate (about 1.5 min)
+
+This slide puts the two projects side by side. The bulk network was tested five times, four of them against measured perturbations, and Geneformer twice, against controls and then in a second tissue; no Geneformer prediction has yet been checked against a measured perturbation. For the bulk network, wherever predictions tracked the measured effects, a shuffled network or co-expression alone tracked them as well. For Geneformer, the random-gene null showed a built-in sign structure, and the lung gene results did not replicate in colon. Replication was the informative step in both lines. Weinstock removed the weak agreement seen in Freimer, and colon did not reproduce the lung gene statuses, with low power and a real difference not separable. The two TE-biology items are exploratory. Several of the checks that shaped these readings were added in review and are post hoc, such as the control-only null, the mapping covariate and the read-total decomposition; none changed a registered status. What would change the picture is a measured single-cell perturbation ground truth for Geneformer, such as CRISPR or Perturb-seq screens in T cells; a full-length, stranded, total-RNA perturbation dataset with a control-only null registered in advance for the TE question; and better-replicated zebrafish loss-of-function studies. Sources: the cross-project synthesis report and the merged reports behind each line, all already cited on earlier slides.
+
+## Slide 40. Summary (about 0.6 min)
 
 To summarise: the opposed effects of the two perturbations in random genes are the baseline that any gene-level claim has to exceed. The six criteria came from our own errors and are now how we evaluate every run; in colon, random genes were opposed in the same direction as in lung but not stably, so that question stays open, and the lung gene pattern did not replicate. On bulk RNA-seq, two registered tests against measured knockouts did not support regulator-specific prediction, and the first test's weak signal did not replicate. For transposable elements, the same network did no better than random genes in fish, its directions agreed with measured zebrafish TE responses only at chance level, and in the T-cell knockouts the TE shifts mostly stayed within what control libraries show among themselves, CBFB the exception in a check added after the results. Thank you; I am glad to take questions.
 
-## Slide 40. Glossary (about 0.3 min)
+## Slide 41. Glossary (about 0.3 min)
 
 The glossary is for reference and is repeated on the handout.
