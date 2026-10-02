@@ -5,6 +5,35 @@ Versions are dated. Each talk folder's `source/README.md` has the full provenanc
 This repository was published on 2026-09-30 as a single commit, tagged `v2026-09-30`. The
 entries below also describe the earlier versions, which were not published separately.
 
+## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
+
+Updated version 4 on 2026-10-02 with the TE arm of the Freimer T-cell knockout test (Geneformer_TE
+`main` merge `c17d39b`, after science and numbers review). Slide 34 now shows the result with a data
+figure drawn from four copied tables: the registered reading is `TE_RECOVERED_NONSPECIFIC`; a post hoc
+control-only null shows that most knockouts' TE subfamily counts are reachable by chance (CBFB the one
+exception); and 83% of TE counts are intronic, so TE shifts cannot be separated from host-gene
+transcription. No TE test is shown as running. The bulk slide's TE-arm line, the track diagram, the TE
+conclusions, Summary 2, the closing summary, the outline and the handout are updated.
+
+Updated version 4 on 2026-10-02 with the zebrafish ground truth from Geneformer_TE (report at `main`
+`246c3e4`, after science and numbers review). A new slide 33 shows 17 zebrafish perturbation contrasts
+with a data figure drawn from six copied tables: no loss-of-function study shifted the global TE share
+(0 of 16); the one shift, human UHRF1 overexpression, is mostly compositional; loss of DNA-methylation
+regulators leaned toward derepression in 6 of 7 studies in exploratory tests that do not pass correction;
+and the fish network directions agreed with the zebrafish leans at chance level (4 of 9). The running-tests
+slide (now 34) keeps only the Freimer TE arm. The TE conclusions, Summary 2, the closing summary, the
+outline, the track diagram and the handout are updated. The deck has 40 slides.
+
+Added `2026-10-lab-progress-geneformer-isp-v4`: version 3 plus six slides (29 to 34) on transposable
+elements, from the Geneformer_TE project, by Kaisar Dauyey. A diagram shows the project's three tracks
+(single-cell Geneformer, bulk linear network, measured knockouts as ground truth) and their state. Two data
+figures come from merged tables: 30 fish TE regulators against 90 expression-matched random genes in 162
+bulk libraries (no regulator passed), and the TE share of reads by tissue and CO2 group (gill lower after
+developmental exposure; exploratory). The zebrafish knockout panel and the TE re-alignment of the Freimer
+knockouts are shown as running, with what they will test and no results. Summary 2, the closing summary,
+the outline and the glossary are updated, and the bulk slide notes that the TE re-alignment was approved.
+Version 3 is unchanged. The root README index lists it.
+
 ## Unreleased: lab progress report, version 3 (proposed 2026-10-01)
 
 Added `2026-10-lab-progress-geneformer-isp-v3`: "Evaluating in-silico perturbation with Geneformer",
