@@ -411,7 +411,7 @@ def fig_te_pipeline():
              ["single cells,\nTE counts", "TE-low vs high\nclassifier", "delete or\noverexpress", "shift toward\nTE-high"]),
             ("Bulk network", "linear, CPU", FAIL, "-", "run: fish, T cells",
              ["bulk genes\n+ TE families", "ridge network\nper stratum", "clamp one\nregulator", "TE shift vs\nrandom genes"]),
-            ("Ground truth", "measured", OPEN, "--", "1 result, 1 running",
+            ("Ground truth", "measured", OPEN, "--", "2 results",
              ["published\nknockouts", "re-count TEs\n(multimapping)", "differential\nexpression", "compare with\nprediction"])]
     w, h, gap, x0 = 2.12, 1.12, 0.3, 2.45
     for r, (name, sub, col, ls, state, steps) in enumerate(rows):
@@ -556,6 +556,51 @@ def fig_te_zebrafish():
     return n_lean, n_shift
 
 
+def fig_te_freimer():
+    """Freimer TE arm (Geneformer_TE main c17d39b, PR head eef6e18): responsive TE subfamilies per knockout against a
+    post hoc control-only (AAVS1, 1v7) null, and per-knockout rho of the network against its controls."""
+    t = json.load(open(os.path.join(DATA, "te_freimer_10_tests.json")))["primary"]
+    rows = [r for r in read_tsv("te_freimer_10_per_ko.tsv") if r["status"] == "TE_SCORED"]
+    pnull = {r["ko"]: float(r["p_null_1v7"]) for r in read_tsv("te_freimer_null_per_ko.tsv")}
+    null = np.array([int(r["n_resp_te"]) for r in read_tsv("te_freimer_aavs1_null.tsv") if r["design"] == "1v7"])
+    assert len(rows) == t["n_te_scored"] == 15 and len(null) == 512
+    assert abs(float(np.median([float(r["rho_resp_te"]) for r in rows])) - t["P1_rho_resp_median"]) < 1e-9
+    med, p95, f10 = float(np.median(null)), float(np.percentile(null, 95)), float((null >= 10).mean())
+    assert (med, p95, round(f10, 2)) == (7.0, 37.0, 0.25)
+    beat = [r["ko"] for r in rows if pnull[r["ko"]] <= 0.05]
+    assert beat == ["CBFB"]
+    rows.sort(key=lambda r: float(r["n_resp_te"]))
+    y = np.arange(len(rows))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.6, 7.2), sharey=True, gridspec_kw={"width_ratios": [1, 1.15]})
+    a1.axvspan(0, p95, color=LIGHT, zorder=0)
+    a1.axvline(med, color=GREY, lw=1.6, ls="--")
+    a1.axvline(10, color=INK, lw=1, ls=":")
+    for yi, r in zip(y, rows):
+        n = float(r["n_resp_te"]); hit = r["ko"] in beat
+        a1.barh(yi, n, color=INK if hit else "#7d93ad", height=0.62)
+        a1.text(n + 1, yi, f"{n:.0f}", va="center", fontsize=12.5)
+    a1.set_xlim(0, 68)
+    a1.set_yticks(y); a1.set_yticklabels([r["ko"] for r in rows], fontsize=14)
+    a1.set_xlabel("TE subfamilies passing\nthe responsiveness rule", fontsize=13.5)
+    a1.set_title("Shaded: control-only null\n(post hoc), to 95th pct", fontsize=13, loc="left")
+    a1.set_ylim(-1.9, len(rows) - 0.5)
+    a1.text(11.5, -1.25, f"dashed: null median {med:.0f}\ndotted: scored at ≥ 10", fontsize=11, color=INK, va="center",
+            ha="left", linespacing=1.15)
+    a2.axvline(0, color=GREY, lw=1)
+    for col, kw, lab in [("rho_baseline_te", dict(marker="s", s=40, color="#6d8f5e"), "co-expression only"),
+                         ("rho_shuf_median_te", dict(marker="D", s=40, facecolor="none", edgecolor=OPEN, lw=1.6), "shuffled network"),
+                         ("rho_resp_te", dict(marker="o", s=70, color=INK, zorder=5), "network model")]:
+        a2.scatter([float(r[col]) for r in rows], y, label=lab, **kw)
+    a2.set_xlim(-0.35, 0.85); a2.set_xticks([0, 0.4, 0.8])
+    a2.tick_params(axis="x", labelsize=12.5); a1.tick_params(axis="x", labelsize=12.5)
+    a2.set_xlabel("Spearman ρ, predicted vs\nmeasured TE shift", fontsize=13.5)
+    a2.set_title(f"Median ρ {t['P1_rho_resp_median']:.2f};\nshuffled gain {t['P3_delta_shuf_median']:.3f}", fontsize=13, loc="left")
+    fig.legend(*a2.get_legend_handles_labels(), loc="lower center", ncol=3, frameon=False, fontsize=12,
+               scatterpoints=1, handletextpad=0.1, columnspacing=1.0)
+    fig.tight_layout(rect=(0, 0.045, 1, 1)); save(fig, "te_freimer.png")
+    return t["reading"], med, p95, f10, beat
+
+
 if __name__ == "__main__":
     fig_pipeline(); fig_tokenise(); fig_isp_mech(); fig_criteria(); fig_finetune(); fig_isp(); fig_baseline()
     fig_one_patient(); fig_unpaired(); fig_bulk_mix()
@@ -568,3 +613,4 @@ if __name__ == "__main__":
     print("te_null", fig_te_fish_null())
     print("te_gill", fig_te_gill())
     print("te_zf", fig_te_zebrafish())
+    print("te_freimer", fig_te_freimer())

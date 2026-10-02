@@ -38,7 +38,7 @@ figure{max-width:100%}
 <header id="title-block-header">
 <h1 class="title">Evaluating in-silico perturbation with Geneformer</h1>
 </header>
-<style>body{font-size:8.2pt;line-height:1.25;max-width:none} h1{font-size:15pt;margin:0 0 3pt} p{margin:3.8pt 0} table{font-size:8pt}</style>
+<style>body{font-size:8.1pt;line-height:1.24;max-width:none} h1{font-size:15pt;margin:0 0 3pt} p{margin:3.4pt 0} table{font-size:8pt}</style>
 <h1 id="evaluating-in-silico-perturbation-with-geneformer">Evaluating
 in-silico perturbation with Geneformer</h1>
 <p><strong>Lab progress report, version 4, 2 October 2026 · Kaisar
@@ -140,8 +140,7 @@ shifts were 55 to 85 times too small. The sets differ in harvest timing,
 deduplication, counting pipeline and possibly donors, uncontrolled; bulk
 data cannot separate composition from regulation. The
 transposable-element arm was <code>NOT_TESTABLE</code> in that run (no
-deposited TE count table); a re-alignment was approved on 2 October and
-is running.</p>
+deposited TE count table); see below for the re-alignment.</p>
 <p><strong>Transposable elements (Geneformer_TE).</strong> A second
 project asks which regulators set the expression of transposable
 elements (TEs), the repeated sequences that cells keep silenced. The
@@ -167,16 +166,21 @@ derepression in 6 of 8 (p = 0.29), and 6 of 7 for DNA-methylation
 regulators (p = 0.13); none passes FDR, and three studies have
 genotype-linked mapping differences (post hoc flag). The fish network
 directions agreed with the zebrafish leans at chance level (4 of 9;
-Spearman ρ = −0.18, p = 0.50). <strong>Running, no result
-shown:</strong> a TE re-alignment of the Freimer knockouts under rules
-registered before any download.</p>
+Spearman ρ = −0.18, p = 0.50). <strong>Freimer TE arm</strong> (96
+libraries re-aligned; gates passed):
+<code>TE_RECOVERED_NONSPECIFIC</code> (P1 ρ 0.18, p = 0.001; no better
+than a shuffled network, p = 0.34). A post hoc control-only null reaches
+most knockouts’ responsive-subfamily counts; only CBFB exceeds it (p =
+0.010), against 14 of 17 knockouts for genes. 83% of TE counts are
+intronic, so TE shifts cannot be separated from host-gene
+transcription.</p>
 <p><strong>Still to test.</strong> Goal swap; subset re-analysis; an
 interpretable baseline from T-cell programs (TCAT, Kotliar et al. 2025);
 model size (104M vs 316M); positive controls and experimental screens;
 bulk prediction with a composition covariate or single-cell data; TE
-predictions against the Freimer measurements; better-replicated
-zebrafish loss-of-function studies; the single-cell TE track. Possible
-methods paper, working title “Opposite by default”. Every number is
-sourced in <code>SOURCES.md</code>.</p>
+data from full-length total RNA; better-replicated zebrafish
+loss-of-function studies; the single-cell TE track. Possible methods
+paper, working title “Opposite by default”. Every number is sourced in
+<code>SOURCES.md</code>.</p>
 </body>
 </html>
