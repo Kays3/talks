@@ -1,6 +1,6 @@
 # Reading the Current: Geneformer, in-silico perturbation, and how we judge it
 
-Lab progress report, 1 October 2026. Kaisar Dauyey · Shinji Nakaoka (Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University). About 25 minutes of talk on 28 slides, including the project's history from July (the first version was about 21 minutes; the history adds about 4, so the slot needs to allow for it), followed by 5 to 10 minutes of discussion. Written for lab members who are new to Geneformer.
+Lab progress report, 1 October 2026. Kaisar Dauyey · Shinji Nakaoka (Laboratory of Mathematical Biology, Hokkaido University, Japan). About 25 minutes of talk on 28 slides, including the project's history from July (the first version was about 21 minutes; the history adds about 4, so the slot needs to allow for it), followed by 5 to 10 minutes of discussion. Written for lab members who are new to Geneformer.
 
 **Status: progress report, published 1 October 2026.** Slide 23 now gives the reviewed results of the colorectal (E2) perturbation run (updated 2 October 2026), next to the readings registered for each outcome; [CHANGELOG.md](../CHANGELOG.md) says what changed.
 

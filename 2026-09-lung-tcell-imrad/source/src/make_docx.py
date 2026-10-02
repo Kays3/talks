@@ -152,7 +152,7 @@ def build() -> dict:
     para(doc, sub).runs[0].italic = True
     p = doc.add_paragraph()
     p.add_run("Kaisar Dauyey · Shinji Nakaoka").bold = True
-    p = doc.add_paragraph("Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University")
+    p = doc.add_paragraph("Laboratory of Mathematical Biology, Hokkaido University, Japan")
     doc.add_paragraph("Contact: k.dauyey.bio.nu@gmail.com")
     from additions import APPENDIX_START, QUESTIONS_MIN, SLOT_MIN, TIMING, mmss
     doc.add_paragraph(f"Talk length: within {SLOT_MIN} minutes; the time slot itself is not fixed. The main talk "

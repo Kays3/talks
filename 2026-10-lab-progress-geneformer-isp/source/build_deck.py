@@ -25,7 +25,7 @@ S.append(("title", 0.5, f"""
 <div class="kicker">Lab progress report · 1 October 2026</div>
 <h1 class="big">Reading the Current</h1>
 <p class="sub">What three months of Geneformer work taught us<br>about believing a model's answer</p>
-<div class="byline">Kaisar Dauyey · Shinji Nakaoka<br><span>Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University</span></div>
+<div class="byline">Kaisar Dauyey · Shinji Nakaoka<br><span>Laboratory of Mathematical Biology, Hokkaido University, Japan</span></div>
 <div class="rose">✦</div>
 """, """This is a progress report, but I want to tell it as a story, because the most useful thing we have learned since July is not a gene. It is how easily a foundation model gives a convincing answer, and what it took for us to stop being convinced too early. I will start with a few minutes on what Geneformer is, then tell you how the project actually went, including the parts we got wrong. From that history I will draw the rules we now apply, show where we are this week, and finish with places where you could join. The image I will keep returning to is navigation: the model draws a chart, a perturbation nudges a boat, and the hard part is telling our nudge apart from the current that moves every boat."""))
 

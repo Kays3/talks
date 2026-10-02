@@ -1,7 +1,7 @@
 # Paired tumour-vs-normal T cells from 43 patients: which genes does a foundation model read as T-cell state?
 
-Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Faculty of Advanced Life
-Science, Hokkaido University. Contact: k.dauyey.bio.nu@gmail.com
+Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Hokkaido University,
+Japan. Contact: k.dauyey.bio.nu@gmail.com
 
 | What | File |
 |---|---|

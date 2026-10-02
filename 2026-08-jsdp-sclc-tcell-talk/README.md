@@ -1,7 +1,7 @@
 # A foundation model points to antigen presentation in SCLC T-cell dysfunction, and independent tissue agrees
 
-Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Faculty of Advanced Life
-Science, Hokkaido University. Contact: k.dauyey.bio.nu@gmail.com
+Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Hokkaido University,
+Japan. Contact: k.dauyey.bio.nu@gmail.com
 
 | What | File |
 |---|---|

@@ -68,7 +68,7 @@ add("title", 0.5, None, """
 <div class="kicker">Lab progress report · 1 October 2026 · version 2</div>
 <h1 class="big">Reading the Current</h1>
 <p class="sub">What Geneformer's "virtual gene edits" can tell us,<br>and the checks we needed before believing them</p>
-<div class="byline">Kaisar Dauyey · Shinji Nakaoka<br><span>Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University</span></div>
+<div class="byline">Kaisar Dauyey · Shinji Nakaoka<br><span>Laboratory of Mathematical Biology, Hokkaido University, Japan</span></div>
 """, """This is the second version of our progress report. The first was written for people who already use Geneformer; this one is meant for everyone in the room, so I will explain each idea before using it. The story is about a model that always gives an answer, and about how we learned, mostly from our own mistakes, to tell when the answer means something.""")
 
 add("plain", 0.8, 0, """

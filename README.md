@@ -1,7 +1,7 @@
 # Talks
 
 Slides, posters, written reports and abstracts from talks by Kaisar Dauyey and Shinji Nakaoka
-(Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University).
+(Laboratory of Mathematical Biology, Hokkaido University, Japan).
 The links open each file in the browser, so you do not need git to read them.
 
 | Date | Talk | Slides or poster | Report | Abstract |

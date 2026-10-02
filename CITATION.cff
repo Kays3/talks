@@ -5,10 +5,10 @@ type: dataset
 authors:
   - family-names: Dauyey
     given-names: Kaisar
-    affiliation: "Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University"
+    affiliation: "Laboratory of Mathematical Biology, Hokkaido University, Japan"
   - family-names: Nakaoka
     given-names: Shinji
-    affiliation: "Laboratory of Mathematical Biology, Faculty of Advanced Life Science, Hokkaido University"
+    affiliation: "Laboratory of Mathematical Biology, Hokkaido University, Japan"
 repository-code: "https://github.com/Kays3/talks"
 license: CC-BY-4.0
 version: "2026-09-30"

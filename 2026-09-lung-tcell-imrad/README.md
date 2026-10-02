@@ -1,7 +1,7 @@
 # A Foundation-Model T-cell Dysfunction Screen: Translational Candidates, Then a Full Audit
 
-Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Faculty of Advanced Life
-Science, Hokkaido University. Contact: k.dauyey.bio.nu@gmail.com
+Kaisar Dauyey · Shinji Nakaoka, Laboratory of Mathematical Biology, Hokkaido University,
+Japan. Contact: k.dauyey.bio.nu@gmail.com
 
 ## Files
 
