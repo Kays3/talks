@@ -452,9 +452,10 @@ a shift in global TE load, and a follow-up found no candidate gene that
 explains it better than random genes; a thyroid gene set was nominal at
 p 0.025, FDR 0.10, and is a lead only. Sources: the TE-axis treatment
 report and the gene-axis report on Geneformer_TE main.</p>
-<h2 id="slide-33.-zebrafish-ground-truth-losing-a-te-regulator-barely-moved-global-te-load-family-leans-point-weakly-to-derepression-about-1.6-min">Slide
-33. Zebrafish ground truth: losing a TE regulator barely moved global TE
-load; family leans point weakly to derepression (about 1.6 min)</h2>
+<h2 id="slide-33.-zebrafish-ground-truth-no-loss-of-a-te-regulator-shifted-global-te-load-detectably-family-leans-point-weakly-to-derepression-about-1.6-min">Slide
+33. Zebrafish ground truth: no loss of a TE regulator shifted global TE
+load detectably; family leans point weakly to derepression (about 1.6
+min)</h2>
 <p>The zebrafish panel is the first direct measurement in this project
 of what TE regulators do to TEs in a vertebrate. Seventeen published
 contrasts were re-counted with one pipeline, and each was compared only
@@ -463,18 +464,19 @@ reads, none of the sixteen loss-of-function studies shifted after
 correction. The one study that did is the human UHRF1 overexpression,
 and that rise comes mostly from fewer reads assigned to genes; TE reads
 per library did not change. The TE families give a more suggestive
-picture. Among studies with a significant family lean, loss of a
-DNA-methylation regulator pushed families up in six of seven, and in
-five of five once three studies with a genotype-linked mapping
-difference are set aside. No row passes correction, and this pooling was
-defined after the prespecified tests came back nearly empty. Clutch
-blocking, also chosen after an interim look, created one of the upward
-leans. The fish network predictions did not track any of this: the rank
-correlation was minus 0.18, and family leans agreed in four of nine
-studies. With two to five libraries per arm, a firmer test needs five or
-more per arm, stranded libraries and mapping quality balanced across
-arms. Sources: the zebrafish validation report and its tables on
-Geneformer_TE main, commit 246c3e4.</p>
+picture. Among loss-of-function studies with a significant family lean,
+six of eight leaned up, and six of seven when the set is restricted to
+DNA-methylation regulators. No row passes correction, and this pooling
+was defined after the prespecified tests came back nearly empty. Three
+studies carry a genotype-linked difference in mapping rate, flagged by a
+rule set after the fact, so their TE direction cannot be separated from
+library quality. Clutch blocking, also chosen after an interim look,
+created one of the upward leans. The fish network predictions did not
+track any of this: the rank correlation was minus 0.18, and family leans
+agreed in four of nine studies. With two to five libraries per arm, a
+firmer test needs five or more per arm, stranded libraries and mapping
+quality balanced across arms. Sources: the zebrafish validation report
+and its tables on Geneformer_TE main, commit 246c3e4.</p>
 <h2 id="slide-34.-one-test-against-measured-te-responses-is-still-running-no-result-is-shown-about-1.3-min">Slide
 34. One test against measured TE responses is still running; no result
 is shown (about 1.3 min)</h2>
@@ -486,11 +488,15 @@ Two gates come first: if the re-aligned gene counts disagree with the
 deposited ones, the analysis stops, and if fewer than twenty TE
 subfamilies are expressed, the TE arm is reported as not testable. The
 rules were registered at 02:12 Japan time, before any data were
-downloaded. After the code review passed, alignment started on two hosts
-at 02:48 and 02:52; the first counts are expected around a quarter past
-four, and all samples between half past seven and half past ten.
-Sources: the handoff document and the registered amendment A3 for the TE
-arm.</p>
+downloaded. After the code review passed, alignment started on two
+hosts. A check that one sample gives the same counts on both hosts then
+failed, because the deduplication step was not seeded. The seed was
+fixed by an amendment at 04:12 Japan time, the samples already processed
+were redone, alignment resumed at 04:42, and the repeated check gave
+byte-identical counts on both hosts. At 09:44, one host had finished its
+39 sample runs and the other had 47 of 58 done; all samples are expected
+around eleven. Sources: the TE-arm run record, the registered amendments
+A3 and A4.12, and the executing team’s status at 09:44.</p>
 <h2 id="slide-35.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
 35. What the TE work shows so far, and what it does not (about 1.1
 min)</h2>
