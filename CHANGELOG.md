@@ -7,6 +7,11 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Updated version 4 on 2026-10-02 with a cross-project synthesis slide (39) before the closing summary:
+seven tests across the two projects, where predictions tracked the data the controls did too, and no
+Geneformer prediction has been checked against a measured perturbation. It adds no new number. The deck
+has 41 slides.
+
 Updated versions 1 to 4 on 2026-10-02 with the reviewed results of the colon perturbation study (E2;
 Kays3/geneformer-lung-tcell `main`, merge `4cce44a`). Random genes were
 opposed in the same direction as in lung (rho -0.245, one-sided p 0.0067) but stayed significant in only

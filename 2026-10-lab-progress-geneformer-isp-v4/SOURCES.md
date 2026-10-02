@@ -1,6 +1,6 @@
 # Sources for every number in "Evaluating in-silico perturbation with Geneformer" (version 4)
 
-Version 4 is version 3 (talks `main` at `a52428c`) plus a part on transposable elements, slides 29 to 35, whose sources are listed in their own section below; slides 1 to 28 keep their version 3 sources, and slides 36 to 40 are version 3 slides 29 to 33. Version 3 reuses the numbers of versions 1 and 2 (`../2026-10-lab-progress-geneformer-isp/` and `../2026-10-lab-progress-geneformer-isp-v2/`) and adds figures drawn from existing results: the external-cohort feasibility count (E0), the colon classifier gate (E2) and the bulk perturbation test against measured knockouts (slides 27-28). It adds no new measurement of its own. Files under `source/data/` are ten inputs: the five result files of version 2 (three byte-identical to the result files named below; in the two null-study files the free-text `about` notes were shortened for publication and every value is unchanged) the E0 per-donor count table (byte-identical, sha256 `3e47f81b0cd2f44d73d47e88650fd4ade809775bcd4f073a3b5dfb5b4086f2e9`) and four bulk-test tables (see slides 26 to 28). Version 4 adds five fish tables and six zebrafish tables (see slides 29 to 35), so `source/data/` holds twenty-one files. `source/SHA256SUMS` lists the copies' hashes.
+Version 4 is version 3 (talks `main` at `a52428c`) plus a part on transposable elements, slides 29 to 35, whose sources are listed in their own section below; slides 1 to 28 keep their version 3 sources, and slides 36 to 38, 40 and 41 are version 3 slides 29 to 33, and slide 39 is a cross-project synthesis. Version 3 reuses the numbers of versions 1 and 2 (`../2026-10-lab-progress-geneformer-isp/` and `../2026-10-lab-progress-geneformer-isp-v2/`) and adds figures drawn from existing results: the external-cohort feasibility count (E0), the colon classifier gate (E2) and the bulk perturbation test against measured knockouts (slides 27-28). It adds no new measurement of its own. Files under `source/data/` are ten inputs: the five result files of version 2 (three byte-identical to the result files named below; in the two null-study files the free-text `about` notes were shortened for publication and every value is unchanged) the E0 per-donor count table (byte-identical, sha256 `3e47f81b0cd2f44d73d47e88650fd4ade809775bcd4f073a3b5dfb5b4086f2e9`) and four bulk-test tables (see slides 26 to 28). Version 4 adds five fish tables and six zebrafish tables (see slides 29 to 35), so `source/data/` holds twenty-one files. `source/SHA256SUMS` lists the copies' hashes.
 
 Paths: G = Kays3/geneformer-lung-tcell at `origin/main` unless a commit or branch is named; T = this talks repository; R = the lab's internal reports folder; STD = the lab's internal standard `isp-outcome-criteria.md` (ISP-STD-1 v1.1, adopted 2026-09-28); GF = the Geneformer package source, `geneformer/tokenizer.py`. Every row was re-read at source on 2026-10-01.
 
@@ -127,7 +127,7 @@ TE = Kays3/Geneformer_TE `main` at `71014df58e16e1f8fd09483af000b4129a076597`. F
 | 35 | Freimer TE line (CBFB the one knockout above the control-only null, post hoc) and the 83% intronic share | slide 34 |
 | 35 | Summary of slides 31 to 34; unexplained global axis (intronic or nascent RNA, composition) | FB "Next steps" item 3 |
 
-## Slides 36 to 40: summary and next (version 3 slides 29 to 33)
+## Slides 36 to 41: summary, synthesis and next (version 3 slides 29 to 33, plus the synthesis slide 39)
 
 | Slide | Number or statement | Source |
 |---|---|---|
@@ -136,8 +136,8 @@ TE = Kays3/Geneformer_TE `main` at `71014df58e16e1f8fd09483af000b4129a076597`. F
 | 37 | Bulk row: not supported; two registered tests, 55 knockouts (17 + 38) | slides 27-28 |
 | 37 | TE rows: zebrafish not supported (ρ −0.18; 4 of 9; loss leaned up 6 of 8, 6 of 7 for DNA methylation, exploratory); Freimer TE arm not supported (non-specific; only CBFB above a control-only null, post hoc); single-cell TE track not started | slides 30, 33 and 34 |
 | 38 | Working title, result (rho -0.59 and -0.61; lung, V2-316M, goal = the donor's own normal centroid), argument, hypotheses, bulk line (two tests, 55 knockouts, not supported), figure list | proposal by the author; bulk line from slides 27-28; each figure marked drawable now (teal) or needing an open study (amber) |
-| 39 | Summary statements, including item 4 (TE: no better than random genes in 162 fish libraries; zebrafish agreement at chance level; T-cell knockouts: TE shifts mostly stayed within a control-only null, post hoc, CBFB the exception) | rows above; slides 31, 33 and 34 |
-| 40 | Glossary, including transposable element | definitions, no numbers |
+| 40 | Summary statements, including item 4 (TE: no better than random genes in 162 fish libraries; zebrafish agreement at chance level; T-cell knockouts: TE shifts mostly stayed within a control-only null, post hoc, CBFB the exception) | rows above; slides 31, 33 and 34 |
+| 41 | Glossary, including transposable element | definitions, no numbers |
 
 ## E2 results (added 2 October 2026)
 
@@ -153,5 +153,21 @@ E2R = Kays3/geneformer-lung-tcell `main`, merge `4cce44a` of PR #45 (branch `ana
 | 24 | Lung against colon deletion medians over 27 shared panel genes: Spearman ρ −0.288, shown −0.29, descriptive | E2R `h2c_result.json` key `descriptive.del_median_spearman_luad_vs_e2` |
 | 24 | Effects a few thousandths of cosine similarity; the lung caution and the closing sentence of the notes | report, Discussion; coordinator wording file `e2-slide-wording-v4-20261002.md` |
 | 24 | A colon–lung difference is not attributable to tissue alone (study, dissociation, chemistry, annotation, null-gene population, fold models; 19 against 43 donors); new fold models, so the lung models were not tested | registration section 10; report, Discussion |
-| 25, 37, 38, 39 | Summary, open-question and closing statements on the colon study | rows above |
+| 25, 37, 38, 39, 40 | Summary, synthesis, open-question and closing statements on the colon study | rows above |
 | 24 | Figure `e2_results.png`: top, deletion against overexpression medians of the 100 null genes (×10⁻³); bottom, control-adjusted colon deletion median with exact 95% CI for the 10 testable lung reference genes, filled where the lung sign is kept | `source/data/e2_h2b_null_result.json` (`about` notes replaced for publication, values unchanged), `e2_h2c_result.json` and `e2_panel_b_outcome_rows.json` (byte-identical); `build_figs.py` `fig_e2_results()` |
+
+## Slide 39: cross-project synthesis (added 2 October 2026)
+
+SY = hive report `te-geneformer-synthesis-20261002.md`, revision 2 (science and numbers review passed), and the coordinator wording file `synthesis-closing-slide-wording-v4-20261002.md`. The slide introduces no number of its own; each is already on an earlier slide of this deck.
+
+| Slide | Number or statement | Source |
+|---|---|---|
+| 39 | Seven tests: five bulk network (Freimer, Weinstock, Freimer TE arm, fish random-gene control, zebrafish), two Geneformer (lung, colon); no Geneformer prediction checked against a measured perturbation | SY; slides 14, 24, 27, 28, 31, 33, 34 |
+| 39 | Freimer P3 gain +0.039, p = 0.19; Weinstock all four tests fail | slide 27 table; `bulk_isp_tests.json`, `bulk_isp_weinstock_tests.json` |
+| 39 | TE arm P3 0.007, p = 0.34 | slide 34; `te_freimer_10_tests.json` key `primary` |
+| 39 | Fish p = 0.70 (real against random regulators, Mann–Whitney, column `mw_p_n_fdr05` 0.703); 0 of 30 after FDR (`n_regulators_fdr_hits_lt_0.05` 0) | slide 31 notes; `te_fish_05c_plain_overall.tsv` |
+| 39 | Zebrafish ρ −0.18, p = 0.50; 4 of 9; 6 of 8, p = 0.29 | slide 33; `te_zf_08f_exploratory_concordance.tsv`, `te_zf_08_prediction_concordance.tsv` |
+| 39 | Balanced accuracy 0.825 and 0.904 | slides 7, 23 and 25; `luad_classifier_gate.json`, `e2_classifier_gate.json` |
+| 39 | ρ −0.593 and −0.245; 78% against 95%; 3 of 10, "within chance" (words only) | slides 14 and 24; `a5_primary_result_v2.json`, `e2_h2b_null_result.json`, `e2_h2c_result.json` |
+| 39 | Gill −11.4% [−17.2, −5.1]; 54 libraries (OLS per tissue, n = 54) | slide 32; `te_fish_06_te_read_pct.tsv`; TA Methods (Geneformer_TE `2ad71cd`) |
+| 39 | Closing line and "what would change the picture" (speaker note); post hoc checks named in the note | SY Discussion; coordinator wording file |

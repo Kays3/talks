@@ -41,8 +41,8 @@ speaker notes</h1>
 </header>
 <h1 id="evaluating-in-silico-perturbation-with-geneformer-speaker-notes">Evaluating
 in-silico perturbation with Geneformer: speaker notes</h1>
-<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 40
-slides, about 44 minutes of talk, then 5 to 10 minutes of discussion.
+<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 41
+slides, about 45 minutes of talk, then 5 to 10 minutes of discussion.
 Every number is sourced in <code>SOURCES.md</code>.</p>
 <h2 id="slide-1.-evaluating-in-silico-perturbation-with-geneformer-about-0.5-min">Slide
 1. Evaluating in-silico perturbation with Geneformer (about 0.5
@@ -601,7 +601,30 @@ slide. The colon result, open on the primary question and not replicated
 for the lung genes, changes the paper’s emphasis rather than removing
 it, because the lung evidence and the documented failure modes stand on
 their own.</p>
-<h2 id="slide-39.-summary-about-0.6-min">Slide 39. Summary (about 0.6
+<h2 id="slide-39.-seven-tests-three-or-four-questions-where-predictions-tracked-the-data-so-did-the-controls-about-1.5-min">Slide
+39. Seven tests, three or four questions: where predictions tracked the
+data, so did the controls (about 1.5 min)</h2>
+<p>This slide puts the two projects side by side. The bulk network was
+tested five times, four of them against measured perturbations, and
+Geneformer twice, against controls and then in a second tissue; no
+Geneformer prediction has yet been checked against a measured
+perturbation. Wherever the predictions tracked the data, the controls
+tracked it as well: a shuffled network, co-expression alone, or random
+genes. Replication was the informative step in both lines. Weinstock
+removed the weak agreement seen in Freimer, and colon did not reproduce
+the lung gene statuses, with low power and a real difference not
+separable. The two TE-biology items are exploratory. Several of the
+checks that shaped these readings were added in review and are post hoc,
+such as the control-only null, the mapping covariate and the read-total
+decomposition; none changed a registered status. What would change the
+picture is a measured single-cell perturbation ground truth for
+Geneformer, such as CRISPR or Perturb-seq screens in T cells; a
+full-length, stranded, total-RNA perturbation dataset with a
+control-only null registered in advance for the TE question; and
+better-replicated zebrafish loss-of-function studies. Sources: the
+cross-project synthesis report and the merged reports behind each line,
+all already cited on earlier slides.</p>
+<h2 id="slide-40.-summary-about-0.6-min">Slide 40. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
@@ -616,7 +639,7 @@ agreed with measured zebrafish TE responses only at chance level, and in
 the T-cell knockouts the TE shifts mostly stayed within what control
 libraries show among themselves, CBFB the exception in a check added
 after the results. Thank you; I am glad to take questions.</p>
-<h2 id="slide-40.-glossary-about-0.3-min">Slide 40. Glossary (about 0.3
+<h2 id="slide-41.-glossary-about-0.3-min">Slide 41. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>
 </body>
