@@ -7,6 +7,14 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Updated version 4 on 2026-10-02 with the TE arm of the Freimer T-cell knockout test (Geneformer_TE
+`main` merge `c17d39b`, after science and numbers review). Slide 34 now shows the result with a data
+figure drawn from four copied tables: the registered reading is `TE_RECOVERED_NONSPECIFIC`; a post hoc
+control-only null shows that most knockouts' TE subfamily counts are reachable by chance (CBFB the one
+exception); and 83% of TE counts are intronic, so TE shifts cannot be separated from host-gene
+transcription. No TE test is shown as running. The bulk slide's TE-arm line, the track diagram, the TE
+conclusions, Summary 2, the closing summary, the outline and the handout are updated.
+
 Updated version 4 on 2026-10-02 with the zebrafish ground truth from Geneformer_TE (report at `main`
 `246c3e4`, after science and numbers review). A new slide 33 shows 17 zebrafish perturbation contrasts
 with a data figure drawn from six copied tables: no loss-of-function study shifted the global TE share
