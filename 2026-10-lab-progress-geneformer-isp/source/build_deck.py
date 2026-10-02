@@ -254,21 +254,19 @@ S.append(("plain", 1.3, f"""
 </div>
 """, """The colorectal study repeats the whole design in a different tissue, using public data from Pelka and colleagues. We kept nineteen patients whose samples were processed the same way in both tissues. Five new models were trained from the base weights. Every patient was above chance, and the lowest was 0.655. The lung value of 0.825 is shown only for context; one study against five, different processing and fewer patients mean we should not read the difference biologically. And because these are new models, this says nothing about whether the lung models transfer. Sources: classifier_gate.json and noop_gate.json at commit 2c104ab, and the interim report of 1 October, which passed internal review."""))
 
-S.append(("plain", 1.0, """
-<div class="kicker">IV · Running now</div>
-<h2>Colorectal perturbation screen: status on 1 October</h2>
+S.append(("plain", 1.5, """
+<div class="kicker">IV · Results, after review</div>
+<h2>Colorectal perturbation screen: same direction as lung but not stable; the lung gene pattern did not replicate</h2>
 <div class="two">
-  <div class="card"><h3>Where the run stands (12:45 JST, 1 October)</h3>
-    <p>369 genes × 19 patients × delete and overexpress: 100 random genes, then 28 panel genes, then 241 controls. Started 02:42 JST.</p>
-    <p><b>119 of 369 genes done:</b> all 100 random genes (finished about 11:10 JST) and 19 of the 28 panel genes.</p>
-    <p>9.7 GPU-hours so far, plus 2.0 for preparation. The random genes took 294 GPU-seconds each against about 120 predicted; logged as deviation D1, a cost overrun with no change to the protocol.</p>
-    <p class="small">Projected: about 32 GPU-hours in total, within the registered 52-hour ceiling; finish about 08:50 JST on 2 October, give or take an hour. <b>No result is shown or claimed here.</b></p></div>
+  <div class="card"><h3>What the run found (finished 10:20 JST, 2 October)</h3>
+    <p><b>Random genes (primary).</b> ρ = −0.245 over 100 genes, one-sided p = 0.0067; every leave-one-out test passes, but only 78% of 10,000 resamples stay significant, against the registered 95%. Status <code>control_draw_sensitive_open</code>: direction as in lung, not stable; open. Lung gave −0.593.</p>
+    <p><b>Lung reference genes.</b> 3 of 10 keep their lung direction, where 9 were needed (p = 0.95): <code>pattern_not_replicated</code>. One panel gene, PRF1, is dose-concordant in colon; it was open in lung.</p>
+    <p class="small">369 genes × 19 patients × delete and overexpress; 32.6 GPU-hours of the 52 registered. A colon–lung difference cannot be put down to tissue alone.</p></div>
   <div class="card slot"><h3>What each registered outcome would tell us</h3>
-    <p><b>Random genes (primary).</b> Status <code>positive</code>: the anti-correlation appears in colon too, so it is more likely a property of the model and this design than of lung. <code>negative</code> (no anti-correlation) or <code>opposite_direction</code>: cannot be put down to tissue alone, since study, protocol, chemistry and the fine-tune all differ. <code>control_draw_sensitive_open</code>: stays open.</p>
-    <p><b>Lung reference genes.</b> <code>pattern_holds</code> if enough keep their lung direction (at the expected n = 10, at least 9); <code>pattern_not_replicated</code> otherwise; <code>not_testable</code> if fewer than 5 can be tested. Holding would not make any gene a regulator.</p>
-    <p class="placeholder">Results go here only after independent review.</p></div>
+    <p><b>Random genes (primary).</b> Status <code>positive</code>: the anti-correlation appears in colon too, so it is more likely a property of the model and this design than of lung. <code>negative</code> (the anti-correlation did not appear) or <code>opposite_direction</code>: cannot be put down to tissue alone, since study, protocol, chemistry and the fine-tune all differ. <code>control_draw_sensitive_open</code>: stays open. <b>This is the outcome.</b></p>
+    <p><b>Lung reference genes.</b> <code>pattern_holds</code> if enough keep their lung direction (at n = 10, at least 9); <code>pattern_not_replicated</code> otherwise (<b>the outcome</b>); <code>not_testable</code> if fewer than 5 can be tested. Holding would not make any gene a regulator.</p></div>
 </div>
-""", """This slide gives the state of the run at 12:45 Japan time today, not a result. The perturbation run started at 02:42 this morning. The hundred random genes, which carry the primary question, finished at about ten past eleven, and nineteen of the panel genes have finished since. Each random gene took about two and a half times longer than we predicted, 294 GPU-seconds against about 120. We entered that in the registration's deviation log as a cost overrun; it changes nothing in the procedure or the analysis, and the projected total of about 32 GPU-hours is well inside the 52-hour ceiling we registered. We expect the run to finish at about ten to nine tomorrow morning, give or take an hour. The readings on the right were fixed before the GPU started. If random genes are anti-correlated in colon as well, the effect more likely belongs to Geneformer and our design than to lung, although we cannot separate the model from the design here. If they are not, we cannot blame tissue, because almost everything else about the data differs too. For the lung reference genes, holding direction means the pattern carries over, not that any gene regulates T-cell state. I will not show either result until it has been reviewed. Sources: the run's per-unit log and ceiling monitor, read at 12:45 JST, and E2_REGISTRATION.md sections 6.2, 6.3, 7 and deviation D1 (commit ab66d3a)."""))
+""", """The colorectal run finished at 10:20 Japan time on 2 October, inside the compute we registered, and the results passed internal review before I put them here. The primary question was whether random genes are anti-correlated in colon as in lung. They are, in the same direction: the rank correlation was minus 0.245, with a one-sided p of 0.0067, and no single gene carries it. But the pattern stayed significant in only 78 percent of resamples, short of the 95 percent we set in advance, so by our own rule it is reported as open. For the lung reference genes, three of ten kept their lung direction where nine were needed, so the lung pattern did not replicate; seven opposite signs is within what chance gives, so this is not a reversal. The right-hand card is the set of readings we fixed before the run, with the two outcomes that occurred marked. Neither difference from lung can be put down to tissue, because study, sample handling, chemistry, the fold models and the number of patients all differ. Sources: the E2 results report and the H2b, H2c and Panel B result files on geneformer-lung-tcell main, merge 4cce44a, and E2_REGISTRATION.md sections 6.2, 6.3 and 7."""))
 
 S.append(("section", 0.2, """<div class="partno">V</div><h1>Uncharted waters</h1><p class="sub">Open questions, and how to join</p>""",
           """We have more open questions than people. Each task on the next slides is sized so that one person could start this month."""))
@@ -277,7 +275,7 @@ S.append(("plain", 1.1, """
 <div class="kicker">V · Open questions</div>
 <h2>What we do not know yet</h2>
 <ol class="qs">
-  <li><b>Why does the current exist?</b> Is the delete/overexpress anti-correlation a property of rank encoding, of the model, or of lung biology? (The colorectal run gives a first answer.)</li>
+  <li><b>Why does the current exist?</b> Is the delete/overexpress anti-correlation a property of rank encoding, of the model, or of lung biology? (The colorectal run gave a first answer: same direction as lung, but not stable.)</li>
   <li><b>Does the lung compass transfer?</b> Applying the frozen lung models to an independent lung cohort is planned, but the one candidate's data are not yet accessible to us.</li>
   <li><b>What does the classifier read?</b> T-cell state, ambient RNA, or CD4:CD8 composition?</li>
   <li><b>Where is ground truth?</b> No T-cell perturbation screen has yet been matched to our readout.</li>
@@ -324,7 +322,7 @@ S.append(("end", 0.3, """
 <h1 class="big">The current is not the enemy.<br>It is the baseline.</h1>
 <p class="sub">We learned to measure it first, then claim the nudge.</p>
 <div class="byline">Sources for every number: SOURCES.md in this talk's folder · ISP-STD-1 · E2 registration (commit 8b11d5d)</div>
-""", """To close: looking back over three months, almost every correction came from measuring something we had taken for granted, such as the study behind a class, the cells behind an arm, the patient behind a shift, or the drift behind a nudge. The anti-correlation in random genes is not a failure of the method. It is the baseline any claimed effect has to exceed. The colorectal results will tell us whether that baseline belongs to the model or to lung. Thank you; I am happy to take questions, and to talk about any of the entry tasks."""))
+""", """To close: looking back over three months, almost every correction came from measuring something we had taken for granted, such as the study behind a class, the cells behind an arm, the patient behind a shift, or the drift behind a nudge. The anti-correlation in random genes is not a failure of the method. It is the baseline any claimed effect has to exceed. In colon the baseline points the same way but is not yet stable, so whether it belongs to the model or to lung is still open. Thank you; I am happy to take questions, and to talk about any of the entry tasks."""))
 
 
 CSS = f"""

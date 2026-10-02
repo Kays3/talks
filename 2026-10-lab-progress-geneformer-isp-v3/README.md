@@ -2,7 +2,7 @@
 
 Lab progress report, 1 October 2026. Kaisar Dauyey (Laboratory of Mathematical Biology, Hokkaido University, Japan). About 34 minutes on 33 slides, then discussion.
 
-Version 3 of `../2026-10-lab-progress-geneformer-isp-v2/` (versions 1 and 2 are unchanged). It keeps the structure of version 2 and changes three things. The language is more formal. Diagrams of the pipeline, the rank-value tokenisation, the perturbation and the evaluation criteria are added, with data figures from the external-cohort feasibility count (E0) and the colon classifier gate (E2). Three slides discuss in-silico perturbation on bulk RNA-seq and report two registered tests of a bulk network model against measured CRISPR knockouts: a weak, non-specific signal in the first that did not replicate in the second. The colon perturbation run is shown as gate passed, results pending.
+Version 3 of `../2026-10-lab-progress-geneformer-isp-v2/` (versions 1 and 2 are unchanged). It keeps the structure of version 2 and changes three things. The language is more formal. Diagrams of the pipeline, the rank-value tokenisation, the perturbation and the evaluation criteria are added, with data figures from the external-cohort feasibility count (E0) and the colon classifier gate (E2). Three slides discuss in-silico perturbation on bulk RNA-seq and report two registered tests of a bulk network model against measured CRISPR knockouts: a weak, non-specific signal in the first that did not replicate in the second. The colon results (added 2 October 2026, after review) are on slide 24 with a data figure: random genes opposed in the same direction as in lung but not stably (`control_draw_sensitive_open`), and the lung gene pattern not replicated.
 
 | File | What it is |
 |---|---|

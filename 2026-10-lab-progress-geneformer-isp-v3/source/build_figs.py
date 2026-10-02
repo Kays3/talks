@@ -346,6 +346,42 @@ def fig_e2_gate():
     return p, g["donors_above_0.5"], min(v for _, v in items), g["sign_test_p_float"], g["PASS"]
 
 
+def fig_e2_results():
+    """E2 perturbation results (geneformer-lung-tcell, analysis/e2-pelka-crc-20261001 at 55b06a4; results b7369cb):
+    H2b null genes, deletion vs overexpression medians; H2c colon deletion medians of the 10 testable LUAD reference genes."""
+    h = load("e2_h2b_null_result.json"); c = load("e2_h2c_result.json")
+    rows = {r["gene"]: r for r in load("e2_panel_b_outcome_rows.json")}
+    pr = h["primary"]
+    assert pr["status"] == "control_draw_sensitive_open" and pr["n_estimable"] == 100
+    d = np.array(h["null_delete_medians"]) * 1e3; o = np.array(h["null_overexpress_medians"]) * 1e3
+    assert abs(float(spearmanr(d, o)[0]) - pr["rho"]) < 1e-12
+    ref = [g for g in c["per_gene"] if g["e2_tested"]]
+    assert len(ref) == c["n_tested"] == 10 and sum(g["del_agree"] for g in ref) == c["del_agree"] == 3
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(6.6, 7.6), gridspec_kw={"height_ratios": [1, 1.05]})
+    a1.axhline(0, color=GREY, lw=1); a1.axvline(0, color=GREY, lw=1)
+    a1.scatter(d, o, s=26, color=INK, alpha=0.75, lw=0)
+    a1.set_xlabel("deletion shift, donor median (×10⁻³)", fontsize=13.5); a1.set_ylabel("overexpression\nshift (×10⁻³)", fontsize=13.5)
+    a1.tick_params(labelsize=12.5)
+    a1.set_title(f"100 random genes: ρ = {pr['rho']:.3f}".replace("-", "−") + f", p = {pr['p_lower_tail']:.4f};\n"
+                 f"stable in {pr['bootstrap_fraction_stable'] * 100:.0f}% of resamples (bar 95%)", fontsize=13, loc="left")
+    ref.sort(key=lambda g: g["e2_del_median"])
+    y = np.arange(len(ref))
+    a2.axvline(0, color=GREY, lw=1)
+    for yi, g in zip(y, ref):
+        r = rows[g["gene"]]; assert abs(r["del_median"] - g["e2_del_median"]) < 1e-15
+        col = INK if g["del_agree"] else "#7d93ad"
+        a2.plot([r["del_ci_lo"] * 1e3, r["del_ci_hi"] * 1e3], [yi, yi], color=col, lw=2)
+        a2.scatter(r["del_median"] * 1e3, yi, s=60, color=col if g["del_agree"] else PAPER, edgecolor=col, lw=2, zorder=5)
+    a2.set_yticks(y)
+    a2.set_yticklabels([f"{g['symbol']} ({'toward' if g['luad_del_median'] > 0 else 'away'})" for g in ref], fontsize=13)
+    a2.set_xlabel("colon deletion shift, control-adjusted (×10⁻³, 95% CI)\n← away from normal | toward normal →", fontsize=13)
+    a2.tick_params(axis="x", labelsize=12.5)
+    a2.set_title(f"Lung reference genes, lung direction in brackets:\n{c['del_agree']} of {c['n_tested']} keep it in colon (filled)",
+                 fontsize=13, loc="left")
+    fig.tight_layout(); save(fig, "e2_results.png")
+    return pr["rho"], pr["p_lower_tail"], pr["bootstrap_fraction_stable"], c["del_agree"], c["p_exact"], c["reading"]
+
+
 # ---------- bulk RNA-seq ----------
 def fig_bulk_mix():
     """Why a bulk profile is not a cell: composition changes the bulk value with no change inside any cell."""
@@ -410,4 +446,5 @@ if __name__ == "__main__":
     print("gate", fig_gate_strip())
     print("e0", fig_e0_cohort())
     print("e2", fig_e2_gate())
+    print("e2_results", fig_e2_results())
     print("bulk", fig_bulk_result())
