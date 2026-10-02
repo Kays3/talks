@@ -7,6 +7,15 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Updated version 4 on 2026-10-02 with the zebrafish ground truth from Geneformer_TE (report at `main`
+`246c3e4`, after science and numbers review). A new slide 33 shows 17 zebrafish perturbation contrasts
+with a data figure drawn from six copied tables: no loss-of-function study shifted the global TE share
+(0 of 16); the one shift, human UHRF1 overexpression, is mostly compositional; loss of DNA-methylation
+regulators leaned toward derepression in 6 of 7 studies in exploratory tests that do not pass correction;
+and the fish network directions agreed with the zebrafish leans at chance level (4 of 9). The running-tests
+slide (now 34) keeps only the Freimer TE arm. The TE conclusions, Summary 2, the closing summary, the
+outline, the track diagram and the handout are updated. The deck has 40 slides.
+
 Added `2026-10-lab-progress-geneformer-isp-v4`: version 3 plus six slides (29 to 34) on transposable
 elements, from the Geneformer_TE project, by Kaisar Dauyey. A diagram shows the project's three tracks
 (single-cell Geneformer, bulk linear network, measured knockouts as ground truth) and their state. Two data

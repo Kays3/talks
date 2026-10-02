@@ -41,8 +41,8 @@ speaker notes</h1>
 </header>
 <h1 id="evaluating-in-silico-perturbation-with-geneformer-speaker-notes">Evaluating
 in-silico perturbation with Geneformer: speaker notes</h1>
-<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 39
-slides, about 41 minutes of talk, then 5 to 10 minutes of discussion.
+<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 40
+slides, about 43 minutes of talk, then 5 to 10 minutes of discussion.
 Every number is sourced in <code>SOURCES.md</code>.</p>
 <h2 id="slide-1.-evaluating-in-silico-perturbation-with-geneformer-about-0.5-min">Slide
 1. Evaluating in-silico perturbation with Geneformer (about 0.5
@@ -394,8 +394,8 @@ families as targets, and runs on a CPU for any species. The third track
 supplies ground truth: published knockout and knockdown experiments,
 re-counted for TEs. The colours give the state: the single-cell track is
 built but not run, the bulk track has results, and the ground-truth
-track is running. Sources: the Geneformer_TE README and handoff
-document.</p>
+track has its first result, from zebrafish, with a second test running.
+Sources: the Geneformer_TE README and handoff document.</p>
 <h2 id="slide-30.-geneformer-has-no-te-tokens-so-the-single-cell-track-reads-te-states-out-through-a-probe-about-1-min">Slide
 30. Geneformer has no TE tokens, so the single-cell track reads TE
 states out through a probe (about 1 min)</h2>
@@ -452,33 +452,47 @@ a shift in global TE load, and a follow-up found no candidate gene that
 explains it better than random genes; a thyroid gene set was nominal at
 p 0.025, FDR 0.10, and is a lead only. Sources: the TE-axis treatment
 report and the gene-axis report on Geneformer_TE main.</p>
-<h2 id="slide-33.-two-tests-against-measured-te-responses-are-running-no-results-are-shown-about-1.3-min">Slide
-33. Two tests against measured TE responses are running; no results are
-shown (about 1.3 min)</h2>
-<p>Two tests compare predictions with measured TE responses. Neither has
-produced a result, and I show none. The zebrafish panel re-counts TEs in
-seventeen published knockout, knockdown and overexpression contrasts of
-TE regulators, from fourteen GEO series. For each study it measures the
-TE share of reads and the balance of TE families going up and down, and
-it asks two questions: whether loss of a silencer de-represses TEs, and
-whether the fish bulk network predicted the right direction. A direction
-call requires both a corrected significance below 0.05 and at least a
-five percent change in TE share. At 02:35 Japan time, 53 of the 112
-samples had been counted; counting should finish around six or seven in
-the morning, and the report goes through review before it reaches a
-slide. The second test returns to the Freimer T-cell knockouts. The
-reads are re-aligned with multimapping reads kept, so that genes and TEs
-come from the same reads. Two gates come first: if the re-aligned gene
-counts disagree with the deposited ones, the analysis stops, and if
-fewer than twenty TE subfamilies are expressed, the TE arm is reported
-as not testable. The rules were registered at 02:12 Japan time, before
-any data were downloaded. After the code review passed, alignment
-started on two hosts at 02:48 and 02:52; the first counts are expected
-around a quarter past four, and all samples between half past seven and
-half past ten. Sources: the zebrafish run record, the handoff document
-and the registered amendment A3 for the TE arm.</p>
-<h2 id="slide-34.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
-34. What the TE work shows so far, and what it does not (about 1.1
+<h2 id="slide-33.-zebrafish-ground-truth-losing-a-te-regulator-barely-moved-global-te-load-family-leans-point-weakly-to-derepression-about-1.6-min">Slide
+33. Zebrafish ground truth: losing a TE regulator barely moved global TE
+load; family leans point weakly to derepression (about 1.6 min)</h2>
+<p>The zebrafish panel is the first direct measurement in this project
+of what TE regulators do to TEs in a vertebrate. Seventeen published
+contrasts were re-counted with one pipeline, and each was compared only
+with its own controls. On the prespecified readout, the TE share of
+reads, none of the sixteen loss-of-function studies shifted after
+correction. The one study that did is the human UHRF1 overexpression,
+and that rise comes mostly from fewer reads assigned to genes; TE reads
+per library did not change. The TE families give a more suggestive
+picture. Among studies with a significant family lean, loss of a
+DNA-methylation regulator pushed families up in six of seven, and in
+five of five once three studies with a genotype-linked mapping
+difference are set aside. No row passes correction, and this pooling was
+defined after the prespecified tests came back nearly empty. Clutch
+blocking, also chosen after an interim look, created one of the upward
+leans. The fish network predictions did not track any of this: the rank
+correlation was minus 0.18, and family leans agreed in four of nine
+studies. With two to five libraries per arm, a firmer test needs five or
+more per arm, stranded libraries and mapping quality balanced across
+arms. Sources: the zebrafish validation report and its tables on
+Geneformer_TE main, commit 246c3e4.</p>
+<h2 id="slide-34.-one-test-against-measured-te-responses-is-still-running-no-result-is-shown-about-1.3-min">Slide
+34. One test against measured TE responses is still running; no result
+is shown (about 1.3 min)</h2>
+<p>The zebrafish result is on the previous slide. One test against
+measured TE responses is still running, and I show no result from it. It
+returns to the Freimer T-cell knockouts. The reads are re-aligned with
+multimapping reads kept, so that genes and TEs come from the same reads.
+Two gates come first: if the re-aligned gene counts disagree with the
+deposited ones, the analysis stops, and if fewer than twenty TE
+subfamilies are expressed, the TE arm is reported as not testable. The
+rules were registered at 02:12 Japan time, before any data were
+downloaded. After the code review passed, alignment started on two hosts
+at 02:48 and 02:52; the first counts are expected around a quarter past
+four, and all samples between half past seven and half past ten.
+Sources: the handoff document and the registered amendment A3 for the TE
+arm.</p>
+<h2 id="slide-35.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
+35. What the TE work shows so far, and what it does not (about 1.1
 min)</h2>
 <p>The supported findings are narrow. A network built from natural
 co-variation did not meet the registered bar for specific prediction in
@@ -489,25 +503,30 @@ it beat neither. In fish, the random-gene control is what shows it;
 without that control, the same run would have looked like thirty-two
 thousand findings. That is the bulk counterpart of the random-gene
 baseline from the T-cell work. Developmental CO2 exposure lowered the
-gill TE share, as an exploratory result. We have not shown any
-regulator-to-TE effect. We do not know whether Geneformer can rank TE
-regulators, because that track has not run, or whether any prediction
-matches a measured TE response, because both tests are still running.
-The global TE axis is also unexplained; it could reflect intronic or
-nascent RNA, or cell composition. The single-cell track is also where
-this project and the colon T-cell work would meet, if human single-cell
-data with TE counts were prepared. Sources: the fish run records and
-reports on Geneformer_TE main.</p>
-<h2 id="slide-35.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
-35. Summary 1: the evaluation criteria, each traced to evidence (about
+gill TE share, as an exploratory result. In zebrafish, no
+loss-of-function study shifted the global TE share, and the fish network
+directions agreed with the measured family leans at chance level. We
+have not shown any regulator-to-TE effect; the zebrafish family leans
+after loss of DNA-methylation regulators point toward derepression, but
+only in exploratory tests that do not pass correction. We do not know
+whether Geneformer can rank TE regulators, because that track has not
+run, or whether the network predicts TE responses in T cells, because
+the Freimer TE arm is still running. The global TE axis is also
+unexplained; it could reflect intronic or nascent RNA, or cell
+composition. The single-cell track is also where this project and the
+colon T-cell work would meet, if human single-cell data with TE counts
+were prepared. Sources: the fish run records and reports on
+Geneformer_TE main.</p>
+<h2 id="slide-36.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
+36. Summary 1: the evaluation criteria, each traced to evidence (about
 1.2 min)</h2>
 <p>Each criterion on the left is now lab practice, and each is tied to a
 documented episode on the right. These are established as practice in
 our lab, with sources for every row. They have not been tested by other
 groups, and some, such as the 95 percent stability threshold, are
 choices rather than derived results.</p>
-<h2 id="slide-36.-summary-2-what-remains-to-be-tested-about-1.3-min">Slide
-36. Summary 2: what remains to be tested (about 1.3 min)</h2>
+<h2 id="slide-37.-summary-2-what-remains-to-be-tested-about-1.3-min">Slide
+37. Summary 2: what remains to be tested (about 1.3 min)</h2>
 <p>This is what we do not yet know. The colon study is running, with its
 gate passed. Transfer to new lung donors is blocked by data access.
 Three studies are planned with little or no new GPU work: swapping the
@@ -518,12 +537,13 @@ controls, a negative result is hard to interpret. The bulk RNA-seq row
 now has a result: across two registered tests on 55 knockouts, the bulk
 network did not recover regulator-specific effects, and its one weak
 positive did not replicate. The last three rows come from the TE
-project: two tests against measured TE responses are running, and the
+project. In zebrafish, the fish network directions agreed with measured
+TE responses at chance level; the Freimer TE test is running; and the
 single-cell TE track needs data we have not prepared. Sources: the
 next-cycle proposal, the independent-data design and the E0 feasibility
 report.</p>
-<h2 id="slide-37.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
-37. These results could form one methods paper on evaluating in-silico
+<h2 id="slide-38.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
+38. These results could form one methods paper on evaluating in-silico
 perturbation (about 1.3 min)</h2>
 <p>If the open studies are completed, the material could form one
 methods paper. The slide separates three things. The result is
@@ -538,7 +558,7 @@ results we have; figures three and six need the studies on the previous
 slide. A negative colon result would change the paper’s emphasis rather
 than remove it, because the lung evidence and the documented failure
 modes stand on their own.</p>
-<h2 id="slide-38.-summary-about-0.6-min">Slide 38. Summary (about 0.6
+<h2 id="slide-39.-summary-about-0.6-min">Slide 39. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
@@ -547,9 +567,10 @@ the colon study has passed its gates and its results are pending. On
 bulk RNA-seq, two registered tests against measured knockouts did not
 support regulator-specific prediction, and the first test’s weak signal
 did not replicate. For transposable elements, the same network did no
-better than random genes in fish, and the tests against measured TE
-responses are still running. Thank you; I am glad to take questions.</p>
-<h2 id="slide-39.-glossary-about-0.3-min">Slide 39. Glossary (about 0.3
+better than random genes in fish, its directions agreed with measured
+zebrafish TE responses only at chance level, and the T-cell TE test is
+still running. Thank you; I am glad to take questions.</p>
+<h2 id="slide-40.-glossary-about-0.3-min">Slide 40. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>
 </body>
