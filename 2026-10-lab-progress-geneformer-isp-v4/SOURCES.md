@@ -175,12 +175,12 @@ E2R = Kays3/geneformer-lung-tcell `main`, merge `4cce44a` of PR #45 (branch `ana
 
 ## Slide 40: cross-project synthesis (added 2 October 2026)
 
-SY = hive report `te-geneformer-synthesis-20261002.md`, revision 2 (science and numbers review passed), and the coordinator wording file `synthesis-closing-slide-wording-v4-20261002.md`. The slide introduces no number of its own; each is already on an earlier slide of this deck.
+SY = hive report `te-geneformer-synthesis-20261002.md`, revision 3 (adds K562; delta review passed; revision 2 passed science and numbers review), and the coordinator wording file `synthesis-closing-slide-wording-v4-20261002.md`. The slide introduces no number of its own; each is already on an earlier slide of this deck.
 
 | Slide | Number or statement | Source |
 |---|---|---|
-| 40 | Eight tests: six bulk network (Freimer, Weinstock, K562, Freimer TE arm, fish random-gene control, zebrafish), two Geneformer (lung, colon); no Geneformer prediction checked against a measured perturbation. K562 added to the revision 2 synthesis by the coordinator wording file `k562-slide-wording-v4-20261003.md` ("seven" to "eight", "any of the three" to "any of the four"); the synthesis report itself is unchanged | SY; slides 14, 24, 27, 28, 29, 32, 34, 35 |
-| 40 | K562 gain −0.008, p = 0.41; co-expression better, p = 0.004 | slide 29; `k562_09_tests.json` keys `P3_delta_shuf_median`, `P3_p`, `model_vs_baseline_wilcoxon_two_sided_p` |
+| 40 | Eight tests: six bulk network (Freimer, Weinstock, K562, Freimer TE arm, fish random-gene control, zebrafish), two Geneformer (lung, colon); no Geneformer prediction checked against a measured perturbation. K562 added as test 8 in synthesis revision 3 and the coordinator wording file `synthesis-closing-slide-wording-v4b-20261003.md` | SY; slides 14, 24, 27, 28, 29, 32, 34, 35 |
+| 40 | K562 P3 −0.008, p = 0.41; co-expression baseline 0.45 beats the model; panel-level P3 wording ("not distinguishable from zero in any of the four") from the coordinator wording file `synthesis-closing-slide-wording-v4b-20261003.md` (synthesis revision 3) | slide 29; `k562_09_tests.json` keys `P3_delta_shuf_median`, `P3_p`, `baseline_rho_resp_median` |
 | 40 | Freimer P3 gain +0.039, p = 0.19; Weinstock all four tests fail | slide 27 table; `bulk_isp_tests.json`, `bulk_isp_weinstock_tests.json` |
 | 40 | TE arm P3 0.007, p = 0.34 | slide 35; `te_freimer_10_tests.json` key `primary` |
 | 40 | Fish p = 0.70 (real against random regulators, Mann–Whitney, column `mw_p_n_fdr05` 0.703); 0 of 30 after FDR (`n_regulators_fdr_hits_lt_0.05` 0) | slide 32 notes; `te_fish_05c_plain_overall.tsv` |
