@@ -374,7 +374,7 @@ add("plain", 1.5, 5, f"""
 <div class="split bulk zf k5"><div>
   <p><b>Design.</b> Same frozen method, registered before download; new cell type, laboratory, perturbation and library: ENCODE CRISPRi in K562, 74 knockdowns, 48 in the base network, 34 past the registered knockdown gate (target mRNA down ≥ 0.5 log2).</p>
   <p><span class="stamp">RECOVERED_NONSPECIFIC</span> {badge('pass', 'P1, P2')} {badge('fail', 'P3, P4')}<br>Median ρ 0.238 (p = 0.041); sign agreement 0.635 (p = 0.045); gain over shuffled networks −0.008 (p = 0.41); 1 of 34 beat random TFs (p = 0.83). The matched prediction ranked first for 0 of 34 knockdowns.</p>
-  <p><b>Co-expression did better:</b> median ρ 0.448, 0.19 above the model (two-sided p = 0.004).</p>
+  <p><b>Co-expression did better:</b> median ρ 0.448; median paired difference 0.19 over the model (two-sided p = 0.004).</p>
   <p><b>Shared component.</b> Within a batch, the shifts of different knockdowns correlate at a median of 0.64 (batch E) and 0.60 (batch C), above the registered 0.3, so by the registered rule the tracking cannot be separated from this shared component (two shared control replicates, a generic knockdown effect, or both). Post hoc: the 14 knockdowns that did not lower their target track at a median ρ of 0.007, and deeper knockdown goes with higher ρ (Spearman −0.41, p = 0.004), which indicates it is not only the shared component; how much is target-specific the design cannot say.</p>
   <p class="note">K562 says nothing about T-cell biology. Two control replicates per batch, so responsiveness is uncalibrated. Batch C (8 scored) had a negative median ρ, batch E (26) a positive one. Without the knockdown gate (48 scored) the reading would be <code>NOT_RECOVERED</code>.</p>
 </div><figure>{img('k562_result.png', 'per-knockdown rank correlation for the network model and co-expression, and model correlation against knockdown depth')}</figure></div>
@@ -505,10 +505,10 @@ add("plain", 1.3, 7, f"""
     <div class="pf pass"><b>Fig. 4</b> Four failure modes the checks catch</div>
     <div class="pf pass"><b>Fig. 5</b> T-cell genes against matched controls</div>
     <div class="pf open"><b>Fig. 6</b> Model size, new lung donors, known genes</div>
-    <div class="pf pass"><b>Fig. 7</b> Bulk network ISP against two knockout sets</div>
+    <div class="pf pass"><b>Fig. 7</b> Bulk network ISP against three perturbation panels</div>
   </div>
 </div>
-""", """If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. The colon result, open on the primary question and not replicated for the lung genes, changes the paper's emphasis rather than removing it, because the lung evidence and the documented failure modes stand on their own.""")
+""", """If the open studies are completed, the material could form one methods paper. The slide separates three things. The result is established, but narrowly: in lung T cells, with the larger model and our design, random genes gave opposed effects. The argument, that gene-level claims need these baselines and checks, is a recommendation drawn from it. Extension to other tissues, goals and model sizes is a hypothesis. The bulk line is now a negative result with a narrow scope: in this design, bulk network perturbation did not predict knockout or knockdown effects. Figures one, two, four, five and seven could be drawn from results we have; figures three and six need the studies on the previous slide. The colon result, open on the primary question and not replicated for the lung genes, changes the paper's emphasis rather than removing it, because the lung evidence and the documented failure modes stand on their own.""")
 
 add("plain", 1.5, 7, f"""
 <h2>Eight tests: the bulk network's agreement was matched or exceeded by its controls; Geneformer's lung gene results did not replicate</h2>
@@ -527,7 +527,7 @@ add("end", 0.6, None, """
 <ol class="endlist">
   <li>In lung, random genes give opposed deletion and overexpression effects (ρ −0.59 to −0.61). Gene-level claims must exceed this baseline.</li>
   <li>Six evaluation criteria, each traced to a documented error, are now lab practice. In colon, random genes were opposed in the same direction but not stably (open); the lung gene pattern did not replicate.</li>
-  <li>On bulk RNA-seq, a simple network model did not recover regulator-specific knockout effects in three registered panels (89 knockouts and knockdowns); where it tracked, co-expression did as well or better.</li>
+  <li>On bulk RNA-seq, a simple network model did not recover regulator-specific perturbation effects in three registered panels (89 knockouts and knockdowns); where it tracked, co-expression did as well or better.</li>
   <li>For transposable elements, the same network did no better than random genes in 162 fish libraries, and in zebrafish its directions agreed with measured TE responses at chance level; in T-cell knockouts, TE shifts mostly stayed within a control-only null (post hoc; CBFB the exception).</li>
 </ol>
 <div class="byline">Every number is sourced in SOURCES.md in this talk's folder.</div>
