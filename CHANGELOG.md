@@ -7,6 +7,13 @@ entries below also describe the earlier versions, which were not published separ
 
 ## Unreleased: lab progress report, version 4 (proposed 2026-10-02)
 
+Updated version 4 on 2026-10-03 with a third bulk panel (slide 29), after its report passed review: the
+same registered bulk network against 34 ENCODE CRISPRi knockdowns in K562 (Geneformer_TE main, merge
+`73226eb`) reads `RECOVERED_NONSPECIFIC`, and a co-expression baseline did better. A data figure is drawn
+from three copied result tables. The synthesis slide (now 40) counts eight tests and "any of the four"
+panels; the bulk introduction, the TE summary, Summary 2, the paper and closing slides, the handout,
+`SOURCES.md` (later slides renumbered) and the READMEs are updated. The deck has 42 slides.
+
 Rebuilt on 2026-10-02 the outputs that still carried the old affiliation after the affiliation change:
 `2026-08-jsdp-sclc-tcell-poster/poster.html` (edited in place, it has no builder) and `poster.pdf`
 (WeasyPrint 69.0, as before), and `slides.html` and `slides.pdf` of lab progress versions 1 to 3, with
