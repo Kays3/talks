@@ -438,6 +438,45 @@ def fig_bulk_result():
     return t["reading"], t["P1_rho_resp_median"], t["P3_p"], t["P4_n_beat_random"], sorted(beat)
 
 
+def fig_k562():
+    """Bulk network ISP against ENCODE CRISPRi knockdowns in K562: model vs co-expression per knockdown, and knockdown depth."""
+    with open(os.path.join(DATA, "k562_11_per_ko_kd.tsv")) as f:
+        rows = [r for r in csv.DictReader(f, delimiter="\t") if r["status"] in ("SCORED", "INEFFECTIVE_KD")]
+    t = load("k562_09_tests.json")
+    sc = [r for r in rows if r["status"] == "SCORED"]
+    ine = [r for r in rows if r["status"] == "INEFFECTIVE_KD"]
+    assert len(sc) == t["n_scored"] == 34 and len(ine) == 14
+    assert abs(float(np.median([float(r["rho_resp"]) for r in sc])) - t["P1_rho_resp_median"]) < 1e-9
+    assert abs(float(np.median([float(r["rho_baseline"]) for r in sc])) - t["baseline_rho_resp_median"]) < 1e-9
+    rng = np.random.default_rng(7)
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(8.4, 8.6), gridspec_kw=dict(height_ratios=[1, 1.15]))
+    for k, (col, c) in enumerate([("rho_resp", INK), ("rho_baseline", "#6d8f5e")]):
+        for b, mk in (("E", "o"), ("C", "^")):
+            v = [float(r[col]) for r in sc if r["batch"] == b]
+            a1.scatter(v, 1 - k + (rng.random(len(v)) - 0.5) * 0.3, marker=mk, s=50, color=c, alpha=0.85, edgecolor="none",
+                       label=f"batch {b} ({len(v)})" if k == 0 else None)
+        m = float(np.median([float(r[col]) for r in sc]))
+        a1.plot([m, m], [1 - k - 0.27, 1 - k + 0.27], color=c, lw=3)
+        a1.text(m, 1 - k + 0.31, f"median {m:.2f}", ha="center", fontsize=13, color=c)
+    a1.axvline(0, color=GREY, lw=1)
+    a1.set_yticks([1, 0]); a1.set_yticklabels(["network\nmodel", "co-expression\nonly"], fontsize=13.5); a1.set_ylim(-0.5, 1.65)
+    a1.set_xlabel("Spearman ρ, predicted vs measured shift (34 knockdowns)", fontsize=14)
+    a1.legend(loc="upper left", ncol=2, frameon=False, fontsize=12, scatterpoints=1)
+    a2.axhline(0, color=GREY, lw=1); a2.axvline(-0.5, color=GREY, lw=1, ls="--")
+    a2.scatter([float(r["kd_mean_lfc"]) for r in sc], [float(r["rho_resp"]) for r in sc], s=50, color=INK,
+               label=f"passed knockdown gate ({len(sc)})")
+    a2.scatter([float(r["kd_mean_lfc"]) for r in ine], [float(r["rho_resp"]) for r in ine], s=50, facecolor="none",
+               edgecolor=OPEN, lw=1.8, label=f"target not lowered ({len(ine)})")
+    x = [float(r["kd_mean_lfc"]) for r in rows]; y = [float(r["rho_resp"]) for r in rows]
+    rs, p = spearmanr(x, y)
+    a2.text(-0.45, 0.02, "gate −0.5", transform=a2.get_xaxis_transform(), ha="left", va="bottom", fontsize=12, color=GREY)
+    a2.set_xlabel("Target mRNA change after knockdown (log2)", fontsize=14); a2.set_ylabel("network model ρ", fontsize=14)
+    a2.legend(loc="upper right", frameon=False, fontsize=12, scatterpoints=1)
+    a2.set_title(f"Post hoc: depth vs ρ, Spearman {rs:.2f} (p".replace("-", "−") + f" = {p:.3f}, {len(x)} knockdowns)", fontsize=13.5, loc="left")
+    fig.tight_layout(); save(fig, "k562_result.png")
+    return t["reading"], t["P1_rho_resp_median"], t["baseline_rho_resp_median"], round(rs, 3), round(p, 4)
+
+
 # ---------- transposable elements (Geneformer_TE) ----------
 def fig_te_pipeline():
     """The three tracks of the TE project and the state of each."""
@@ -645,6 +684,7 @@ if __name__ == "__main__":
     print("e2", fig_e2_gate())
     print("e2_results", fig_e2_results())
     print("bulk", fig_bulk_result())
+    print("k562", fig_k562())
     fig_te_pipeline()
     print("te_null", fig_te_fish_null())
     print("te_gill", fig_te_gill())

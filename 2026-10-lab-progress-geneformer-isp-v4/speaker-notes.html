@@ -41,8 +41,8 @@ speaker notes</h1>
 </header>
 <h1 id="evaluating-in-silico-perturbation-with-geneformer-speaker-notes">Evaluating
 in-silico perturbation with Geneformer: speaker notes</h1>
-<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 41
-slides, about 45 minutes of talk, then 5 to 10 minutes of discussion.
+<p>Lab progress report, version 4, 2 October 2026. Kaisar Dauyey. 42
+slides, about 47 minutes of talk, then 5 to 10 minutes of discussion.
 Every number is sourced in <code>SOURCES.md</code>.</p>
 <h2 id="slide-1.-evaluating-in-silico-perturbation-with-geneformer-about-0.5-min">Slide
 1. Evaluating in-silico perturbation with Geneformer (about 0.5
@@ -356,8 +356,9 @@ contains fewer T cells. Any perturbation model fitted on bulk data
 inherits this mixture of composition and regulation within cells.
 Geneformer itself is not usable here, because a bulk profile does not
 resemble the single-cell lists it was trained on. We therefore tested a
-simpler network model, twice, as shown on the next two slides. The
-values in the figure are invented.</p>
+simpler network model on three panels of measured knockouts and
+knockdowns, as shown on the next three slides. The values in the figure
+are invented.</p>
 <h2 id="slide-27.-bulk-tests-a-weak-non-specific-signal-in-one-knockout-set-that-did-not-replicate-in-a-second-about-1.5-min">Slide
 27. Bulk tests: a weak, non-specific signal in one knockout set that did
 not replicate in a second (about 1.5 min)</h2>
@@ -400,8 +401,43 @@ possibly donors, none of which was controlled. The supported claim is
 narrow: in this design, bulk network perturbation is not a reliable way
 to predict knockout effects in T cells. Sources: the combined reading of
 the two bulk tests and the Weinstock report.</p>
-<h2 id="slide-29.-a-second-project-asks-which-regulators-set-te-expression-about-1.2-min">Slide
-29. A second project asks which regulators set TE expression (about 1.2
+<h2 id="slide-29.-third-panel-k562-crispri-the-bulk-network-tracks-knockdowns-again-and-again-no-better-than-a-shuffled-network-about-1.5-min">Slide
+29. Third panel, K562 CRISPRi: the bulk network tracks knockdowns again,
+and again no better than a shuffled network (about 1.5 min)</h2>
+<p>The third panel was chosen to arbitrate between the two T-cell
+readings. It uses ENCODE CRISPRi knockdowns in the leukaemia line K562,
+so it differs from the T-cell sets in cell type, laboratory,
+perturbation and library, and the method and its registered tests were
+frozen before download. Of 74 knockdowns, 48 target factors in the base
+network, and 34 lowered their own target by the registered amount. The
+network tracked the measured shifts, with a median correlation of 0.24
+and sign agreement of 0.63, but its median gain over shuffled networks
+was not distinguishable from zero and only 1 of 34 beat random factors,
+so the reading is RECOVERED_NONSPECIFIC, as for Freimer. A model-free
+co-expression baseline did better, at a median of 0.45. Within each
+batch the knockdowns share much of their response, above the registered
+limit of 0.3, so by the registered rule the tracking cannot be separated
+from this shared component, which could come from the two shared control
+replicates, from a generic knockdown effect, or both. Two checks added
+after the results argue that it is not the whole story: knockdowns that
+failed to lower their target track at about zero, a median of 0.007, and
+deeper knockdowns track better. How much of the tracking is specific to
+the target, the design cannot say. The upper panel shows the model and
+co-expression for each knockdown; the lower, post hoc panel shows the
+model’s correlation against knockdown depth. K562 tells us nothing about
+T cells, the eight batch C knockdowns went the other way, and without
+the knockdown gate the reading would have been NOT_RECOVERED. Across the
+three panels: Freimer RECOVERED_NONSPECIFIC with 17 knockouts, Weinstock
+NOT_RECOVERED with 38, K562 RECOVERED_NONSPECIFIC with 34. Where the
+method tracks, it tracks without the wiring, and co-expression does as
+well or better. This panel sides with Freimer on whether the method
+tracks at all, which leaves Weinstock’s null looking specific to that
+dataset or design. Compute was 4.04 CPU-hours against a cap of 6; the
+scoring was run twice and the four result files were byte-identical.
+Sources: the K562 run record and result tables on Geneformer_TE main,
+merge 73226eb, head 37b974d.</p>
+<h2 id="slide-30.-a-second-project-asks-which-regulators-set-te-expression-about-1.2-min">Slide
+30. A second project asks which regulators set TE expression (about 1.2
 min)</h2>
 <p>Our second project applies the same question to transposable
 elements. These are repeated sequences that cells keep silenced through
@@ -416,8 +452,8 @@ re-counted for TEs. The colours give the state: the single-cell track is
 built but not run, the bulk track has results, and the ground-truth
 track has two results, from zebrafish and from the Freimer T-cell
 knockouts. Sources: the Geneformer_TE README and handoff document.</p>
-<h2 id="slide-30.-geneformer-has-no-te-tokens-so-the-single-cell-track-reads-te-states-out-through-a-probe-about-1-min">Slide
-30. Geneformer has no TE tokens, so the single-cell track reads TE
+<h2 id="slide-31.-geneformer-has-no-te-tokens-so-the-single-cell-track-reads-te-states-out-through-a-probe-about-1-min">Slide
+31. Geneformer has no TE tokens, so the single-cell track reads TE
 states out through a probe (about 1 min)</h2>
 <p>Geneformer’s vocabulary contains human genes and no transposable
 elements, so TEs cannot simply be deleted or overexpressed in the token
@@ -432,8 +468,8 @@ we have not yet prepared human single-cell data with TE counts. Droplet
 reads are short and many map to several TE copies, so any claim stays at
 the family level. Sources: the Geneformer_TE README and design log,
 entries DC-01 and DC-02.</p>
-<h2 id="slide-31.-in-162-fish-libraries-the-30-te-regulators-did-no-better-than-expression-matched-random-genes-about-1.3-min">Slide
-31. In 162 fish libraries, the 30 TE regulators did no better than
+<h2 id="slide-32.-in-162-fish-libraries-the-30-te-regulators-did-no-better-than-expression-matched-random-genes-about-1.3-min">Slide
+32. In 162 fish libraries, the 30 TE regulators did no better than
 expression-matched random genes (about 1.3 min)</h2>
 <p>The bulk track was first run on a fish cohort from our
 ocean-acidification work: 162 bulk libraries from three tissues and
@@ -453,8 +489,8 @@ correlates at 0.87 with the TE share of reads; each regulator’s
 predicted direction followed its correlation with that axis. Removing
 the axis did not reveal specific regulators either. Sources: the fish
 bulk run record and its random-control tables on Geneformer_TE main.</p>
-<h2 id="slide-32.-developmental-co2-lowered-the-gill-te-share-brain-and-liver-showed-no-robust-shift-about-1.1-min">Slide
-32. Developmental CO2 lowered the gill TE share; brain and liver showed
+<h2 id="slide-33.-developmental-co2-lowered-the-gill-te-share-brain-and-liver-showed-no-robust-shift-about-1.1-min">Slide
+33. Developmental CO2 lowered the gill TE share; brain and liver showed
 no robust shift (about 1.1 min)</h2>
 <p>Because the network removes treatment differences by design, the
 global TE load needed its own test. In gill, fish exposed to elevated
@@ -472,8 +508,8 @@ a shift in global TE load, and a follow-up found no candidate gene that
 explains it better than random genes; a thyroid gene set was nominal at
 p 0.025, FDR 0.10, and is a lead only. Sources: the TE-axis treatment
 report and the gene-axis report on Geneformer_TE main.</p>
-<h2 id="slide-33.-zebrafish-ground-truth-no-te-regulator-loss-shifted-global-te-load-detectably-family-leans-point-weakly-to-derepression-about-1.6-min">Slide
-33. Zebrafish ground truth: no TE-regulator loss shifted global TE load
+<h2 id="slide-34.-zebrafish-ground-truth-no-te-regulator-loss-shifted-global-te-load-detectably-family-leans-point-weakly-to-derepression-about-1.6-min">Slide
+34. Zebrafish ground truth: no TE-regulator loss shifted global TE load
 detectably; family leans point weakly to derepression (about 1.6
 min)</h2>
 <p>The zebrafish panel is the first direct measurement in this project
@@ -497,8 +533,8 @@ agreed in four of nine studies. With two to five libraries per arm, a
 firmer test needs five or more per arm, stranded libraries and mapping
 quality balanced across arms. Sources: the zebrafish validation report
 and its tables on Geneformer_TE main, commit 246c3e4.</p>
-<h2 id="slide-34.-freimer-te-arm-te-shifts-mostly-within-a-control-only-null-post-hoc-the-networks-te-predictions-were-non-specific-about-1.7-min">Slide
-34. Freimer TE arm: TE shifts mostly within a control-only null (post
+<h2 id="slide-35.-freimer-te-arm-te-shifts-mostly-within-a-control-only-null-post-hoc-the-networks-te-predictions-were-non-specific-about-1.7-min">Slide
+35. Freimer TE arm: TE shifts mostly within a control-only null (post
 hoc); the network’s TE predictions were non-specific (about 1.7
 min)</h2>
 <p>This is the second ground-truth test, and it returns to the Freimer
@@ -527,16 +563,17 @@ exception, do not detectably shift TE subfamilies. Asking the TE
 question properly needs full-length total-RNA data. Sources: the TE-arm
 report and the run record and tables on Geneformer_TE main, merge
 c17d39b, PR head eef6e18.</p>
-<h2 id="slide-35.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
-35. What the TE work shows so far, and what it does not (about 1.1
+<h2 id="slide-36.-what-the-te-work-shows-so-far-and-what-it-does-not-about-1.1-min">Slide
+36. What the TE work shows so far, and what it does not (about 1.1
 min)</h2>
 <p>The supported findings are narrow. A network built from natural
 co-variation did not meet the registered bar for specific prediction in
 any controlled test. In 162 fish libraries no regulator beat random
 genes. In the Freimer knockouts it beat random transcription factors in
-4 of 17 cases but not shuffled networks, and in the Weinstock knockouts
-it beat neither. In fish, the random-gene control is what shows it;
-without that control, the same run would have looked like thirty-two
+4 of 17 cases but not shuffled networks, in the Weinstock knockouts it
+beat neither, and in the K562 knockdowns it beat neither while
+co-expression did better. In fish, the random-gene control is what shows
+it; without that control, the same run would have looked like thirty-two
 thousand findings. That is the bulk counterpart of the random-gene
 baseline from the T-cell work. Developmental CO2 exposure lowered the
 gill TE share, as an exploratory result. In zebrafish, no
@@ -556,16 +593,16 @@ intronic or nascent RNA, or cell composition. The single-cell track is
 also where this project and the colon T-cell work would meet, if human
 single-cell data with TE counts were prepared. Sources: the fish run
 records and reports on Geneformer_TE main.</p>
-<h2 id="slide-36.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
-36. Summary 1: the evaluation criteria, each traced to evidence (about
+<h2 id="slide-37.-summary-1-the-evaluation-criteria-each-traced-to-evidence-about-1.2-min">Slide
+37. Summary 1: the evaluation criteria, each traced to evidence (about
 1.2 min)</h2>
 <p>Each criterion on the left is now lab practice, and each is tied to a
 documented episode on the right. These are established as practice in
 our lab, with sources for every row. They have not been tested by other
 groups, and some, such as the 95 percent stability threshold, are
 choices rather than derived results.</p>
-<h2 id="slide-37.-summary-2-what-remains-to-be-tested-about-1.3-min">Slide
-37. Summary 2: what remains to be tested (about 1.3 min)</h2>
+<h2 id="slide-38.-summary-2-what-remains-to-be-tested-about-1.3-min">Slide
+38. Summary 2: what remains to be tested (about 1.3 min)</h2>
 <p>This is what we do not yet know. The colon study has finished: random
 genes were opposed in the same direction as in lung but not stably, so
 the first question stays open, and the lung gene pattern did not
@@ -575,17 +612,19 @@ re-analysing within T-cell subsets, and comparing the classifier with an
 interpretable baseline built from published T-cell programs. Model size
 and positive controls have not started; without positive controls, a
 negative result is hard to interpret. The bulk RNA-seq row now has a
-result: across two registered tests on 55 knockouts, the bulk network
-did not recover regulator-specific effects, and its one weak positive
-did not replicate. The last three rows come from the TE project. In
-zebrafish, the fish network directions agreed with measured TE responses
-at chance level; in the Freimer T-cell knockouts, TE shifts mostly
-stayed within a control-only null and the network’s TE predictions were
-non-specific; and the single-cell TE track needs data we have not
-prepared. Sources: the next-cycle proposal, the independent-data design
-and the E0 feasibility report.</p>
-<h2 id="slide-38.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
-38. These results could form one methods paper on evaluating in-silico
+result: across three registered panels with 89 knockouts and knockdowns,
+the bulk network did not recover regulator-specific effects; its weak
+positive in Freimer did not replicate in Weinstock, and in K562 it
+tracked again without beating shuffled networks or co-expression. The
+last three rows come from the TE project. In zebrafish, the fish network
+directions agreed with measured TE responses at chance level; in the
+Freimer T-cell knockouts, TE shifts mostly stayed within a control-only
+null and the network’s TE predictions were non-specific; and the
+single-cell TE track needs data we have not prepared. Sources: the
+next-cycle proposal, the independent-data design and the E0 feasibility
+report.</p>
+<h2 id="slide-39.-these-results-could-form-one-methods-paper-on-evaluating-in-silico-perturbation-about-1.3-min">Slide
+39. These results could form one methods paper on evaluating in-silico
 perturbation (about 1.3 min)</h2>
 <p>If the open studies are completed, the material could form one
 methods paper. The slide separates three things. The result is
@@ -594,19 +633,19 @@ our design, random genes gave opposed effects. The argument, that
 gene-level claims need these baselines and checks, is a recommendation
 drawn from it. Extension to other tissues, goals and model sizes is a
 hypothesis. The bulk line is now a negative result with a narrow scope:
-in this design, bulk network perturbation did not predict knockout
-effects. Figures one, two, four, five and seven could be drawn from
-results we have; figures three and six need the studies on the previous
-slide. The colon result, open on the primary question and not replicated
-for the lung genes, changes the paper’s emphasis rather than removing
-it, because the lung evidence and the documented failure modes stand on
-their own.</p>
-<h2 id="slide-39.-seven-tests-the-bulk-networks-agreement-was-matched-by-its-controls-geneformers-lung-gene-results-did-not-replicate-about-1.5-min">Slide
-39. Seven tests: the bulk network’s agreement was matched by its
-controls; Geneformer’s lung gene results did not replicate (about 1.5
-min)</h2>
+in this design, bulk network perturbation did not predict knockout or
+knockdown effects. Figures one, two, four, five and seven could be drawn
+from results we have; figures three and six need the studies on the
+previous slide. The colon result, open on the primary question and not
+replicated for the lung genes, changes the paper’s emphasis rather than
+removing it, because the lung evidence and the documented failure modes
+stand on their own.</p>
+<h2 id="slide-40.-eight-tests-the-bulk-networks-agreement-was-matched-or-exceeded-by-its-controls-geneformers-lung-gene-results-did-not-replicate-about-1.5-min">Slide
+40. Eight tests: the bulk network’s agreement was matched or exceeded by
+its controls; Geneformer’s lung gene results did not replicate (about
+1.5 min)</h2>
 <p>This slide puts the two projects side by side. The bulk network was
-tested five times, four of them against measured perturbations, and
+tested six times, five of them against measured perturbations, and
 Geneformer twice, against controls and then in a second tissue; no
 Geneformer prediction has yet been checked against a measured
 perturbation. For the bulk network, wherever predictions tracked the
@@ -614,35 +653,36 @@ measured effects, a shuffled network or co-expression alone tracked them
 as well. For Geneformer, the random-gene null showed a built-in sign
 structure, and the lung gene results did not replicate in colon.
 Replication was the informative step in both lines. Weinstock removed
-the weak agreement seen in Freimer, and colon did not reproduce the lung
-gene statuses, with low power and a real difference not separable. The
-two TE-biology items are exploratory. Several of the checks that shaped
-these readings were added in review and are post hoc, such as the
-control-only null, the mapping covariate and the read-total
-decomposition; none changed a registered status. What would change the
-picture is a measured single-cell perturbation ground truth for
-Geneformer, such as CRISPR or Perturb-seq screens in T cells; a
-full-length, stranded, total-RNA perturbation dataset with a
-control-only null registered in advance for the TE question; and
-better-replicated zebrafish loss-of-function studies. Sources: the
-cross-project synthesis report and the merged reports behind each line,
-all already cited on earlier slides.</p>
-<h2 id="slide-40.-summary-about-0.6-min">Slide 40. Summary (about 0.6
+the weak agreement seen in Freimer and K562 restored it without the
+specificity, and colon did not reproduce the lung gene statuses, with
+low power and a real difference not separable. The two TE-biology items
+are exploratory. Several of the checks that shaped these readings were
+added in review and are post hoc, such as the control-only null, the
+mapping covariate and the read-total decomposition; none changed a
+registered status. What would change the picture is a measured
+single-cell perturbation ground truth for Geneformer, such as CRISPR or
+Perturb-seq screens in T cells; a full-length, stranded, total-RNA
+perturbation dataset with a control-only null registered in advance for
+the TE question; and better-replicated zebrafish loss-of-function
+studies. Sources: the cross-project synthesis report and the merged
+reports behind each line, all already cited on earlier slides.</p>
+<h2 id="slide-41.-summary-about-0.6-min">Slide 41. Summary (about 0.6
 min)</h2>
 <p>To summarise: the opposed effects of the two perturbations in random
 genes are the baseline that any gene-level claim has to exceed. The six
 criteria came from our own errors and are now how we evaluate every run;
 in colon, random genes were opposed in the same direction as in lung but
 not stably, so that question stays open, and the lung gene pattern did
-not replicate. On bulk RNA-seq, two registered tests against measured
-knockouts did not support regulator-specific prediction, and the first
-test’s weak signal did not replicate. For transposable elements, the
-same network did no better than random genes in fish, its directions
-agreed with measured zebrafish TE responses only at chance level, and in
-the T-cell knockouts the TE shifts mostly stayed within what control
+not replicate. On bulk RNA-seq, three registered panels of measured
+knockouts and knockdowns did not support regulator-specific prediction;
+the first panel’s weak signal did not replicate, and the third tracked
+again without beating co-expression. For transposable elements, the same
+network did no better than random genes in fish, its directions agreed
+with measured zebrafish TE responses only at chance level, and in the
+T-cell knockouts the TE shifts mostly stayed within what control
 libraries show among themselves, CBFB the exception in a check added
 after the results. Thank you; I am glad to take questions.</p>
-<h2 id="slide-41.-glossary-about-0.3-min">Slide 41. Glossary (about 0.3
+<h2 id="slide-42.-glossary-about-0.3-min">Slide 42. Glossary (about 0.3
 min)</h2>
 <p>The glossary is for reference and is repeated on the handout.</p>
 </body>
